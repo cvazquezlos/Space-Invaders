@@ -9,31 +9,35 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/fondo1"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/fondo1" />
 
     <ImageView
+        android:id="@+id/nave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/diseno1"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/nave"/>
+        android:src="@drawable/diseno1" />
 
     <Button
+        android:id="@+id/control_izquierda"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/control_izquierda"
-        android:onClick="actualizaPosicionIzq"/>
+        android:background="@android:color/transparent"
+        android:onClick="actualizaPosicionIzq"
+        android:visibility="visible" />
 
     <Button
+        android:id="@+id/control_derecha"
         android:layout_width="wrap_content"
         android:layout_height="100dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:id="@+id/control_derecha"
-        android:onClick="actualizaPosicionDer"/>
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:onClick="actualizaPosicionDer"
+        android:visibility="visible" />
 
 </RelativeLayout>

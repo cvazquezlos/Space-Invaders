@@ -12,11 +12,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void actualizaPosicionIzq(View view){
-        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX()-30);
+    public void actualizaPosicionIzq(View view) {
+        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() + 30);
     }
 
-    public void actualizaPosicionDer(View view){
-        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX()+30);
+    public void actualizaPosicionDer(View view) {
+        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - 30);
     }
 }
