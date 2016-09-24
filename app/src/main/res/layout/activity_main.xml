@@ -6,18 +6,4 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.spaceinvaders.MainActivity">
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/fondo1"
-        android:scaleType="centerCrop"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/diseño1"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/nave"/>
-
 </RelativeLayout>
