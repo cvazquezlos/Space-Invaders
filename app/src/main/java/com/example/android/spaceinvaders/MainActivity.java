@@ -1,9 +1,8 @@
 package com.example.android.spaceinvaders;
 
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
+        import android.os.Bundle;
+        import android.support.v7.app.AppCompatActivity;
+        import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,13 +12,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void actualizaPosicionIzq(View view) {
-        Button botonIzq = (Button) view;
-        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() + 30);
-    }
-
-    public void actualizaPosicionDer(View view) {
-        Button botonDer = (Button) view;
-        findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - 30);
+    public void actualizaPosicion(View v) {
+        switch (v.getId()) {
+            case R.id.control_derecha:
+                findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - 30);
+                break;
+            case R.id.control_izquierda:
+                findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() + 30);
+                break;
+        }
     }
 }

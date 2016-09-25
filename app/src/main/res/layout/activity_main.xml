@@ -27,8 +27,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@android:color/transparent"
-        android:onClick="actualizaPosicionIzq"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:onClick="actualizaPosicion"/>
 
     <Button
         android:id="@+id/control_derecha"
@@ -37,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:onClick="actualizaPosicionDer"
-        android:visibility="visible" />
+        android:visibility="visible"
+        android:onClick="actualizaPosicion"/>
 
 </RelativeLayout>
