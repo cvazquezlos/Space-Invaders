@@ -12,6 +12,25 @@
         android:scaleType="centerCrop"
         android:src="@drawable/fondo1" />
 
+    <Button
+        android:id="@+id/disparo"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:onClick="dispara"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/municion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/disparo"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/municion"
+        android:visibility="invisible" />
+
     <ImageView
         android:id="@+id/nave"
         android:layout_width="wrap_content"
@@ -27,8 +46,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="@android:color/transparent"
-        android:visibility="visible"
-        android:onClick="actualizaPosicion"/>
+        android:onClick="actualizaPosicion"
+        android:visibility="visible" />
 
     <Button
         android:id="@+id/control_derecha"
@@ -37,7 +56,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
-        android:visibility="visible"
-        android:onClick="actualizaPosicion"/>
+        android:onClick="actualizaPosicion"
+        android:visibility="visible" />
 
 </RelativeLayout>
