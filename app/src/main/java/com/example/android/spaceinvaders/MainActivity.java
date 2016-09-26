@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void actualizaPosicion(View v) {
         switch (v.getId()) {
-            case R.id.control_derecha:
+            case (R.id.control_derecha):
                 findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - 30);
                 break;
             case R.id.control_izquierda:
