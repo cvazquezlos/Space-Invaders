@@ -13,12 +13,14 @@ public class MainActivity extends AppCompatActivity {
     TimerTask tarea;
     Timer timer;
     float posicionInicialMunicion;
+    ImageView municion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        posicionInicialMunicion = findViewById(R.id.municion).getY();
+        municion = (ImageView) findViewById(R.id.municion);
+        posicionInicialMunicion = municion.getY();
     }
 
     public void actualizaPosicion(View v) {
@@ -33,34 +35,34 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dispara(View v) {
-        ImageView municion = (ImageView) findViewById(R.id.municion);
-        if (municion.getY() >= posicionInicialMunicion) {
+        ImageView ammo = (ImageView) findViewById(R.id.municion);
+        if (ammo.getY() >= posicionInicialMunicion) {
             System.out.println(findViewById(R.id.municion).getY() + "\n\n\n");
-            municion.setVisibility(View.VISIBLE);
+            ammo.setVisibility(View.VISIBLE);
             timer = new Timer();
             tarea = new TimerTask() {
                 @Override
                 public void run() {
                     if (!llegaAlFinal()) {
-                        findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
-                        System.out.println(findViewById(R.id.municion).getY() + "\n");
-                    } else {
+                        municion.setY(municion.getY() - 50);
+                        System.out.println(municion.getY() + "\n");
+                    } else
                         restauraPorDefecto();
-                    }
+
                 }
             };
-            timer.schedule(tarea, 0, 500);
         }
+        timer.schedule(tarea, 0, 500);
     }
 
     private boolean llegaAlFinal() {
         return findViewById(R.id.municion).getY() <= 50;
     }
 
-    private void restauraPorDefecto(){
+    private void restauraPorDefecto() {
         timer.cancel();
         tarea.cancel();
-        findViewById(R.id.municion).setX(findViewById(R.id.nave).getX()+(findViewById(R.id.nave).getWidth())/2);
-        findViewById(R.id.municion).setY(1122);
+        municion.setX(findViewById(R.id.nave).getX() + (findViewById(R.id.nave).getWidth()) / 2);
+        municion.setY(1122);
     }
 }
