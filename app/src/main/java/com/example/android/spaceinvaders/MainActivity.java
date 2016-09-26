@@ -11,17 +11,23 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     TimerTask tarea;
+    Timer timer;
+    float posicionInicialMunicion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        posicionInicialMunicion = findViewById(R.id.municion).getY();
+        timer = new Timer();
         tarea = new TimerTask() {
             @Override
             public void run() {
                 if (!llegaAlFinal()) {
                     findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
                     System.out.println(findViewById(R.id.municion).getY() + "\n");
+                } else {
+                    restauraPorDefecto();
                 }
             }
         };
@@ -40,15 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void dispara(View v) {
         ImageView municion = (ImageView) findViewById(R.id.municion);
-        if (municion.getY()==1122) {
+        if (municion.getY() == 1122) {
             System.out.println(findViewById(R.id.municion).getY() + "\n\n\n");
             municion.setVisibility(View.VISIBLE);
-            Timer timer = new Timer();
             timer.schedule(tarea, 0, 500);
         }
     }
 
     private boolean llegaAlFinal() {
-        return findViewById(R.id.municion).getY()<=50;
+        return findViewById(R.id.municion).getY() <= 50;
+    }
+
+    private void restauraPorDefecto(){
+        findViewById(R.id.municion).setX(findViewById(R.id.nave).getX()+(findViewById(R.id.nave).getWidth())/2);
+        findViewById(R.id.municion).setY(1122);
     }
 }
