@@ -19,7 +19,10 @@ public class MainActivity extends AppCompatActivity {
         tarea = new TimerTask() {
             @Override
             public void run() {
-                findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
+                if (!llegaAlFinal()) {
+                    findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
+                    System.out.println(findViewById(R.id.municion).getY() + "\n");
+                }
             }
         };
     }
@@ -37,13 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void dispara(View v) {
         ImageView municion = (ImageView) findViewById(R.id.municion);
-        municion.setVisibility(View.VISIBLE);
-        Timer timer = new Timer();
-        timer.schedule(tarea, 0, 500);
+        if (municion.getY()==1122) {
+            System.out.println(findViewById(R.id.municion).getY() + "\n\n\n");
+            municion.setVisibility(View.VISIBLE);
+            Timer timer = new Timer();
+            timer.schedule(tarea, 0, 500);
+        }
     }
 
-    private boolean llegaAlFinal(ImageView municion) {
-        //return municion.getY()==;
-        return true;
+    private boolean llegaAlFinal() {
+        return findViewById(R.id.municion).getY()<=50;
     }
 }
