@@ -19,18 +19,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         posicionInicialMunicion = findViewById(R.id.municion).getY();
-        timer = new Timer();
-        tarea = new TimerTask() {
-            @Override
-            public void run() {
-                if (!llegaAlFinal()) {
-                    findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
-                    System.out.println(findViewById(R.id.municion).getY() + "\n");
-                } else {
-                    restauraPorDefecto();
-                }
-            }
-        };
     }
 
     public void actualizaPosicion(View v) {
@@ -46,9 +34,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void dispara(View v) {
         ImageView municion = (ImageView) findViewById(R.id.municion);
-        if (municion.getY() == 1122) {
+        if (municion.getY() >= posicionInicialMunicion) {
             System.out.println(findViewById(R.id.municion).getY() + "\n\n\n");
             municion.setVisibility(View.VISIBLE);
+            timer = new Timer();
+            tarea = new TimerTask() {
+                @Override
+                public void run() {
+                    if (!llegaAlFinal()) {
+                        findViewById(R.id.municion).setY(findViewById(R.id.municion).getY() - 50);
+                        System.out.println(findViewById(R.id.municion).getY() + "\n");
+                    } else {
+                        restauraPorDefecto();
+                    }
+                }
+            };
             timer.schedule(tarea, 0, 500);
         }
     }
@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restauraPorDefecto(){
+        timer.cancel();
+        tarea.cancel();
         findViewById(R.id.municion).setX(findViewById(R.id.nave).getX()+(findViewById(R.id.nave).getWidth())/2);
         findViewById(R.id.municion).setY(1122);
     }
