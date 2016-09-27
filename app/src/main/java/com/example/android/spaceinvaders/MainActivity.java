@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -14,24 +15,41 @@ public class MainActivity extends AppCompatActivity {
     Timer timer;
     float posicionInicialMunicion;
     ImageView municion;
+    RelativeLayout rl;
+    final int movimiento = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         municion = (ImageView) findViewById(R.id.municion);
+        rl = (RelativeLayout) findViewById(R.id.activity_main);
         posicionInicialMunicion = municion.getY();
     }
 
     public void actualizaPosicion(View v) {
         switch (v.getId()) {
             case (R.id.control_derecha):
-                findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - 30);
+                if (!seSale("der")) {
+                    findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() - movimiento);
+                }
                 break;
             case R.id.control_izquierda:
-                findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() + 30);
+                if (!seSale("izq")){
+                    findViewById(R.id.nave).setX(findViewById(R.id.nave).getX() + movimiento);
+                }
                 break;
         }
+    }
+
+    private boolean seSale(String direccion){
+        switch (direccion){
+            case "izq":
+                return (findViewById(R.id.nave).getX() + movimiento + findViewById(R.id.nave).getWidth())>rl.getWidth();
+            case "der":
+                return (findViewById(R.id.nave).getX() - movimiento) < 0;
+        }
+        return true;
     }
 
     public void dispara(View v) {
@@ -52,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             };
         }
-        timer.schedule(tarea, 0, 500);
+        timer.schedule(tarea, 0, 250);
     }
 
     private boolean llegaAlFinal() {
@@ -63,6 +81,6 @@ public class MainActivity extends AppCompatActivity {
         timer.cancel();
         tarea.cancel();
         municion.setX(findViewById(R.id.nave).getX() + (findViewById(R.id.nave).getWidth()) / 2);
-        municion.setY(1122);
+        municion.setY(posicionInicialMunicion);
     }
 }
