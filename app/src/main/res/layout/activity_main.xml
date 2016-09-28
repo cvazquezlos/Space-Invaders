@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/diseno1" />
+        android:src="@drawable/spaceship" />
 
     <Button
         android:id="@+id/control_izquierda"

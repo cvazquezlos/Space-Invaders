@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dispara(View v) {
-        municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 15));
+        municion.setX(nave.getX() + (((nave.getWidth()) / 2)-10));
         municion.setY(nave.getY());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     };
 
     private boolean llegaAlFinal() {
-        return municion.getY() <= 50;
+        return municion.getY() <= 20;
     }
 
     private boolean seSale(String direccion) {
