@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void dispara(View v) {
-        municion.setX(nave.getX() + (((nave.getWidth()) / 2)-10));
+        municion.setX(nave.getX() + (((nave.getWidth()) / 2)-5));
         municion.setY(nave.getY());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
