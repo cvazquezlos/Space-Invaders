@@ -1,64 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/principal_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.android.spaceinvaders.MainActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/fondo1" />
-
-    <Button
-        android:id="@+id/disparo"
-        android:layout_width="wrap_content"
-        android:layout_height="90dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/transparent"
-        android:onClick="dispara"
-        android:visibility="visible" />
+        android:src="@drawable/fondo2"
+        android:scaleType="centerCrop"/>
 
     <ImageView
-        android:id="@+id/municion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/disparo"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/municion"
-        android:visibility="invisible" />
+        android:layout_centerHorizontal="true" />
 
-    <ImageView
-        android:id="@+id/nave"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/diseno11" />
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/control_izquierda"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:background="@android:color/transparent"
-        android:onClick="actualizaPosicion"
-        android:visibility="visible" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/boton1"
+            android:scaleType="centerCrop"
+            android:id="@+id/play_boton"
+            android:background="@android:color/transparent"/>
 
-    <Button
-        android:id="@+id/control_derecha"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@android:color/transparent"
-        android:onClick="actualizaPosicion"
-        android:visibility="visible" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/boton2"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
