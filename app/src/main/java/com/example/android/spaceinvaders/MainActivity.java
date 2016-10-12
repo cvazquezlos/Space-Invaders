@@ -16,25 +16,13 @@ public class MainActivity extends AppCompatActivity {
     ImageButton opcionBoton;
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
-    int[] resultados;
+    String[] resultados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        resultados = new int[2];
-        ImageButton playBoton = (ImageButton) findViewById(R.id.play_boton);
-        playBoton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent gameScreen = new Intent(view.getContext(), GameActivity.class);
-                startActivityForResult(gameScreen, 0);
-                try {
-                    this.finalize();
-                } catch (Throwable throwable) {
-                    throwable.printStackTrace();
-                }
-            }
-        });
+        resultados = new String[2];
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
@@ -62,30 +50,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void iniciaJuego(View view){
+        Intent juego = new Intent(view.getContext(), GameActivity.class);
+        juego.putExtra("arg", resultados[0]+" "+resultados[1]);
+        startActivity(juego);
+    }
+
     public void actualizaFondo(View vista) {
         switch (vista.getId()) {
             case R.id.fondo_1:
-                resultados[0] = R.drawable.fondo;
+                resultados[0] = "fondo";
                 break;
             case R.id.fondo_2:
-                resultados[0] = R.drawable.fondo1;
+                resultados[0] = "fondo1";
                 break;
             case R.id.fondo_3:
-                resultados[0] = R.drawable.fondo3;
+                resultados[0] = "fondo3";
                 break;
         }
     }
 
-    public void actualizaNave(View vista){
-        switch (vista.getId()){
+    public void actualizaNave(View vista) {
+        switch (vista.getId()) {
             case R.id.nave_1:
-                resultados[1] = R.drawable.diseno11;
+                resultados[1] = "diseno11";
                 break;
             case R.id.nave_2:
-                resultados[1] = R.drawable.diseno21;
+                resultados[1] = "diseno21";
                 break;
             case R.id.nave_3:
-                resultados[1] = R.drawable.diseno31;
+                resultados[1] = "diseno31";
                 break;
         }
     }

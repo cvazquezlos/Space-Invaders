@@ -1,5 +1,6 @@
 package com.example.android.spaceinvaders;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ public class GameActivity extends AppCompatActivity {
 
     ImageView municion;
     ImageView nave;
+    ImageView fondoJuego;
     Button botonDisparo;
     Handler manejaDisparo = new Handler();
     final int movimiento = 30;
@@ -20,7 +22,21 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
+        fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
         botonDisparo = (Button) findViewById(R.id.disparo);
+        Intent i = getIntent();
+        if (i!=null) {
+            String data = i.getStringExtra("arg");
+            introduceCambios(data);
+        }
+    }
+
+    private void introduceCambios(String data){
+        String[] info = data.split(" ");
+        int idFondo = getResources().getIdentifier(info[0], "drawable", getPackageName());
+        fondoJuego.setImageResource(idFondo);
+        int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
+        nave.setImageResource(idNave);
     }
 
     public void actualizaPosicion(View v) {

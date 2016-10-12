@@ -48,6 +48,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:scaleType="centerCrop"
+            android:onClick="iniciaJuego"
             android:src="@drawable/boton1" />
 
         <RelativeLayout
