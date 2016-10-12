@@ -33,12 +33,11 @@
 
     <ImageView
         android:id="@+id/nave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
         android:src="@drawable/diseno11" />
 
     <Button
