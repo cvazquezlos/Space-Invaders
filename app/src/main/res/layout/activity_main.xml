@@ -39,7 +39,7 @@
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/diseno1.1" />
+        android:src="@drawable/diseno11" />
 
     <Button
         android:id="@+id/control_izquierda"

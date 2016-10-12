@@ -27,17 +27,22 @@ public class MainActivity extends AppCompatActivity {
     public void actualizaPosicion(View v) {
         switch (v.getId()) {
             case (R.id.control_derecha):
-                if (!seSale("der"))
+                if (!seSale("der")) {
+                    nave.setImageResource(R.drawable.diseno12);
                     nave.setX(nave.getX() - movimiento);
+                }
                 break;
             case R.id.control_izquierda:
-                if (!seSale("izq"))
+                if (!seSale("izq")) {
+                    nave.setImageResource(R.drawable.diseno13);
                     nave.setX(nave.getX() + movimiento);
+                }
                 break;
         }
     }
 
     public void dispara(View v) {
+        nave.setImageResource(R.drawable.diseno11);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2)-5));
         municion.setY(nave.getY());
         municion.setVisibility(View.VISIBLE);
