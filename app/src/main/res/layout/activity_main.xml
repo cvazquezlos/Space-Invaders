@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/fondo1"/>
+        android:src="@drawable/fondo1" />
 
     <Button
         android:id="@+id/disparo"
