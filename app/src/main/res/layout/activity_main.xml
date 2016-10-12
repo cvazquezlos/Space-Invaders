@@ -26,9 +26,9 @@
         <ImageView
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:src="@drawable/logotipo"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:src="@drawable/logotipo" />
 
     </RelativeLayout>
 
@@ -53,6 +53,7 @@
             android:layout_margin="10dp">
 
             <ImageButton
+                android:id="@+id/opcion_boton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
