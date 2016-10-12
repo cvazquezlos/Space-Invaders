@@ -3,8 +3,13 @@
     android:id="@+id/principal_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/fondo2"
+        android:scaleType="centerCrop"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -20,11 +25,25 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/boton1"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"/>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/boton2"
+                android:scaleType="centerCrop"
+                android:layout_centerHorizontal="true"
+                android:background="@android:color/transparent" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
