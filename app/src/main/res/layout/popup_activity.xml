@@ -11,98 +11,118 @@
         android:orientation="horizontal">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/fondo_opcion"
+            <TextView
+                android:id="@+id/fondo_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:orientation="vertical">
+                android:layout_marginBottom="3dp"
+                android:text="Fondo"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
-                    android:text="Fondo" />
+            <ImageView
+                android:id="@+id/fondo_1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/fondo_titulo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaFondo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fondo" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/fondo" />
+            <ImageView
+                android:id="@+id/fondo_2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/fondo_1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaFondo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fondo1" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/fondo1" />
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/fondo3" />
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/fondo_3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/fondo_2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaFondo"
+                android:scaleType="centerCrop"
+                android:src="@drawable/fondo3" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/nave_opcion"
+            <TextView
+                android:id="@+id/nave_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:orientation="vertical">
+                android:layout_marginBottom="3dp"
+                android:text="Nave"
+                android:textSize="20sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
-                    android:text="Nave"/>
+            <ImageView
+                android:id="@+id/nave_1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/nave_titulo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaNave"
+                android:src="@drawable/diseno11" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:src="@drawable/diseno11"/>
+            <ImageView
+                android:id="@+id/nave_2"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/nave_1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaNave"
+                android:src="@drawable/diseno21" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:src="@drawable/diseno21"/>
+            <ImageView
+                android:id="@+id/nave_3"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/nave_2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:onClick="actualizaNave"
+                android:src="@drawable/diseno31" />
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="60dp"
-                    android:layout_marginBottom="3dp"
-                    android:src="@drawable/diseno31"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="VOLVER"
-                    android:id="@+id/volver_boton"/>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/volver_boton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/nave_3"
+                android:layout_centerHorizontal="true"
+                android:text="VOLVER" />
 
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
             <LinearLayout
                 android:id="@+id/enemigo_opcion"
@@ -112,9 +132,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/enemigos_titulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Enemigos"/>
+                    android:layout_centerHorizontal="true"
+                    android:text="Enemigos"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 

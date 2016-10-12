@@ -16,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
     ImageButton opcionBoton;
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
+    int[] resultados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        resultados = new int[2];
         ImageButton playBoton = (ImageButton) findViewById(R.id.play_boton);
         playBoton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -33,18 +35,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LayoutInflater inflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View vistaPopup = inflater.inflate(R.layout.popup_activity, null);
 
                 popup = new PopupWindow(
                         vistaPopup,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
@@ -55,10 +56,38 @@ public class MainActivity extends AppCompatActivity {
                         popup.dismiss();
                     }
                 });
-                popup.showAtLocation(layoutPrincipal, Gravity.CENTER, 0, 0);
+                popup.showAtLocation(layoutPrincipal, Gravity.BOTTOM, 0, 0);
 
             }
         });
+    }
+
+    public void actualizaFondo(View vista) {
+        switch (vista.getId()) {
+            case R.id.fondo_1:
+                resultados[0] = R.drawable.fondo;
+                break;
+            case R.id.fondo_2:
+                resultados[0] = R.drawable.fondo1;
+                break;
+            case R.id.fondo_3:
+                resultados[0] = R.drawable.fondo3;
+                break;
+        }
+    }
+
+    public void actualizaNave(View vista){
+        switch (vista.getId()){
+            case R.id.nave_1:
+                resultados[1] = R.drawable.diseno11;
+                break;
+            case R.id.nave_2:
+                resultados[1] = R.drawable.diseno21;
+                break;
+            case R.id.nave_3:
+                resultados[1] = R.drawable.diseno31;
+                break;
+        }
     }
 
 }
