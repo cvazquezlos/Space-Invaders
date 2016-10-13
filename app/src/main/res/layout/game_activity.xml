@@ -13,6 +13,14 @@
         android:scaleType="centerCrop"
         android:src="@drawable/fondo3" />
 
+    <ImageView
+        android:id="@+id/enemigo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:adjustViewBounds="true"
+        android:src="@drawable/enemigodiseno11"/>
+
     <Button
         android:id="@+id/disparo"
         android:layout_width="wrap_content"
