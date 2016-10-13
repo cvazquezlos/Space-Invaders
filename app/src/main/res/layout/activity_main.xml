@@ -22,8 +22,8 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/icon" />
+            android:src="@drawable/iconotitulo"
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:layout_width="130dp"
@@ -31,7 +31,7 @@
             android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/logotipo" />
+            android:src="@drawable/iconotitulo1"/>
 
     </RelativeLayout>
 

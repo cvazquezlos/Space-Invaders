@@ -32,22 +32,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View vistaPopup = inflater.inflate(R.layout.popup_activity, null);
-
                 popup = new PopupWindow(
                         vistaPopup,
                         RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
-
                 ImageButton cerrarPop = (ImageButton) vistaPopup.findViewById(R.id.volver_boton);
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         popup.dismiss();
+                        opcionBoton.setVisibility(View.VISIBLE);
                     }
                 });
                 popup.showAtLocation(layoutPrincipal, Gravity.BOTTOM, 0, 0);
-
+                opcionBoton.setVisibility(View.INVISIBLE);
             }
         });
     }

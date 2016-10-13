@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9ceaac"
+    android:background="#839ceaac"
     android:orientation="vertical">
 
     <ImageButton
@@ -10,17 +10,18 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginTop="3dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/iconx" />
+        android:src="@drawable/cerrar" />
 
     <TextView
         android:id="@+id/titulo_opciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="6dp"
         android:layout_marginTop="5dp"
         android:text="Opciones gráficas"
         android:textSize="20dp"
@@ -36,8 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/titulo_opciones"
+        android:layout_marginBottom="8dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -166,8 +167,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
                 android:adjustViewBounds="true"
-                android:rotation="180"
                 android:onClick="actualizaEnemigo"
+                android:rotation="180"
                 android:src="@drawable/enemigodiseno11" />
 
         </RelativeLayout>
