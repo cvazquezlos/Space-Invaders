@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         resultados = new String[2];
+        resultados[0] = "fondo3";
+        resultados[1] = "diseno11";
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
@@ -50,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void iniciaJuego(View view){
+    public void iniciaJuego(View view) {
         Intent juego = new Intent(view.getContext(), GameActivity.class);
-        juego.putExtra("arg", resultados[0]+" "+resultados[1]);
+        juego.putExtra("arg", resultados[0] + " " + resultados[1]);
         startActivity(juego);
     }
 

@@ -16,6 +16,7 @@ public class GameActivity extends AppCompatActivity {
     Button botonDisparo;
     Handler manejaDisparo = new Handler();
     final int movimiento = 30;
+    int ladeadoIzq, ladeadoDer, frontal;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,31 +26,32 @@ public class GameActivity extends AppCompatActivity {
         fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
         botonDisparo = (Button) findViewById(R.id.disparo);
         Intent i = getIntent();
-        if (i!=null) {
+        if (i != null) {
             String data = i.getStringExtra("arg");
             introduceCambios(data);
         }
     }
 
-    private void introduceCambios(String data){
+    private void introduceCambios(String data) {
         String[] info = data.split(" ");
         int idFondo = getResources().getIdentifier(info[0], "drawable", getPackageName());
         fondoJuego.setImageResource(idFondo);
         int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
-        nave.setImageResource(idNave);
+        cambiosMovilidad(idNave);
+        nave.setImageResource(frontal);
     }
 
     public void actualizaPosicion(View v) {
         switch (v.getId()) {
             case (R.id.control_derecha):
                 if (!seSale("der")) {
-                    nave.setImageResource(R.drawable.diseno12);
+                    nave.setImageResource(ladeadoIzq);
                     nave.setX(nave.getX() - movimiento);
                 }
                 break;
             case R.id.control_izquierda:
                 if (!seSale("izq")) {
-                    nave.setImageResource(R.drawable.diseno13);
+                    nave.setImageResource(ladeadoDer);
                     nave.setX(nave.getX() + movimiento);
                 }
                 break;
@@ -57,12 +59,32 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void dispara(View v) {
-        nave.setImageResource(R.drawable.diseno11);
+        nave.setImageResource(frontal);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 5));
         municion.setY(nave.getY());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
         manejaDisparo.postDelayed(accionDisparo, 0);
+    }
+
+    private void cambiosMovilidad(int idNave){
+        switch(idNave){
+            case 2130837592:
+                frontal = R.drawable.diseno21;
+                ladeadoDer = R.drawable.diseno23;
+                ladeadoIzq = R.drawable.diseno22;
+                break;
+            case 2130837589:
+                frontal = R.drawable.diseno11;
+                ladeadoDer = R.drawable.diseno13;
+                ladeadoIzq = R.drawable.diseno12;
+                break;
+            case 2130837595:
+                frontal = R.drawable.diseno31;
+                ladeadoDer = R.drawable.diseno33;
+                ladeadoIzq = R.drawable.diseno32;
+                break;
+        }
     }
 
     Runnable accionDisparo = new Runnable() {
