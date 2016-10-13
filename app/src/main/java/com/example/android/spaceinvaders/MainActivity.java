@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -22,9 +21,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        resultados = new String[2];
+        resultados = new String[3];
         resultados[0] = "fondo3";
         resultados[1] = "diseno11";
+        resultados[2] = "enemigodiseno11";
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
-                Button cerrarPop = (Button) vistaPopup.findViewById(R.id.volver_boton);
+                ImageButton cerrarPop = (ImageButton) vistaPopup.findViewById(R.id.volver_boton);
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void iniciaJuego(View view) {
         Intent juego = new Intent(view.getContext(), GameActivity.class);
-        juego.putExtra("arg", resultados[0] + " " + resultados[1]);
+        juego.putExtra("arg", resultados[0] + " " + resultados[1] + " " + resultados[2]);
         startActivity(juego);
     }
 
@@ -82,6 +82,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nave_3:
                 resultados[1] = "diseno31";
+                break;
+        }
+    }
+
+    public void actualizaEnemigo(View vista) {
+        switch (vista.getId()) {
+            case R.id.enemigo_1:
+                resultados[2] = "enemigodiseno11";
                 break;
         }
     }

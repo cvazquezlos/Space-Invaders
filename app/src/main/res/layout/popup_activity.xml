@@ -5,9 +5,39 @@
     android:background="#9ceaac"
     android:orientation="vertical">
 
+    <ImageButton
+        android:id="@+id/volver_boton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/iconx" />
+
+    <TextView
+        android:id="@+id/titulo_opciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="Opciones gráficas"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/titulo_opciones"
+        android:background="#9dc8a6" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/titulo_opciones"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <RelativeLayout
@@ -22,7 +52,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
                 android:text="Fondo"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/fondo_1"
@@ -74,7 +105,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="3dp"
                 android:text="Nave"
-                android:textSize="20sp" />
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/nave_1"
@@ -109,14 +141,6 @@
                 android:onClick="actualizaNave"
                 android:src="@drawable/diseno31" />
 
-            <Button
-                android:id="@+id/volver_boton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/nave_3"
-                android:layout_centerHorizontal="true"
-                android:text="VOLVER" />
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -124,22 +148,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/enemigo_opcion"
+            <TextView
+                android:id="@+id/enemigos_titulo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:orientation="vertical">
+                android:layout_marginBottom="3dp"
+                android:text="Enemigos"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/enemigos_titulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Enemigos"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
+            <ImageView
+                android:id="@+id/enemigo_1"
+                android:layout_width="40dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/enemigos_titulo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:adjustViewBounds="true"
+                android:rotation="180"
+                android:onClick="actualizaEnemigo"
+                android:src="@drawable/enemigodiseno11" />
 
         </RelativeLayout>
 

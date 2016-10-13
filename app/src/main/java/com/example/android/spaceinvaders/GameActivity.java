@@ -45,6 +45,8 @@ public class GameActivity extends AppCompatActivity {
         int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
         cambiosMovilidad(idNave);
         nave.setImageResource(frontal);
+        int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
+        enemigo.setImageResource(idEnemigo);
     }
 
     public void actualizaPosicion(View v) {
