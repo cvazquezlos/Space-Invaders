@@ -15,12 +15,14 @@ public class GameActivity extends AppCompatActivity {
     ImageView fondoJuego;
     ImageView enemigo;
     Button botonDisparo;
+    int rotacion = 0;
     Handler manejaDisparo = new Handler();
     Handler manejaEnemigo = new Handler();
     final int movimiento = 30;
     final int movimientoEnemigo = 20;
     boolean inicioAFin = false;
     int ladeadoIzq, ladeadoDer, frontal, disparo;
+    int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +48,10 @@ public class GameActivity extends AppCompatActivity {
         cambiosMovilidad(idNave);
         nave.setImageResource(frontal);
         int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
-        enemigo.setImageResource(idEnemigo);
+        cambiosMovilidadEnemigo(idEnemigo);
+        System.out.println(idEnemigo);
+        enemigo.setImageResource(frontal);
+        this.idEnemigo = idEnemigo;
     }
 
     public void actualizaPosicion(View v) {
@@ -62,6 +67,19 @@ public class GameActivity extends AppCompatActivity {
                     nave.setImageResource(ladeadoDer);
                     nave.setX(nave.getX() + movimiento);
                 }
+                break;
+        }
+    }
+
+    private void cambiosMovilidadEnemigo(int idEnemigo){
+        switch (idEnemigo){
+            case 2130837601:
+                frontal = R.drawable.enemigodiseno21;
+                break;
+            case 2130837598:
+                frontal = R.drawable.enemigodiseno11;
+                ladeadoIzqEnemigo = R.drawable.enemigodiseno12;
+                ladeadoDerEnemigo = R.drawable.enemigodiseno13;
                 break;
         }
     }
@@ -115,14 +133,25 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (inicioAFin) {
-                enemigo.setImageResource(R.drawable.enemigodiseno12);
+                if (idEnemigo == 2130837601) {
+                    rotacion+=20;
+                    enemigo.setRotation(rotacion);
+                }
+                else
+                    enemigo.setImageResource(ladeadoIzqEnemigo);
                 enemigo.setX(enemigo.getX() + movimientoEnemigo);
             } else {
-                enemigo.setImageResource(R.drawable.enemigodiseno13);
+                if (idEnemigo == 2130837601) {
+                    rotacion-=20;
+                    enemigo.setRotation(rotacion);
+                } else
+                    enemigo.setImageResource(ladeadoDerEnemigo);
                 enemigo.setX(enemigo.getX() - movimientoEnemigo);
             }
-            if (seSale("izq", "IA") || seSale("der", "IA"))
+            if (seSale("izq", "IA") || seSale("der", "IA")) {
+                rotacion = 0;
                 inicioAFin = !inicioAFin;
+            }
             manejaEnemigo.postDelayed(this, 80);
         }
     };

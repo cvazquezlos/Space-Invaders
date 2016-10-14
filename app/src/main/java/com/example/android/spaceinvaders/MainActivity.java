@@ -90,6 +90,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.enemigo_1:
                 resultados[2] = "enemigodiseno11";
                 break;
+            case R.id.enemigo_2:
+                resultados[2] = "enemigodiseno21";
+                break;
         }
     }
 

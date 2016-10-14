@@ -14,7 +14,7 @@
         android:layout_marginTop="3dp"
         android:background="@android:color/transparent"
         android:scaleType="centerCrop"
-        android:src="@drawable/cerrar" />
+        android:src="@drawable/wcerrar" />
 
     <TextView
         android:id="@+id/titulo_opciones"
@@ -170,6 +170,16 @@
                 android:onClick="actualizaEnemigo"
                 android:rotation="180"
                 android:src="@drawable/enemigodiseno11" />
+
+            <ImageView
+                android:id="@+id/enemigo_2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_below="@id/enemigo_1"
+                android:layout_marginBottom="3dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/enemigodiseno21"
+                android:onClick="actualizaEnemigo"/>
 
         </RelativeLayout>
 
