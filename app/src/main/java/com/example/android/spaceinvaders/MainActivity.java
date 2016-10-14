@@ -1,6 +1,7 @@
 package com.example.android.spaceinvaders;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
     String[] resultados;
+    MediaPlayer botonPresionado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +29,11 @@ public class MainActivity extends AppCompatActivity {
         resultados[2] = "enemigodiseno11";
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
+        botonPresionado  = MediaPlayer.create(this, R.raw.botonpresionado);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                botonPresionado.start();
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View vistaPopup = inflater.inflate(R.layout.popup_activity, null);
                 popup = new PopupWindow(
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        botonPresionado.start();
                         popup.dismiss();
                         opcionBoton.setVisibility(View.VISIBLE);
                     }
@@ -52,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciaJuego(View view) {
+        botonPresionado.start();
         Intent juego = new Intent(view.getContext(), GameActivity.class);
         juego.putExtra("arg", resultados[0] + " " + resultados[1] + " " + resultados[2]);
         startActivity(juego);
