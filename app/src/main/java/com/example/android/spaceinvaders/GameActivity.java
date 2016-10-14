@@ -150,6 +150,7 @@ public class GameActivity extends AppCompatActivity {
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
+                enemigo.setY(enemigo.getY()+40);
                 inicioAFin = !inicioAFin;
             }
             manejaEnemigo.postDelayed(this, 80);
