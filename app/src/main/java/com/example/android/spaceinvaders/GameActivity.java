@@ -1,12 +1,14 @@
 package com.example.android.spaceinvaders;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -15,6 +17,7 @@ public class GameActivity extends AppCompatActivity {
     ImageView fondoJuego;
     ImageView enemigo;
     Button botonDisparo;
+    RelativeLayout terrenoJuego;
     int rotacion = 0;
     Handler manejaDisparo = new Handler();
     Handler manejaEnemigo = new Handler();
@@ -23,15 +26,21 @@ public class GameActivity extends AppCompatActivity {
     boolean inicioAFin = false;
     int ladeadoIzq, ladeadoDer, frontal, disparo;
     int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
+    MediaPlayer sonidoDisparoNave;
+    int puntuacion = 0;
+    String titulo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        titulo="Space Invaders | Puntuación: ";
+        setTitle(titulo+puntuacion);
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
         enemigo = (ImageView) findViewById(R.id.enemigo);
         fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
         botonDisparo = (Button) findViewById(R.id.disparo);
+        terrenoJuego = (RelativeLayout) findViewById(R.id.activity_main);
         Intent i = getIntent();
         if (i != null) {
             String data = i.getStringExtra("arg");
@@ -50,7 +59,7 @@ public class GameActivity extends AppCompatActivity {
         int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
         cambiosMovilidadEnemigo(idEnemigo);
         System.out.println(idEnemigo);
-        enemigo.setImageResource(frontal);
+        enemigo.setImageResource(frontalEnemigo);
         this.idEnemigo = idEnemigo;
     }
 
@@ -74,10 +83,10 @@ public class GameActivity extends AppCompatActivity {
     private void cambiosMovilidadEnemigo(int idEnemigo){
         switch (idEnemigo){
             case 2130837601:
-                frontal = R.drawable.enemigodiseno21;
+                frontalEnemigo = R.drawable.enemigodiseno21;
                 break;
             case 2130837598:
-                frontal = R.drawable.enemigodiseno11;
+                frontalEnemigo = R.drawable.enemigodiseno11;
                 ladeadoIzqEnemigo = R.drawable.enemigodiseno12;
                 ladeadoDerEnemigo = R.drawable.enemigodiseno13;
                 break;
@@ -91,22 +100,27 @@ public class GameActivity extends AppCompatActivity {
                 ladeadoDer = R.drawable.diseno13;
                 ladeadoIzq = R.drawable.diseno12;
                 disparo = R.drawable.municion;
+                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavezanahoria);
                 break;
             case 2130837592:
                 frontal = R.drawable.diseno21;
                 ladeadoDer = R.drawable.diseno23;
                 ladeadoIzq = R.drawable.diseno22;
                 disparo = R.drawable.municion1;
+                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparodragon);
                 break;
             case 2130837595:
                 frontal = R.drawable.diseno31;
                 ladeadoDer = R.drawable.diseno33;
                 ladeadoIzq = R.drawable.diseno32;
+                disparo = R.drawable.municion2;
+                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavenormal);
                 break;
         }
     }
 
     public void dispara(View v) {
+        sonidoDisparoNave.start();
         nave.setImageResource(frontal);
         municion.setImageResource(disparo);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 5));
@@ -126,6 +140,11 @@ public class GameActivity extends AppCompatActivity {
                 botonDisparo.setEnabled(true);
             }
             manejaDisparo.postDelayed(this, 80);
+            if (colisionaConEnemigo()){
+                enemigo.setVisibility(View.INVISIBLE);
+                puntuacion+=20;
+                setTitle(titulo+puntuacion);
+            }
         }
     };
 
@@ -179,5 +198,17 @@ public class GameActivity extends AppCompatActivity {
                 }
         }
         return true;
+    }
+
+    private boolean colisionaConEnemigo(){
+        return estaEnRegionX()&&estaEnRegionY();
+    }
+
+    private boolean estaEnRegionX(){
+        return (municion.getX()>enemigo.getX())&&(municion.getX()<(enemigo.getX()+enemigo.getWidth()));
+    }
+
+    private boolean estaEnRegionY(){
+        return (municion.getY()>enemigo.getY()&&(municion.getY()<(enemigo.getY()+enemigo.getHeight())));
     }
 }

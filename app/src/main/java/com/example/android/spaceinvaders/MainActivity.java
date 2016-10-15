@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
     String[] resultados;
-    MediaPlayer botonPresionado;
+    MediaPlayer sonidoMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
         resultados[2] = "enemigodiseno11";
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
-        botonPresionado  = MediaPlayer.create(this, R.raw.botonpresionado);
+        sonidoMenu = MediaPlayer.create(this, R.raw.botonpresionado);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                botonPresionado.start();
+                sonidoMenu.start();
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View vistaPopup = inflater.inflate(R.layout.popup_activity, null);
                 popup = new PopupWindow(
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        botonPresionado.start();
+                        sonidoMenu.start();
                         popup.dismiss();
                         opcionBoton.setVisibility(View.VISIBLE);
                     }
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void iniciaJuego(View view) {
-        botonPresionado.start();
+        sonidoMenu.start();
         Intent juego = new Intent(view.getContext(), GameActivity.class);
         juego.putExtra("arg", resultados[0] + " " + resultados[1] + " " + resultados[2]);
         startActivity(juego);
