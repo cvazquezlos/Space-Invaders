@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer sonidoDisparoNave;
     int puntuacion = 0;
     String titulo;
+    MediaPlayer musicaFondo;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,8 @@ public class GameActivity extends AppCompatActivity {
         if (i != null) {
             String data = i.getStringExtra("arg");
             introduceCambios(data);
+            musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
+            musicaFondo.start();
         }
         manejaEnemigo.postDelayed(accionMovimiento, 0);
     }
