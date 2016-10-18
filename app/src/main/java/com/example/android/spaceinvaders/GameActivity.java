@@ -144,9 +144,14 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnemigo()){
-                enemigo.setVisibility(View.INVISIBLE);
+                //enemigo.setVisibility(View.INVISIBLE);
+                enemigo.setY(0);
+                enemigo.setX((terrenoJuego.getWidth()/2)-(enemigo.getWidth()/2));
                 puntuacion+=20;
                 setTitle(titulo+puntuacion);
+                municion.setVisibility(View.INVISIBLE);
+                manejaDisparo.removeCallbacks(accionDisparo);
+                botonDisparo.setEnabled(true);
             }
         }
     };

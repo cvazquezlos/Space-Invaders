@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Space-Invaders-Android-PS.iml" filepath="$PROJECT_DIR$/Space-Invaders-Android-PS.iml" />
       <module fileurl="file://$PROJECT_DIR$/SpaceInvaders.iml" filepath="$PROJECT_DIR$/SpaceInvaders.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
