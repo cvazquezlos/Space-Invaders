@@ -144,7 +144,6 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnemigo()){
-                //enemigo.setVisibility(View.INVISIBLE);
                 enemigo.setY(0);
                 enemigo.setX((terrenoJuego.getWidth()/2)-(enemigo.getWidth()/2));
                 puntuacion+=20;
@@ -185,7 +184,7 @@ public class GameActivity extends AppCompatActivity {
     };
 
     private boolean llegaAlFinal() {
-        return municion.getY() <= 20;
+        return (municion.getY() <= 20);
     }
 
     private boolean seSale(String direccion, String jugador) {
@@ -219,4 +218,17 @@ public class GameActivity extends AppCompatActivity {
     private boolean estaEnRegionY(){
         return (municion.getY()>enemigo.getY()&&(municion.getY()<(enemigo.getY()+enemigo.getHeight())));
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (musicaFondo != null) {
+            musicaFondo.pause();
+            if (isFinishing()) {
+                musicaFondo.stop();
+                musicaFondo.release();
+            }
+        }
+    }
+
 }
