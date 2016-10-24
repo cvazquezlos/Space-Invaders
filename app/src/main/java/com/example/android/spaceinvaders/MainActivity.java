@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         RelativeLayout.LayoutParams.MATCH_PARENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                popup.showAtLocation(layoutPrincipal, Gravity.BOTTOM, 0, 0);
                 ImageButton cerrarPop = (ImageButton) vistaPopup.findViewById(R.id.volver_boton);
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -50,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
                         opcionBoton.setVisibility(View.VISIBLE);
                     }
                 });
-                popup.showAtLocation(layoutPrincipal, Gravity.BOTTOM, 0, 0);
                 opcionBoton.setVisibility(View.INVISIBLE);
             }
         });

@@ -33,8 +33,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        titulo="Space Invaders | Puntuación: ";
-        setTitle(titulo+puntuacion);
+        titulo = "Space Invaders | Puntuación: ";
+        setTitle(titulo + puntuacion);
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
@@ -83,8 +83,8 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void cambiosMovilidadEnemigo(int idEnemigo){
-        switch (idEnemigo){
+    private void cambiosMovilidadEnemigo(int idEnemigo) {
+        switch (idEnemigo) {
             case 2130837601:
                 frontalEnemigo = R.drawable.enemigodiseno21;
                 break;
@@ -138,19 +138,15 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             municion.setY(municion.getY() - 50);
             if (llegaAlFinal()) {
-                municion.setVisibility(View.INVISIBLE);
-                manejaDisparo.removeCallbacks(accionDisparo);
-                botonDisparo.setEnabled(true);
+                resetBala();
             }
             manejaDisparo.postDelayed(this, 80);
-            if (colisionaConEnemigo()){
+            if (colisionaConEnemigo()) {
                 enemigo.setY(0);
-                enemigo.setX((terrenoJuego.getWidth()/2)-(enemigo.getWidth()/2));
-                puntuacion+=20;
-                setTitle(titulo+puntuacion);
-                municion.setVisibility(View.INVISIBLE);
-                manejaDisparo.removeCallbacks(accionDisparo);
-                botonDisparo.setEnabled(true);
+                enemigo.setX((terrenoJuego.getWidth() / 2) - (enemigo.getWidth() / 2));
+                puntuacion += 20;
+                setTitle(titulo + puntuacion);
+                resetBala();
             }
         }
     };
@@ -160,15 +156,14 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
-                    rotacion+=20;
+                    rotacion += 20;
                     enemigo.setRotation(rotacion);
-                }
-                else
+                } else
                     enemigo.setImageResource(ladeadoIzqEnemigo);
                 enemigo.setX(enemigo.getX() + movimientoEnemigo);
             } else {
                 if (idEnemigo == 2130837601) {
-                    rotacion-=20;
+                    rotacion -= 20;
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoDerEnemigo);
@@ -176,7 +171,7 @@ public class GameActivity extends AppCompatActivity {
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
-                enemigo.setY(enemigo.getY()+40);
+                enemigo.setY(enemigo.getY() + 40);
                 inicioAFin = !inicioAFin;
             }
             manejaEnemigo.postDelayed(this, 80);
@@ -207,16 +202,22 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean colisionaConEnemigo(){
-        return estaEnRegionX()&&estaEnRegionY();
+    private boolean colisionaConEnemigo() {
+        return estaEnRegionX() && estaEnRegionY();
     }
 
-    private boolean estaEnRegionX(){
-        return (municion.getX()>enemigo.getX())&&(municion.getX()<(enemigo.getX()+enemigo.getWidth()));
+    private boolean estaEnRegionX() {
+        return (municion.getX() > enemigo.getX()) && (municion.getX() < (enemigo.getX() + enemigo.getWidth()));
     }
 
-    private boolean estaEnRegionY(){
-        return (municion.getY()>enemigo.getY()&&(municion.getY()<(enemigo.getY()+enemigo.getHeight())));
+    private boolean estaEnRegionY() {
+        return (municion.getY() > enemigo.getY() && (municion.getY() < (enemigo.getY() + enemigo.getHeight())));
+    }
+
+    private void resetBala() {
+        municion.setVisibility(View.INVISIBLE);
+        manejaDisparo.removeCallbacks(accionDisparo);
+        botonDisparo.setEnabled(true);
     }
 
     @Override
