@@ -13,27 +13,31 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton opcionBoton;
+    ImageButton opcionBoton, volumenBoton;
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
     String[] resultados;
     MediaPlayer sonidoMenu;
+    Boolean sonido = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        resultados = new String[3];
+        resultados = new String[4];
         resultados[0] = "fondo3";
         resultados[1] = "diseno11";
         resultados[2] = "enemigodiseno11";
+        resultados[3] = "true";
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
+        volumenBoton = (ImageButton) findViewById(R.id.volumen_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
         sonidoMenu = MediaPlayer.create(this, R.raw.botonpresionado);
         opcionBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sonidoMenu.start();
+                if (sonido)
+                    sonidoMenu.start();
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
                 View vistaPopup = inflater.inflate(R.layout.popup_activity, null);
                 popup = new PopupWindow(
@@ -46,20 +50,24 @@ public class MainActivity extends AppCompatActivity {
                 cerrarPop.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        sonidoMenu.start();
+                        if (sonido)
+                            sonidoMenu.start();
                         popup.dismiss();
                         opcionBoton.setVisibility(View.VISIBLE);
+                        volumenBoton.setVisibility(View.VISIBLE);
                     }
                 });
                 opcionBoton.setVisibility(View.INVISIBLE);
+                volumenBoton.setVisibility(View.INVISIBLE);
             }
         });
     }
 
     public void iniciaJuego(View view) {
-        sonidoMenu.start();
+        if (sonido)
+            sonidoMenu.start();
         Intent juego = new Intent(view.getContext(), GameActivity.class);
-        juego.putExtra("arg", resultados[0] + " " + resultados[1] + " " + resultados[2]);
+        juego.putExtra("arg", resultados[0] + " " + resultados[1] + " " + resultados[2] + " " + resultados[3]);
         startActivity(juego);
     }
 
@@ -99,6 +107,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.enemigo_2:
                 resultados[2] = "enemigodiseno21";
                 break;
+        }
+    }
+
+    public void eliminaVolumen(View vista){
+        if (sonido) {
+            volumenBoton.setImageResource(R.drawable.xboton4);
+            sonido=!sonido;
+            resultados[3]="false";
+        } else {
+            volumenBoton.setImageResource(R.drawable.xboton3);
+            sonido=!sonido;
+            resultados[3]="true";
         }
     }
 

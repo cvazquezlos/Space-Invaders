@@ -30,6 +30,7 @@ public class GameActivity extends AppCompatActivity {
     int puntuacion = 0;
     String titulo;
     MediaPlayer musicaFondo;
+    Boolean sonido;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,8 @@ public class GameActivity extends AppCompatActivity {
             String data = i.getStringExtra("arg");
             introduceCambios(data);
             musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
-            musicaFondo.start();
+            if (sonido)
+                musicaFondo.start();
         }
         manejaEnemigo.postDelayed(accionMovimiento, 0);
     }
@@ -64,6 +66,14 @@ public class GameActivity extends AppCompatActivity {
         System.out.println(idEnemigo);
         enemigo.setImageResource(frontalEnemigo);
         this.idEnemigo = idEnemigo;
+        switch (info[3]){
+            case "true":
+                sonido=true;
+                break;
+            case "false":
+                sonido=false;
+                break;
+        }
     }
 
     public void actualizaPosicion(View v) {
@@ -123,7 +133,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void dispara(View v) {
-        sonidoDisparoNave.start();
+        if (sonido)
+            sonidoDisparoNave.start();
         nave.setImageResource(frontal);
         municion.setImageResource(disparo);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 5));
