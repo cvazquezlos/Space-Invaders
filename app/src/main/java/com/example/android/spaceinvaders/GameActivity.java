@@ -66,14 +66,7 @@ public class GameActivity extends AppCompatActivity {
         System.out.println(idEnemigo);
         enemigo.setImageResource(frontalEnemigo);
         this.idEnemigo = idEnemigo;
-        switch (info[3]){
-            case "true":
-                sonido=true;
-                break;
-            case "false":
-                sonido=false;
-                break;
-        }
+        sonido = Boolean.valueOf(info[3]);
     }
 
     public void actualizaPosicion(View v) {
