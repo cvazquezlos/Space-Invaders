@@ -90,7 +90,7 @@
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
                     android:onClick="eliminaVolumen"
-                    android:src="@drawable/xboton3" />
+                    android:src="@drawable/xboton4" />
 
             </RelativeLayout>
 

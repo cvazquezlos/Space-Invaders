@@ -112,11 +112,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void eliminaVolumen(View vista){
         if (sonido) {
-            volumenBoton.setImageResource(R.drawable.xboton4);
+            volumenBoton.setImageResource(R.drawable.xboton3);
             sonido=!sonido;
             resultados[3]="false";
         } else {
-            volumenBoton.setImageResource(R.drawable.xboton3);
+            volumenBoton.setImageResource(R.drawable.xboton4);
             sonido=!sonido;
             resultados[3]="true";
         }
