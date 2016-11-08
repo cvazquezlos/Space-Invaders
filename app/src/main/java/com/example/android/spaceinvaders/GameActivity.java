@@ -12,12 +12,9 @@ import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity {
 
-    ImageView municion;
-    ImageView nave;
-    ImageView fondoJuego;
-    ImageView enemigo;
+    ImageView municion, nave, fondoJuego, enemigo;
     Button botonDisparo;
-    RelativeLayout terrenoJuego;
+    RelativeLayout tableroEnemigo, tableroAliado;
     int rotacion = 0;
     Handler manejaDisparo = new Handler();
     Handler manejaEnemigo = new Handler();
@@ -43,7 +40,8 @@ public class GameActivity extends AppCompatActivity {
         enemigo = (ImageView) findViewById(R.id.enemigo);
         fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
         botonDisparo = (Button) findViewById(R.id.disparo);
-        terrenoJuego = (RelativeLayout) findViewById(R.id.activity_main);
+        tableroEnemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
+        tableroAliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
         Intent i = getIntent();
         if (i != null) {
             String data = i.getStringExtra("arg");
@@ -132,7 +130,7 @@ public class GameActivity extends AppCompatActivity {
         nave.setImageResource(frontal);
         municion.setImageResource(disparo);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 5));
-        municion.setY(nave.getY());
+        municion.setY((tableroAliado.getHeight()*2)-nave.getHeight());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
         manejaDisparo.postDelayed(accionDisparo, 0);
@@ -147,10 +145,8 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnemigo()) {
-                enemigo.setY(0);
-                enemigo.setX((terrenoJuego.getWidth() / 2) - (enemigo.getWidth() / 2));
-                puntuacion += 20;
-                setTitle(titulo + puntuacion);
+                reseteaNaveEnemiga();
+                insertaPuntuacion(puntuacion += 20);
                 resetBala();
             }
         }
@@ -176,15 +172,13 @@ public class GameActivity extends AppCompatActivity {
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
-                enemigo.setY(enemigo.getY() + 40);
+                enemigo.setY(enemigo.getY() + 70);
                 inicioAFin = !inicioAFin;
             }
-            if (invadeMitad()){
-                enemigo.setY(0);
-                enemigo.setX((terrenoJuego.getWidth() / 2) - (enemigo.getWidth() / 2));
-                puntuacion -= 5;
+            if (invadeMitad()) {
+                reseteaNaveEnemiga();
+                insertaPuntuacion(puntuacion -= 5);
                 puntosSaludJugador--;
-                setTitle(titulo + puntuacion);
             }
             manejaEnemigo.postDelayed(this, 80);
         }
@@ -199,9 +193,9 @@ public class GameActivity extends AppCompatActivity {
             case "izq":
                 switch (jugador) {
                     case "CU":
-                        return (nave.getX() + movimiento + nave.getWidth()) > terrenoJuego.getWidth();
+                        return (nave.getX() + movimiento + nave.getWidth()) > tableroAliado.getWidth();
                     case "IA":
-                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > terrenoJuego.getWidth();
+                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > tableroEnemigo.getWidth();
                 }
             case "der":
                 switch (jugador) {
@@ -214,8 +208,8 @@ public class GameActivity extends AppCompatActivity {
         return true;
     }
 
-    private boolean invadeMitad(){
-        return (enemigo.getY()>=(terrenoJuego.getHeight()/2));
+    private boolean invadeMitad() {
+        return ((enemigo.getY() + enemigo.getHeight()) >= tableroEnemigo.getHeight());
     }
 
     private boolean colisionaConEnemigo() {
@@ -246,6 +240,15 @@ public class GameActivity extends AppCompatActivity {
                 musicaFondo.release();
             }
         }
+    }
+
+    private void reseteaNaveEnemiga() {
+        enemigo.setY(0);
+        enemigo.setX((tableroEnemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
+    }
+
+    private void insertaPuntuacion(int puntuacion) {
+        setTitle(titulo + puntuacion);
     }
 
 }
