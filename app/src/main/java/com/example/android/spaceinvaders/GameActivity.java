@@ -31,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     String titulo;
     MediaPlayer musicaFondo;
     Boolean sonido;
+    int puntosSaludJugador = 5;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,6 +179,13 @@ public class GameActivity extends AppCompatActivity {
                 enemigo.setY(enemigo.getY() + 40);
                 inicioAFin = !inicioAFin;
             }
+            if (invadeMitad()){
+                enemigo.setY(0);
+                enemigo.setX((terrenoJuego.getWidth() / 2) - (enemigo.getWidth() / 2));
+                puntuacion -= 5;
+                puntosSaludJugador--;
+                setTitle(titulo + puntuacion);
+            }
             manejaEnemigo.postDelayed(this, 80);
         }
     };
@@ -191,9 +199,9 @@ public class GameActivity extends AppCompatActivity {
             case "izq":
                 switch (jugador) {
                     case "CU":
-                        return (nave.getX() + movimiento + nave.getWidth()) > findViewById(R.id.activity_main).getWidth();
+                        return (nave.getX() + movimiento + nave.getWidth()) > terrenoJuego.getWidth();
                     case "IA":
-                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > findViewById(R.id.activity_main).getWidth();
+                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > terrenoJuego.getWidth();
                 }
             case "der":
                 switch (jugador) {
@@ -204,6 +212,10 @@ public class GameActivity extends AppCompatActivity {
                 }
         }
         return true;
+    }
+
+    private boolean invadeMitad(){
+        return (enemigo.getY()>=(terrenoJuego.getHeight()/2));
     }
 
     private boolean colisionaConEnemigo() {
