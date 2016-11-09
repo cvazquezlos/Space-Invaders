@@ -151,12 +151,11 @@ public class GameActivity extends AppCompatActivity {
                 reseteaNaveEnemiga();
                 insertaPuntuacion(puntuacion += 20);
                 resetBala();
-            } else if (colisionaConEnte(asteroide1) || colisionaConEnte(asteroide2)) {
-                resetBala();
-                if (colisionaConEnte(asteroide1))
-                    actualizaRecurso(asteroide1, saludObstaculo1-=1);
+            } else if (colisionaConAsteroide(asteroide1) || colisionaConAsteroide(asteroide2)) {
+                if (colisionaConAsteroide(asteroide1))
+                    actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
                 else
-                    actualizaRecurso(asteroide2, saludObstaculo2-=1);
+                    actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
             }
         }
     };
@@ -202,9 +201,9 @@ public class GameActivity extends AppCompatActivity {
             case "izq":
                 switch (jugador) {
                     case "CU":
-                        return (nave.getX() + movimiento + nave.getWidth()) > activity_main.getWidth();
+                        return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
                     case "IA":
-                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > activity_main.getWidth();
+                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > tablero_enemigo.getWidth();
                 }
             case "der":
                 switch (jugador) {
@@ -233,14 +232,24 @@ public class GameActivity extends AppCompatActivity {
         return (municion.getY() > view.getY() && (municion.getY() < (view.getY() + view.getHeight())));
     }
 
+    private boolean colisionaConAsteroide(ImageView view) {
+        return estaEnRegionX(view) && asteroideRegionY(view);
+    }
+
+    private boolean asteroideRegionY(ImageView view) {
+        return (municion.getY() > (view.getY() + tablero_aliado.getHeight()) && (municion.getY() < ((view.getY() + tablero_aliado.getHeight()) + view.getHeight())));
+    }
+
     private void actualizaRecurso(ImageView view, int salud) {
         if (salud >= 0)
             switch (salud) {
                 case 2:
                     view.setImageResource(R.drawable.zobjectasteroiefase2);
+                    resetBala();
                     break;
                 case 1:
                     view.setImageResource(R.drawable.zobjectasteroiefase3);
+                    resetBala();
                     break;
                 case 0:
                     view.setVisibility(View.GONE);
