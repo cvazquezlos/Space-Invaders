@@ -12,12 +12,11 @@ import android.widget.RelativeLayout;
 
 public class GameActivity extends AppCompatActivity {
 
-    ImageView municion, nave, fondoJuego, enemigo;
+    ImageView municion, nave, fondoJuego, enemigo, asteroide1, asteroide2;
     Button botonDisparo;
-    RelativeLayout tableroEnemigo, tableroAliado;
     int rotacion = 0;
-    Handler manejaDisparo = new Handler();
-    Handler manejaEnemigo = new Handler();
+    RelativeLayout activity_main, tablero_enemigo, tablero_aliado;
+    Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
     final int movimiento = 30;
     final int movimientoEnemigo = 20;
     boolean inicioAFin = false;
@@ -29,6 +28,7 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer musicaFondo;
     Boolean sonido;
     int puntosSaludJugador = 5;
+    int saludObstaculo1 = 3, saludObstaculo2 = 3;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +39,12 @@ public class GameActivity extends AppCompatActivity {
         nave = (ImageView) findViewById(R.id.nave);
         enemigo = (ImageView) findViewById(R.id.enemigo);
         fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
+        asteroide1 = (ImageView) findViewById(R.id.asteroide_1);
+        asteroide2 = (ImageView) findViewById(R.id.asteroide_2);
         botonDisparo = (Button) findViewById(R.id.disparo);
-        tableroEnemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
-        tableroAliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
+        activity_main = (RelativeLayout) findViewById(R.id.activity_main);
+        tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
+        tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
         Intent i = getIntent();
         if (i != null) {
             String data = i.getStringExtra("arg");
@@ -130,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
         nave.setImageResource(frontal);
         municion.setImageResource(disparo);
         municion.setX(nave.getX() + (((nave.getWidth()) / 2) - 5));
-        municion.setY((tableroAliado.getHeight()*2)-nave.getHeight());
+        municion.setY(activity_main.getHeight() - nave.getHeight());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
         manejaDisparo.postDelayed(accionDisparo, 0);
@@ -144,10 +147,16 @@ public class GameActivity extends AppCompatActivity {
                 resetBala();
             }
             manejaDisparo.postDelayed(this, 80);
-            if (colisionaConEnemigo()) {
+            if (colisionaConEnte(enemigo)) {
                 reseteaNaveEnemiga();
                 insertaPuntuacion(puntuacion += 20);
                 resetBala();
+            } else if (colisionaConEnte(asteroide1) || colisionaConEnte(asteroide2)) {
+                resetBala();
+                if (colisionaConEnte(asteroide1))
+                    actualizaRecurso(asteroide1, saludObstaculo1-=1);
+                else
+                    actualizaRecurso(asteroide2, saludObstaculo2-=1);
             }
         }
     };
@@ -193,9 +202,9 @@ public class GameActivity extends AppCompatActivity {
             case "izq":
                 switch (jugador) {
                     case "CU":
-                        return (nave.getX() + movimiento + nave.getWidth()) > tableroAliado.getWidth();
+                        return (nave.getX() + movimiento + nave.getWidth()) > activity_main.getWidth();
                     case "IA":
-                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > tableroEnemigo.getWidth();
+                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > activity_main.getWidth();
                 }
             case "der":
                 switch (jugador) {
@@ -209,19 +218,34 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean invadeMitad() {
-        return ((enemigo.getY() + enemigo.getHeight()) >= tableroEnemigo.getHeight());
+        return ((enemigo.getY() + enemigo.getHeight()) >= tablero_enemigo.getHeight());
     }
 
-    private boolean colisionaConEnemigo() {
-        return estaEnRegionX() && estaEnRegionY();
+    private boolean colisionaConEnte(ImageView view) {
+        return estaEnRegionX(view) && estaEnRegionY(view);
     }
 
-    private boolean estaEnRegionX() {
-        return (municion.getX() > enemigo.getX()) && (municion.getX() < (enemigo.getX() + enemigo.getWidth()));
+    private boolean estaEnRegionX(ImageView view) {
+        return (municion.getX() > view.getX()) && (municion.getX() < (view.getX() + view.getWidth()));
     }
 
-    private boolean estaEnRegionY() {
-        return (municion.getY() > enemigo.getY() && (municion.getY() < (enemigo.getY() + enemigo.getHeight())));
+    private boolean estaEnRegionY(ImageView view) {
+        return (municion.getY() > view.getY() && (municion.getY() < (view.getY() + view.getHeight())));
+    }
+
+    private void actualizaRecurso(ImageView view, int salud) {
+        if (salud >= 0)
+            switch (salud) {
+                case 2:
+                    view.setImageResource(R.drawable.zobjectasteroiefase2);
+                    break;
+                case 1:
+                    view.setImageResource(R.drawable.zobjectasteroiefase3);
+                    break;
+                case 0:
+                    view.setVisibility(View.GONE);
+                    break;
+            }
     }
 
     private void resetBala() {
@@ -244,7 +268,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void reseteaNaveEnemiga() {
         enemigo.setY(0);
-        enemigo.setX((tableroEnemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
+        enemigo.setX((tablero_enemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
     }
 
     private void insertaPuntuacion(int puntuacion) {
