@@ -33,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         titulo = "Space Invaders | Puntuación: ";
-        setTitle(titulo + puntuacion);
+        insertaPuntuacion(puntuacion);
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
@@ -185,7 +185,6 @@ public class GameActivity extends AppCompatActivity {
             }
             if (invadeMitad()) {
                 reseteaNaveEnemiga();
-                insertaPuntuacion(puntuacion -= 5);
                 puntosSaludJugador--;
             }
             manejaEnemigo.postDelayed(this, 80);
