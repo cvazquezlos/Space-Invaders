@@ -24,7 +24,6 @@ public class GameActivity extends AppCompatActivity {
     int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
     MediaPlayer sonidoDisparoNave;
     int puntuacion = 0;
-    String titulo;
     MediaPlayer musicaFondo;
     Boolean sonido;
     int puntosSaludJugador = 5;
@@ -32,8 +31,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        titulo = "Space Invaders | Puntuación: ";
-        insertaPuntuacion(puntuacion);
+        actualizaPuntosVida();
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
@@ -149,7 +147,8 @@ public class GameActivity extends AppCompatActivity {
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnte(enemigo)) {
                 reseteaNaveEnemiga();
-                insertaPuntuacion(puntuacion += 20);
+                puntuacion += 20;
+                actualizaPuntosVida();
                 resetBala();
             } else if (colisionaConAsteroide(asteroide1) || colisionaConAsteroide(asteroide2)) {
                 if (colisionaConAsteroide(asteroide1))
@@ -186,6 +185,7 @@ public class GameActivity extends AppCompatActivity {
             if (invadeMitad()) {
                 reseteaNaveEnemiga();
                 puntosSaludJugador--;
+                actualizaPuntosVida();
             }
             manejaEnemigo.postDelayed(this, 80);
         }
@@ -279,8 +279,8 @@ public class GameActivity extends AppCompatActivity {
         enemigo.setX((tablero_enemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
     }
 
-    private void insertaPuntuacion(int puntuacion) {
-        setTitle(titulo + puntuacion);
+    private void actualizaPuntosVida() {
+        setTitle("Vidas: " + this.puntosSaludJugador + " - Puntuación: " + this.puntuacion );
     }
 
 }
