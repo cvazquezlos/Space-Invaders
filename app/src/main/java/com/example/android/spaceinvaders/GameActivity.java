@@ -1,6 +1,7 @@
 package com.example.android.spaceinvaders;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -262,6 +263,15 @@ public class GameActivity extends AppCompatActivity {
         botonDisparo.setEnabled(true);
     }
 
+    private void reseteaNaveEnemiga() {
+        enemigo.setY(0);
+        enemigo.setX((tablero_enemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
+    }
+
+    private void actualizaPuntosVida() {
+        setTitle("Vidas: " + this.puntosSaludJugador + " - Puntuación: " + this.puntuacion );
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -274,13 +284,15 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    private void reseteaNaveEnemiga() {
-        enemigo.setY(0);
-        enemigo.setX((tablero_enemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
-    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
 
-    private void actualizaPuntosVida() {
-        setTitle("Vidas: " + this.puntosSaludJugador + " - Puntuación: " + this.puntuacion );
-    }
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            setContentView(R.layout.game_activity);
 
+        } else {
+            setContentView(R.layout.game_activity);
+        }
+    }
 }
