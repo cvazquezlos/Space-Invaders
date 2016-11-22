@@ -1,7 +1,6 @@
 package com.example.android.spaceinvaders;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -281,18 +280,6 @@ public class GameActivity extends AppCompatActivity {
                 musicaFondo.stop();
                 musicaFondo.release();
             }
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            setContentView(R.layout.game_activity);
-
-        } else {
-            setContentView(R.layout.game_activity);
         }
     }
 }
