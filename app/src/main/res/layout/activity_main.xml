@@ -4,7 +4,6 @@
     android:id="@+id/principal_screen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.example.android.spaceinvaders.MainActivity">
 
     <ImageView
@@ -19,6 +18,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:layout_marginTop="30dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:adjustViewBounds="true"
