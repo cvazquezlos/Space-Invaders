@@ -211,28 +211,35 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ba935ffa">
+        android:background="#ba5f7efa">
 
         <ImageView
             android:id="@+id/titulo_game_over"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:src="@drawable/gameovertitutlo"
+            android:layout_width="170dp"
+            android:layout_height="170dp"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"/>
-
-        <ImageButton
-            android:id="@+id/botonFin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/titulo_game_over"
-            android:layout_centerHorizontal="true"/>
 
         <TextView
             android:id="@+id/puntuacion_final"
             android:layout_width="wrap_content"
-            android:layout_below="@id/botonFin"
+            android:layout_below="@id/titulo_game_over"
             android:layout_centerHorizontal="true"
+            android:text="Puntuación: "
+            android:textSize="20sp"
             android:layout_height="wrap_content" />
+
+        <ImageButton
+            android:id="@+id/return_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/movetonext"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"/>
 
         </RelativeLayout>
 
