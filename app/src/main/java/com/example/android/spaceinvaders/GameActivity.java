@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
     MediaPlayer sonidoDisparoNave;
     int puntuacion = 0;
     MediaPlayer musicaFondo;
-    Boolean sonido;
+    Boolean sonido, accionEnemigo;
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
 
@@ -51,10 +51,11 @@ public class GameActivity extends AppCompatActivity {
             String data = i.getStringExtra("arg");
             introduceCambios(data);
             musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
+            accionEnemigo=true;
             if (sonido)
                 musicaFondo.start();
+            manejaEnemigo.postDelayed(accionMovimiento, 0);
         }
-        manejaEnemigo.postDelayed(accionMovimiento, 0);
     }
 
     private void introduceCambios(String data) {
@@ -191,7 +192,8 @@ public class GameActivity extends AppCompatActivity {
                 actualizaSalud();
                 actualizaPuntosVida();
             }
-            manejaEnemigo.postDelayed(this, 80);
+            if (accionEnemigo)
+                manejaEnemigo.postDelayed(this, 80);
         }
     };
 
@@ -282,7 +284,13 @@ public class GameActivity extends AppCompatActivity {
         int idAEsconder = 2131492962 - puntosSaludJugador;
         findViewById(idAEsconder).setVisibility(View.INVISIBLE);
         if (puntosSaludJugador == 0) {
+            accionEnemigo=false;
             manejaEnemigo.removeCallbacks(accionMovimiento);
+            try {
+                accionMovimiento.wait();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             botonDisparo.setEnabled(false);
             findViewById(R.id.control_derecha).setEnabled(false);
             findViewById(R.id.control_izquierda).setEnabled(false);
