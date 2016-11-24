@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -22,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
     boolean inicioAFin = false;
     int ladeadoIzq, ladeadoDer, frontal, disparo;
     int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
+    TextView puntosVida;
     MediaPlayer sonidoDisparoNave;
     int puntuacion = 0;
     MediaPlayer musicaFondo;
@@ -31,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        actualizaPuntosVida();
+        getSupportActionBar().hide();
         setContentView(R.layout.game_activity);
         municion = (ImageView) findViewById(R.id.municion);
         nave = (ImageView) findViewById(R.id.nave);
@@ -43,6 +45,7 @@ public class GameActivity extends AppCompatActivity {
         activity_main = (RelativeLayout) findViewById(R.id.activity_main);
         tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
         tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
+        puntosVida=(TextView) findViewById(R.id.ptos_vida);
         Intent i = getIntent();
         if (i != null) {
             String data = i.getStringExtra("arg");
@@ -268,7 +271,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void actualizaPuntosVida() {
-        setTitle("Vidas: " + this.puntosSaludJugador + " - Puntuación: " + this.puntuacion );
+        try {
+            puntosVida.setText(Integer.toString(puntuacion));
+        }catch (Exception e){}
     }
 
     @Override
