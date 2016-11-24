@@ -209,8 +209,10 @@
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/pantalla_game_over"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:background="#ba5f7efa">
 
         <ImageView
@@ -239,6 +241,7 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/movetonext"
             android:background="@android:color/transparent"
+            android:onClick="volverMenuPrincipal"
             android:layout_alignParentRight="true"/>
 
         </RelativeLayout>

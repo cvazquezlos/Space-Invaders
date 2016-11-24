@@ -278,12 +278,17 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void actualizaSalud(){
-        if (puntosSaludJugador>=0) {
             int idAEsconder = 2131492962 - puntosSaludJugador;
             findViewById(idAEsconder).setVisibility(View.INVISIBLE);
-        } else {
-            this.finish();
-        }
+            if (puntosSaludJugador==0){
+                findViewById(R.id.pantalla_game_over).setVisibility(View.VISIBLE);
+                manejaEnemigo.removeCallbacks(accionMovimiento);
+                botonDisparo.setEnabled(false);
+            }
+    }
+
+    public void volverMenuPrincipal(View v){
+        this.finish();
     }
 
     @Override
