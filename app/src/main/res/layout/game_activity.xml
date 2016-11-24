@@ -45,40 +45,40 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/heart_1"
+                    android:id="@+id/heart_6"
                     android:layout_width="20dp"
                     android:layout_marginRight="1dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vcorazonizq"/>
-
-                <ImageView
-                    android:id="@+id/heart_2"
-                    android:layout_width="20dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/vcorazonder"/>
-
-                <ImageView
-                    android:id="@+id/heart_3"
-                    android:layout_width="20dp"
-                    android:layout_marginRight="1dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/vcorazonizq"/>
-
-                <ImageView
-                    android:id="@+id/heart_4"
-                    android:layout_width="20dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/vcorazonder"/>
 
                 <ImageView
                     android:id="@+id/heart_5"
                     android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/vcorazonder"/>
+
+                <ImageView
+                    android:id="@+id/heart_4"
+                    android:layout_width="20dp"
                     android:layout_marginRight="1dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vcorazonizq"/>
 
                 <ImageView
-                    android:id="@+id/heart_6"
+                    android:id="@+id/heart_3"
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/vcorazonder"/>
+
+                <ImageView
+                    android:id="@+id/heart_2"
+                    android:layout_width="20dp"
+                    android:layout_marginRight="1dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/vcorazonizq"/>
+
+                <ImageView
+                    android:id="@+id/heart_1"
                     android:layout_width="20dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vcorazonder"/>

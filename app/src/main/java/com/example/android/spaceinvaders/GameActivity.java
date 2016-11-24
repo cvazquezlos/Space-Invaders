@@ -28,7 +28,7 @@ public class GameActivity extends AppCompatActivity {
     int puntuacion = 0;
     MediaPlayer musicaFondo;
     Boolean sonido;
-    int puntosSaludJugador = 5;
+    int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -188,6 +188,7 @@ public class GameActivity extends AppCompatActivity {
             if (invadeMitad()) {
                 reseteaNaveEnemiga();
                 puntosSaludJugador--;
+                actualizaSalud();
                 actualizaPuntosVida();
             }
             manejaEnemigo.postDelayed(this, 80);
@@ -274,6 +275,15 @@ public class GameActivity extends AppCompatActivity {
         try {
             puntosVida.setText(Integer.toString(puntuacion));
         }catch (Exception e){}
+    }
+
+    private void actualizaSalud(){
+        if (puntosSaludJugador>=0) {
+            int idAEsconder = 2131492962 - puntosSaludJugador;
+            findViewById(idAEsconder).setVisibility(View.INVISIBLE);
+        } else {
+            this.finish();
+        }
     }
 
     @Override
