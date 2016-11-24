@@ -18,20 +18,20 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_marginTop="30dp"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/iconotitulo"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/iconotitulo" />
 
         <ImageView
             android:layout_width="130dp"
             android:layout_height="130dp"
-            android:adjustViewBounds="true"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/iconotitulo1"/>
+            android:adjustViewBounds="true"
+            android:src="@drawable/iconotitulo1" />
 
     </RelativeLayout>
 
@@ -47,15 +47,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:scaleType="centerCrop"
             android:onClick="iniciaJuego"
+            android:scaleType="centerCrop"
             android:src="@drawable/boton1" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="10dp">
+            android:layout_margin="10dp"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0dp"
@@ -67,8 +67,8 @@
                     android:id="@+id/opcion_boton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
                     android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
                     android:scaleType="centerCrop"
                     android:src="@drawable/boton2" />
@@ -77,19 +77,19 @@
 
             <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:adjustViewBounds="true">
 
                 <ImageButton
                     android:id="@+id/volumen_boton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
                     android:layout_centerHorizontal="true"
+                    android:adjustViewBounds="true"
                     android:background="@android:color/transparent"
-                    android:scaleType="centerCrop"
                     android:onClick="eliminaVolumen"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/xboton4" />
 
             </RelativeLayout>

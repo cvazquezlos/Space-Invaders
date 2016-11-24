@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
         activity_main = (RelativeLayout) findViewById(R.id.activity_main);
         tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
         tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
-        puntosVida=(TextView) findViewById(R.id.ptos_vida);
+        puntosVida = (TextView) findViewById(R.id.ptos_vida);
         Intent i = getIntent();
         if (i != null) {
             String data = i.getStringExtra("arg");
@@ -274,20 +274,24 @@ public class GameActivity extends AppCompatActivity {
     private void actualizaPuntosVida() {
         try {
             puntosVida.setText(Integer.toString(puntuacion));
-        }catch (Exception e){}
+        } catch (Exception e) {
+        }
     }
 
-    private void actualizaSalud(){
-            int idAEsconder = 2131492962 - puntosSaludJugador;
-            findViewById(idAEsconder).setVisibility(View.INVISIBLE);
-            if (puntosSaludJugador==0){
-                findViewById(R.id.pantalla_game_over).setVisibility(View.VISIBLE);
-                manejaEnemigo.removeCallbacks(accionMovimiento);
-                botonDisparo.setEnabled(false);
-            }
+    private void actualizaSalud() {
+        int idAEsconder = 2131492962 - puntosSaludJugador;
+        findViewById(idAEsconder).setVisibility(View.INVISIBLE);
+        if (puntosSaludJugador == 0) {
+            manejaEnemigo.removeCallbacks(accionMovimiento);
+            botonDisparo.setEnabled(false);
+            findViewById(R.id.control_derecha).setEnabled(false);
+            findViewById(R.id.control_izquierda).setEnabled(false);
+            ((TextView) (findViewById(R.id.puntuacion_final))).setText("Puntuación: "+puntuacion);
+            findViewById(R.id.pantalla_game_over).setVisibility(View.VISIBLE);
+        }
     }
 
-    public void volverMenuPrincipal(View v){
+    public void volverMenuPrincipal(View v) {
         this.finish();
     }
 

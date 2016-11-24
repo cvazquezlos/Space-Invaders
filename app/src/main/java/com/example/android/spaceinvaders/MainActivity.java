@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         resultados[0] = "fondo3";
         resultados[1] = "diseno11";
         resultados[2] = "enemigodiseno11";
-        resultados[3]=Boolean.toString(sonido);
+        resultados[3] = Boolean.toString(sonido);
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         volumenBoton = (ImageButton) findViewById(R.id.volumen_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
@@ -111,15 +111,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void eliminaVolumen(View vista){
+    public void eliminaVolumen(View vista) {
         if (sonido) {
             volumenBoton.setImageResource(R.drawable.xboton3);
-            sonido=!sonido;
-            resultados[3]=Boolean.toString(sonido);
+            sonido = !sonido;
+            resultados[3] = Boolean.toString(sonido);
         } else {
             volumenBoton.setImageResource(R.drawable.xboton4);
-            sonido=!sonido;
-            resultados[3]=Boolean.toString(sonido);
+            sonido = !sonido;
+            resultados[3] = Boolean.toString(sonido);
         }
     }
 
