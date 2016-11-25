@@ -33,6 +33,7 @@ public class GameActivity extends AppCompatActivity {
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
     LinearLayout[] naves;
+    LinearLayout matriz;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +157,7 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnte(enemigo)) {
-                reseteaNaveEnemiga();
+                reseteaMatriz();
                 puntuacion += 20;
                 actualizaPuntosVida();
                 resetBala();
@@ -179,23 +180,22 @@ public class GameActivity extends AppCompatActivity {
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoIzqEnemigo);
-                findViewById(R.id.matriz_enemigos).setX(findViewById(R.id.matriz_enemigos).getX() + movimientoEnemigo);
+                matriz.setX(matriz.getX() + movimientoEnemigo);
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 20;
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoDerEnemigo);
-                findViewById(R.id.matriz_enemigos).setX(findViewById(R.id.matriz_enemigos).getX() - movimientoEnemigo);
+                matriz.setX(matriz.getX() - movimientoEnemigo);
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
-                naves[0].setY(naves[0].getY() + 70);
-                naves[1].setY(naves[1].getY() + 70);
+                matriz.setY(matriz.getY()+70);
                 inicioAFin = !inicioAFin;
             }
             if (invadeMitad()) {
-                reseteaNaveEnemiga();
+                reseteaMatriz();
                 puntosSaludJugador--;
                 actualizaSalud();
                 actualizaPuntosVida();
@@ -216,21 +216,21 @@ public class GameActivity extends AppCompatActivity {
                     case "CU":
                         return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
                     case "IA":
-                        return (findViewById(R.id.matriz_enemigos).getX() + movimiento + findViewById(R.id.matriz_enemigos).getWidth()) > tablero_enemigo.getWidth();
+                        return (matriz.getX() + movimiento + matriz.getWidth()) > tablero_enemigo.getWidth();
                 }
             case "der":
                 switch (jugador) {
                     case "CU":
                         return (nave.getX() - movimiento) < 0;
                     case "IA":
-                        return (findViewById(R.id.matriz_enemigos).getX() - movimiento) < 0;
+                        return (matriz.getX() - movimiento) < 0;
                 }
         }
         return true;
     }
 
     private boolean invadeMitad() {
-        return ((naves[1].getY() + naves[1].getHeight()) >= tablero_enemigo.getHeight());
+        return ((matriz.getY() + matriz.getHeight()) >= tablero_enemigo.getHeight());
     }
 
     private boolean colisionaConEnte(ImageView view) {
@@ -276,9 +276,9 @@ public class GameActivity extends AppCompatActivity {
         botonDisparo.setEnabled(true);
     }
 
-    private void reseteaNaveEnemiga() {
-        enemigo.setY(0);
-        enemigo.setX((tablero_enemigo.getWidth() / 2) - (enemigo.getWidth() / 2));
+    private void reseteaMatriz() {
+        matriz.setY(0);
+        matriz.setX((tablero_enemigo.getWidth() / 2) - (matriz.getWidth() / 2));
     }
 
     private void actualizaPuntosVida() {
@@ -327,5 +327,6 @@ public class GameActivity extends AppCompatActivity {
         naves = new LinearLayout[2];
         naves[0]=(LinearLayout) findViewById(R.id.fila_1_enemigos);
         naves[1]=(LinearLayout) findViewById(R.id.fila_2_enemigos);
+        matriz=(LinearLayout) findViewById(R.id.matriz_enemigos);
     }
 }
