@@ -16,6 +16,7 @@ public class GameActivity extends AppCompatActivity {
     ImageView municion, nave, fondoJuego, enemigo, asteroide1, asteroide2;
     Button botonDisparo;
     int rotacion = 0;
+    int iteracion = 0;
     RelativeLayout activity_main, tablero_enemigo, tablero_aliado;
     Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
     final int movimiento = 30;
@@ -30,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     Boolean sonido, accionEnemigo;
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
+    ImageView[][] naves;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,10 @@ public class GameActivity extends AppCompatActivity {
             accionEnemigo=true;
             if (sonido)
                 musicaFondo.start();
-            manejaEnemigo.postDelayed(accionMovimiento, 0);
+            if (iteracion==0) {
+                manejaEnemigo.postDelayed(accionMovimiento, 0);
+                lanzaEnemigos();
+            }
         }
     }
 
@@ -166,6 +171,7 @@ public class GameActivity extends AppCompatActivity {
     Runnable accionMovimiento = new Runnable() {
         @Override
         public void run() {
+            iteracion++;
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
                     rotacion += 20;
@@ -313,5 +319,9 @@ public class GameActivity extends AppCompatActivity {
                 musicaFondo.release();
             }
         }
+    }
+
+    private void lanzaEnemigos() {
+        naves = new ImageView[2][3];
     }
 }

@@ -93,13 +93,68 @@
             android:layout_height="0dp"
             android:layout_weight="12">
 
-            <ImageView
-                android:id="@+id/enemigo"
-                android:layout_width="65dp"
-                android:layout_height="65dp"
-                android:layout_centerHorizontal="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/enemigodiseno11" />
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:orientation="vertical"
+                 android:layout_height="wrap_content">
+
+                 <LinearLayout
+                     android:id="@+id/fila_1_enemigos"
+                     android:layout_width="wrap_content"
+                     android:orientation="horizontal"
+                     android:layout_height="wrap_content">
+
+                     <ImageView
+                         android:id="@+id/enemigo"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:src="@drawable/enemigodiseno11" />
+
+                     <ImageView
+                         android:id="@+id/enemigo1"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:layout_centerHorizontal="true"
+                         android:src="@drawable/enemigodiseno11" />
+
+                     <ImageView
+                         android:id="@+id/enemigo2"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:layout_centerHorizontal="true"
+                         android:src="@drawable/enemigodiseno11" />
+
+                 </LinearLayout>
+
+                 <LinearLayout
+                     android:layout_width="wrap_content"
+                     android:orientation="horizontal"
+                     android:id="@+id/fila_2_enemigos"
+                     android:layout_height="wrap_content">
+
+                     <ImageView
+                         android:id="@+id/enemigo3"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:src="@drawable/enemigodiseno11" />
+
+                     <ImageView
+                         android:id="@+id/enemigo4"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:layout_centerHorizontal="true"
+                         android:src="@drawable/enemigodiseno11" />
+
+                     <ImageView
+                         android:id="@+id/enemigo5"
+                         android:layout_width="65dp"
+                         android:layout_height="65dp"
+                         android:layout_centerHorizontal="true"
+                         android:src="@drawable/enemigodiseno11" />
+
+                 </LinearLayout>
+
+             </LinearLayout>
 
             <Button
                 android:id="@+id/disparo"
