@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     Boolean sonido, accionEnemigo;
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
-    ImageView[][] naves;
+    LinearLayout[] naves;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,8 +58,8 @@ public class GameActivity extends AppCompatActivity {
             if (sonido)
                 musicaFondo.start();
             if (iteracion==0) {
-                manejaEnemigo.postDelayed(accionMovimiento, 0);
                 lanzaEnemigos();
+                manejaEnemigo.postDelayed(accionMovimiento, 0);
             }
         }
     }
@@ -178,18 +179,21 @@ public class GameActivity extends AppCompatActivity {
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoIzqEnemigo);
-                enemigo.setX(enemigo.getX() + movimientoEnemigo);
+                naves[0].setX(naves[0].getX() + movimientoEnemigo);
+                naves[1].setX(naves[1].getX() + movimientoEnemigo);
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 20;
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoDerEnemigo);
-                enemigo.setX(enemigo.getX() - movimientoEnemigo);
+                naves[0].setX(naves[0].getX() - movimientoEnemigo);
+                naves[1].setX(naves[1].getX() - movimientoEnemigo);
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
-                enemigo.setY(enemigo.getY() + 70);
+                naves[0].setY(naves[0].getY() + 70);
+                naves[1].setY(naves[1].getY() + 70);
                 inicioAFin = !inicioAFin;
             }
             if (invadeMitad()) {
@@ -214,21 +218,21 @@ public class GameActivity extends AppCompatActivity {
                     case "CU":
                         return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
                     case "IA":
-                        return (enemigo.getX() + movimiento + enemigo.getWidth()) > tablero_enemigo.getWidth();
+                        return (naves[0].getX() + movimiento + naves[0].getWidth()) > tablero_enemigo.getWidth();
                 }
             case "der":
                 switch (jugador) {
                     case "CU":
                         return (nave.getX() - movimiento) < 0;
                     case "IA":
-                        return (enemigo.getX() - movimiento) < 0;
+                        return (naves[0].getX() - movimiento) < 0;
                 }
         }
         return true;
     }
 
     private boolean invadeMitad() {
-        return ((enemigo.getY() + enemigo.getHeight()) >= tablero_enemigo.getHeight());
+        return ((naves[1].getY() + naves[1].getHeight()) >= tablero_enemigo.getHeight());
     }
 
     private boolean colisionaConEnte(ImageView view) {
@@ -322,6 +326,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void lanzaEnemigos() {
-        naves = new ImageView[2][3];
+        naves = new LinearLayout[2];
+        naves[0]=(LinearLayout) findViewById(R.id.fila_1_enemigos);
+        naves[1]=(LinearLayout) findViewById(R.id.fila_2_enemigos);
     }
 }
