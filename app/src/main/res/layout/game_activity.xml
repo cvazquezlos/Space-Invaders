@@ -94,6 +94,7 @@
             android:layout_weight="12">
 
              <LinearLayout
+                 android:id="@+id/matriz_enemigos"
                  android:layout_width="wrap_content"
                  android:orientation="vertical"
                  android:layout_alignParentTop="true"

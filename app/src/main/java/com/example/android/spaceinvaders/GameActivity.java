@@ -179,16 +179,14 @@ public class GameActivity extends AppCompatActivity {
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoIzqEnemigo);
-                naves[0].setX(naves[0].getX() + movimientoEnemigo);
-                naves[1].setX(naves[1].getX() + movimientoEnemigo);
+                findViewById(R.id.matriz_enemigos).setX(findViewById(R.id.matriz_enemigos).getX() + movimientoEnemigo);
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 20;
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoDerEnemigo);
-                naves[0].setX(naves[0].getX() - movimientoEnemigo);
-                naves[1].setX(naves[1].getX() - movimientoEnemigo);
+                findViewById(R.id.matriz_enemigos).setX(findViewById(R.id.matriz_enemigos).getX() - movimientoEnemigo);
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
@@ -218,14 +216,14 @@ public class GameActivity extends AppCompatActivity {
                     case "CU":
                         return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
                     case "IA":
-                        return (naves[0].getX() + movimiento + naves[0].getWidth()) > tablero_enemigo.getWidth();
+                        return (findViewById(R.id.matriz_enemigos).getX() + movimiento + findViewById(R.id.matriz_enemigos).getWidth()) > tablero_enemigo.getWidth();
                 }
             case "der":
                 switch (jugador) {
                     case "CU":
                         return (nave.getX() - movimiento) < 0;
                     case "IA":
-                        return (naves[0].getX() - movimiento) < 0;
+                        return (findViewById(R.id.matriz_enemigos).getX() - movimiento) < 0;
                 }
         }
         return true;
