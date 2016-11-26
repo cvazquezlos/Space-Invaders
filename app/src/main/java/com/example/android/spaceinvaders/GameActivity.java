@@ -243,10 +243,10 @@ public class GameActivity extends AppCompatActivity {
         }
         if (navesEnemigasEnPosX[1]==null) {
             return false;
-        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.GONE) && (estaEnRegionY(navesEnemigasEnPosX[0]))){
+        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.GONE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))){
             navesEnemigasEnPosX[0].setVisibility(View.GONE);
             return true;
-        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.GONE) && (estaEnRegionY(navesEnemigasEnPosX[1]))){
+        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.GONE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))){
             navesEnemigasEnPosX[1].setVisibility(View.GONE);
             return true;
         }
@@ -264,11 +264,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean estaEnRegionXRelativa(View view) {
-        return ((getRelativeLeft(municion) > getRelativeLeft(view)) && (getRelativeLeft(municion) < (getRelativeLeft(view)+view.getWidth())));
+        int[] location = getViewLocations(view);
+        int[] location1 = getViewLocations(municion);
+        return (location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()));
     }
 
     private boolean estaEnRegionYRelativa(View view){
-        return ((getRelativeTop(municion) > getRelativeTop(view)) && (getRelativeTop(municion) < (getRelativeTop(view)+view.getHeight())));
+        int[] location = getViewLocations(view);
+        int[] location1 = getViewLocations(municion);
+        return (location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()));
     }
 
     private boolean estaEnRegionX(ImageView view) {
@@ -357,17 +361,9 @@ public class GameActivity extends AppCompatActivity {
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
 
-    private int getRelativeLeft(View myView) {
-        if (myView.getParent() == myView.getRootView())
-            return myView.getLeft();
-        else
-            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
-    }
-
-    private int getRelativeTop(View myView) {
-        if (myView.getParent() == myView.getRootView())
-            return myView.getTop();
-        else
-            return myView.getTop() + getRelativeTop((View) myView.getParent());
+    private int[] getViewLocations(View view) {
+        int[] locations = new int[2];
+        view.getLocationOnScreen(locations);
+        return locations;
     }
 }
