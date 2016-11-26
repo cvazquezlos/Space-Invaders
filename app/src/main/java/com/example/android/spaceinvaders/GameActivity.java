@@ -233,6 +233,25 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean colisionaConEnte() {
+        ImageView[] navesEnemigasEnPosX=new ImageView[2];
+        for (int i=0; i<3; i++){
+            if (estaEnRegionXRelativa((findViewById(navesId[i])))){
+                navesEnemigasEnPosX[0] = (ImageView) findViewById(navesId[i+3]);
+                navesEnemigasEnPosX[1] = (ImageView) findViewById(navesId[i]);
+                break;
+            }
+        }
+        if (navesEnemigasEnPosX[1]==null) {
+            return false;
+        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.GONE) && (estaEnRegionY(navesEnemigasEnPosX[0]))){
+            navesEnemigasEnPosX[0].setVisibility(View.GONE);
+            return true;
+        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.GONE) && (estaEnRegionY(navesEnemigasEnPosX[1]))){
+            navesEnemigasEnPosX[1].setVisibility(View.GONE);
+            return true;
+        }
+
+        /* Funciona parcialmente
         for (int i = 0; i < 6; i++) {
             if ((estaEnRegionX((ImageView) findViewById(navesId[i]))) && estaEnRegionY((ImageView) findViewById(navesId[i]))) {
                 if (findViewById(navesId[i]).getVisibility() != View.INVISIBLE) {
@@ -240,9 +259,16 @@ public class GameActivity extends AppCompatActivity {
                     return true;
                 }
             }
-        }
+        }*/
         return false;
-        //return estaEnRegionX(view) && estaEnRegionY(view);
+    }
+
+    private boolean estaEnRegionXRelativa(View view) {
+        return ((getRelativeLeft(municion) > getRelativeLeft(view)) && (getRelativeLeft(municion) < (getRelativeLeft(view)+view.getWidth())));
+    }
+
+    private boolean estaEnRegionYRelativa(View view){
+        return ((getRelativeTop(municion) > getRelativeTop(view)) && (getRelativeTop(municion) < (getRelativeTop(view)+view.getHeight())));
     }
 
     private boolean estaEnRegionX(ImageView view) {
@@ -329,5 +355,19 @@ public class GameActivity extends AppCompatActivity {
     private void lanzaEnemigos() {
         navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
+    }
+
+    private int getRelativeLeft(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getLeft();
+        else
+            return myView.getLeft() + getRelativeLeft((View) myView.getParent());
+    }
+
+    private int getRelativeTop(View myView) {
+        if (myView.getParent() == myView.getRootView())
+            return myView.getTop();
+        else
+            return myView.getTop() + getRelativeTop((View) myView.getParent());
     }
 }
