@@ -21,7 +21,7 @@ public class GameActivity extends AppCompatActivity {
     RelativeLayout activity_main, tablero_enemigo, tablero_aliado;
     Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
     final int movimiento = 30;
-    final int movimientoEnemigo = 20;
+    final int movimientoEnemigo = 5;
     boolean inicioAFin = false;
     int ladeadoIzq, ladeadoDer, frontal, disparo;
     int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
@@ -60,7 +60,7 @@ public class GameActivity extends AppCompatActivity {
                 musicaFondo.start();
             if (iteracion == 0) {
                 lanzaEnemigos();
-                manejaEnemigo.postDelayed(accionMovimiento, 0);
+                manejaEnemigo.postDelayed(accionMovimiento, 10);
             }
         }
     }
@@ -145,17 +145,17 @@ public class GameActivity extends AppCompatActivity {
         municion.setY(activity_main.getHeight() - nave.getHeight());
         municion.setVisibility(View.VISIBLE);
         botonDisparo.setEnabled(false);
-        manejaDisparo.postDelayed(accionDisparo, 0);
+        manejaDisparo.postDelayed(accionDisparo, 10);
     }
 
     Runnable accionDisparo = new Runnable() {
         @Override
         public void run() {
-            municion.setY(municion.getY() - 50);
+            municion.setY(municion.getY() - 15);
             if (llegaAlFinal()) {
                 resetBala();
             }
-            manejaDisparo.postDelayed(this, 80);
+            manejaDisparo.postDelayed(this, 10);
             if (colisionaConEnte()) {
                 puntuacion += 20;
                 actualizaPuntosVida();
@@ -200,7 +200,7 @@ public class GameActivity extends AppCompatActivity {
                 actualizaPuntosVida();
             }
             if (accionEnemigo)
-                manejaEnemigo.postDelayed(this, 80);
+                manejaEnemigo.postDelayed(this, 10);
         }
     };
 
@@ -241,7 +241,7 @@ public class GameActivity extends AppCompatActivity {
                 break;
             }
         }
-        if (navesEnemigasEnPosX[1]==null) {
+        if (navesEnemigasEnPosX[0]==null) {
             return false;
         } else if ((navesEnemigasEnPosX[0].getVisibility() != View.GONE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))){
             navesEnemigasEnPosX[0].setVisibility(View.GONE);
@@ -250,16 +250,6 @@ public class GameActivity extends AppCompatActivity {
             navesEnemigasEnPosX[1].setVisibility(View.GONE);
             return true;
         }
-
-        /* Funciona parcialmente
-        for (int i = 0; i < 6; i++) {
-            if ((estaEnRegionX((ImageView) findViewById(navesId[i]))) && estaEnRegionY((ImageView) findViewById(navesId[i]))) {
-                if (findViewById(navesId[i]).getVisibility() != View.INVISIBLE) {
-                    findViewById(navesId[i]).setVisibility(View.INVISIBLE);
-                    return true;
-                }
-            }
-        }*/
         return false;
     }
 
@@ -275,20 +265,8 @@ public class GameActivity extends AppCompatActivity {
         return (location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()));
     }
 
-    private boolean estaEnRegionX(ImageView view) {
-        return (municion.getX() > view.getX()) && (municion.getX() < (view.getX() + view.getWidth()));
-    }
-
-    private boolean estaEnRegionY(ImageView view) {
-        return (municion.getY() > view.getY() && (municion.getY() < (view.getY() + view.getHeight())));
-    }
-
     private boolean colisionaConAsteroide(ImageView view) {
-        return estaEnRegionX(view) && asteroideRegionY(view);
-    }
-
-    private boolean asteroideRegionY(ImageView view) {
-        return (municion.getY() > (view.getY() + tablero_aliado.getHeight()) && (municion.getY() < ((view.getY() + tablero_aliado.getHeight()) + view.getHeight())));
+        return estaEnRegionXRelativa(view) && estaEnRegionYRelativa(view);
     }
 
     private void actualizaRecurso(ImageView view, int salud) {
