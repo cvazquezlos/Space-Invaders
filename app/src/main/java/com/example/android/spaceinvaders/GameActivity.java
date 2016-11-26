@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     Boolean sonido, accionEnemigo;
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
-    LinearLayout[] naves;
+    int[] navesId;
     LinearLayout matriz;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -157,7 +157,6 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 80);
             if (colisionaConEnte()) {
-                reseteaMatriz();
                 puntuacion += 20;
                 actualizaPuntosVida();
                 resetBala();
@@ -234,8 +233,15 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean colisionaConEnte() {
-
-
+        for (int i = 0; i < 6; i++) {
+            if ((estaEnRegionX((ImageView) findViewById(navesId[i]))) && estaEnRegionY((ImageView) findViewById(navesId[i]))) {
+                if (findViewById(navesId[i]).getVisibility() != View.INVISIBLE) {
+                    findViewById(navesId[i]).setVisibility(View.INVISIBLE);
+                    return true;
+                }
+            }
+        }
+        return false;
         //return estaEnRegionX(view) && estaEnRegionY(view);
     }
 
@@ -296,11 +302,6 @@ public class GameActivity extends AppCompatActivity {
         if (puntosSaludJugador == 0) {
             accionEnemigo = false;
             manejaEnemigo.removeCallbacks(accionMovimiento);
-            try {
-                accionMovimiento.wait();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             botonDisparo.setEnabled(false);
             findViewById(R.id.control_derecha).setEnabled(false);
             findViewById(R.id.control_izquierda).setEnabled(false);
@@ -326,9 +327,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void lanzaEnemigos() {
-        naves = new LinearLayout[2];
-        naves[0] = (LinearLayout) findViewById(R.id.fila_1_enemigos);
-        naves[1] = (LinearLayout) findViewById(R.id.fila_2_enemigos);
+        navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
 }
