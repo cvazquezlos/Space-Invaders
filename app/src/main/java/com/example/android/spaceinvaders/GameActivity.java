@@ -32,7 +32,7 @@ public class GameActivity extends AppCompatActivity {
     Boolean sonido, accionEnemigo;
     int puntosSaludJugador = 6;
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
-    int[] navesId;
+    int[] navesId, columnasCaptadas;
     LinearLayout matriz;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -157,6 +157,7 @@ public class GameActivity extends AppCompatActivity {
             }
             manejaDisparo.postDelayed(this, 10);
             if (colisionaConEnte()) {
+                //detectaCambiosEnAnchura();
                 puntuacion += 20;
                 actualizaPuntosVida();
                 resetBala();
@@ -233,20 +234,20 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean colisionaConEnte() {
-        ImageView[] navesEnemigasEnPosX=new ImageView[2];
-        for (int i=0; i<3; i++){
-            if (estaEnRegionXRelativa((findViewById(navesId[i])))){
-                navesEnemigasEnPosX[0] = (ImageView) findViewById(navesId[i+3]);
+        ImageView[] navesEnemigasEnPosX = new ImageView[2];
+        for (int i = 0; i < 3; i++) {
+            if (estaEnRegionXRelativa((findViewById(navesId[i])))) {
+                navesEnemigasEnPosX[0] = (ImageView) findViewById(navesId[i + 3]);
                 navesEnemigasEnPosX[1] = (ImageView) findViewById(navesId[i]);
                 break;
             }
         }
-        if (navesEnemigasEnPosX[0]==null) {
+        if (navesEnemigasEnPosX[0] == null) {
             return false;
-        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))){
+        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))) {
             navesEnemigasEnPosX[0].setVisibility(View.INVISIBLE);
             return true;
-        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))){
+        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))) {
             navesEnemigasEnPosX[1].setVisibility(View.INVISIBLE);
             return true;
         }
@@ -259,7 +260,7 @@ public class GameActivity extends AppCompatActivity {
         return (location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()));
     }
 
-    private boolean estaEnRegionYRelativa(View view){
+    private boolean estaEnRegionYRelativa(View view) {
         int[] location = getViewLocations(view);
         int[] location1 = getViewLocations(municion);
         return (location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()));
@@ -335,6 +336,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void lanzaEnemigos() {
+        columnasCaptadas=new int[2];
         navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
@@ -343,5 +345,23 @@ public class GameActivity extends AppCompatActivity {
         int[] locations = new int[2];
         view.getLocationOnScreen(locations);
         return locations;
+    }
+
+    private void detectaCambiosEnAnchura(){
+        int i = esColumnaVacia();
+        if (i==1 && (findViewById(navesId[1]).getVisibility()!=View.INVISIBLE && findViewById(navesId[4]).getVisibility()!=View.INVISIBLE)){
+            matriz.setLayoutParams(new RelativeLayout.LayoutParams((findViewById(navesId[0]).getWidth())*2, matriz.getHeight()));
+        } else if (i==2) {
+            matriz.setLayoutParams(new RelativeLayout.LayoutParams((findViewById(navesId[0]).getWidth()), matriz.getHeight()));
+        }
+    }
+
+    private int esColumnaVacia(){
+        int j=0;
+        for (int i=0; i<3; i++){
+            if (findViewById(navesId[i]).getVisibility()==View.INVISIBLE && findViewById(navesId[i+3]).getVisibility()==View.INVISIBLE)
+                j++;
+        }
+        return j;
     }
 }
