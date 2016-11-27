@@ -243,11 +243,11 @@ public class GameActivity extends AppCompatActivity {
         }
         if (navesEnemigasEnPosX[0]==null) {
             return false;
-        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.GONE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))){
-            navesEnemigasEnPosX[0].setVisibility(View.GONE);
+        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))){
+            navesEnemigasEnPosX[0].setVisibility(View.INVISIBLE);
             return true;
-        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.GONE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))){
-            navesEnemigasEnPosX[1].setVisibility(View.GONE);
+        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))){
+            navesEnemigasEnPosX[1].setVisibility(View.INVISIBLE);
             return true;
         }
         return false;
