@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class GameActivity extends AppCompatActivity {
 
     ImageView municion, nave, fondoJuego, enemigo, asteroide1, asteroide2;
@@ -19,7 +21,7 @@ public class GameActivity extends AppCompatActivity {
     int rotacion = 0;
     int iteracion = 0;
     RelativeLayout activity_main, tablero_enemigo, tablero_aliado;
-    Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
+    Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler(), manejaDisparoEnemigo = new Handler();
     final int movimiento = 30;
     final int movimientoEnemigo = 5;
     boolean inicioAFin = false;
@@ -61,6 +63,7 @@ public class GameActivity extends AppCompatActivity {
             if (iteracion == 0) {
                 lanzaEnemigos();
                 manejaEnemigo.postDelayed(accionMovimiento, 10);
+                manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
             }
         }
     }
@@ -202,6 +205,16 @@ public class GameActivity extends AppCompatActivity {
             }
             if (accionEnemigo)
                 manejaEnemigo.postDelayed(this, 10);
+        }
+    };
+
+    Runnable accionDisparoEnemigo = new Runnable() {
+        @Override
+        public void run() {
+            ArrayList<Integer> posiciones = enemigosQueDisparan();
+            for (int i=0; i<posiciones.size(); i++){
+                // Creación de ImageViews que serán las balas de cada enemigo.
+            }
         }
     };
 
@@ -347,6 +360,19 @@ public class GameActivity extends AppCompatActivity {
         return locations;
     }
 
+    private ArrayList<Integer> enemigosQueDisparan(){
+        ArrayList<Integer> posiciones = new ArrayList<Integer>();
+        for (int i=0; i<3; i++){
+            if (findViewById(navesId[i]).getVisibility()!=View.INVISIBLE){
+                posiciones.add(i);
+            } else if (findViewById(navesId[i+3]).getVisibility()!=View.INVISIBLE){
+                posiciones.add(i+3);
+            }
+        }
+        return posiciones;
+    }
+
+    // QUEDA ARREGLAR ESTOS DOS MÉTODOS
     private void detectaCambiosEnAnchura(){
         int i = esColumnaVacia();
         if (i==1 && (findViewById(navesId[1]).getVisibility()!=View.INVISIBLE && findViewById(navesId[4]).getVisibility()!=View.INVISIBLE)){
