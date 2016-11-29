@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class GameActivity extends AppCompatActivity {
 
     ImageView municion, nave, fondoJuego, enemigo, asteroide1, asteroide2;
+    ImageView[] municionEnemiga;
     Button botonDisparo;
     int rotacion = 0;
     int iteracion = 0;
@@ -212,8 +214,14 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             ArrayList<Integer> posiciones = enemigosQueDisparan();
+            municionEnemiga = new ImageView[posiciones.size()];
             for (int i=0; i<posiciones.size(); i++){
-                // Creación de ImageViews que serán las balas de cada enemigo.
+                ImageView image = new ImageView(GameActivity.this);
+                municionEnemiga[i] = image;
+                municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
+                municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                tablero_enemigo.addView(municionEnemiga[i]);
+                municionEnemiga[i].setX(findViewById(navesId[i]).getX());
             }
         }
     };
