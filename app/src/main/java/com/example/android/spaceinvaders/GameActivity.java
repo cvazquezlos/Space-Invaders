@@ -38,6 +38,7 @@ public class GameActivity extends AppCompatActivity {
     int saludObstaculo1 = 3, saludObstaculo2 = 3;
     int[] navesId, columnasCaptadas;
     LinearLayout matriz;
+    ArrayList<Integer> posiciones;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +67,7 @@ public class GameActivity extends AppCompatActivity {
                 lanzaEnemigos();
                 manejaEnemigo.postDelayed(accionMovimiento, 10);
                 manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
+                posiciones = new ArrayList<Integer>();
             }
         }
     }
@@ -213,18 +215,33 @@ public class GameActivity extends AppCompatActivity {
     Runnable accionDisparoEnemigo = new Runnable() {
         @Override
         public void run() {
-            ArrayList<Integer> posiciones = enemigosQueDisparan();
-            municionEnemiga = new ImageView[posiciones.size()];
-            for (int i=0; i<posiciones.size(); i++){
-                ImageView image = new ImageView(GameActivity.this);
-                municionEnemiga[i] = image;
-                municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
-                municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                tablero_enemigo.addView(municionEnemiga[i]);
-                municionEnemiga[i].setX(findViewById(navesId[i]).getX());
+            ArrayList<Integer> posiciones1 = enemigosQueDisparan();
+            if (!posiciones.equals(posiciones1)) {
+                municionEnemiga = new ImageView[posiciones1.size()];
+                for (int i = 0; i < posiciones1.size(); i++) {
+                    ImageView image = new ImageView(GameActivity.this);
+                    municionEnemiga[i] = image;
+                    municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
+                    municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    tablero_enemigo.addView(municionEnemiga[i]);
+                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[i])));
+                    municionEnemiga[i].setY(findViewById(navesId[i]).getHeight());
+                }
+                posiciones = new ArrayList<Integer>(posiciones1);
+            } else {
+                for (int i = 0; i < posiciones.size(); i++) {
+                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[i])) + (findViewById(navesId[i]).getWidth()/2));
+                    municionEnemiga[i].setY(findViewById(navesId[i]).getHeight());
+                }
             }
+            manejaDisparoEnemigo.postDelayed(this, 10);
         }
     };
+
+    private int getPosicionXRelative(View view){
+        int[] location = getViewLocations(view);
+        return location[0];
+    }
 
     private boolean llegaAlFinal() {
         return (municion.getY() <= 20);
