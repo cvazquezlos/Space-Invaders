@@ -216,9 +216,11 @@ public class GameActivity extends AppCompatActivity {
                 manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
                 disparoEnemigoFuncion = false;
                 for (int i=0; i<municionEnemiga.length; i++)
-                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
-                if (llegaMunicionAlFinal())
+                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 150);
+                if (llegaMunicionAlFinal()) {
                     disparoEnemigoFuncion = true;
+                    manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
+                }
             }
             if (accionEnemigo)
                 manejaEnemigo.postDelayed(this, 10);
@@ -244,7 +246,7 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         activity_main.addView(municionEnemiga[i]);
                         municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2));
+                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + ((findViewById(navesId[posiciones1.get(i)]).getWidth() / 2)-8));
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
                     }
                     posiciones.clear();
@@ -255,7 +257,6 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones.get(i)])));
                     }
                 }
-                manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
             }
         }
     };
