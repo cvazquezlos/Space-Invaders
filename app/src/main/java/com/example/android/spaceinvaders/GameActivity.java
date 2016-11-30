@@ -224,23 +224,28 @@ public class GameActivity extends AppCompatActivity {
                     municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
                     municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     tablero_enemigo.addView(municionEnemiga[i]);
-                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[i])));
-                    municionEnemiga[i].setY(findViewById(navesId[i]).getHeight());
+                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2));
+                    municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
                 }
-                posiciones = new ArrayList<Integer>(posiciones1);
+                posiciones = new ArrayList<>(posiciones1);
             } else {
                 for (int i = 0; i < posiciones.size(); i++) {
-                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[i])) + (findViewById(navesId[i]).getWidth()/2));
-                    municionEnemiga[i].setY(findViewById(navesId[i]).getHeight());
+                    municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2));
+                    municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones.get(i)])));
                 }
             }
             manejaDisparoEnemigo.postDelayed(this, 10);
         }
     };
 
-    private int getPosicionXRelative(View view){
+    private int getPosicionXRelative(View view) {
         int[] location = getViewLocations(view);
         return location[0];
+    }
+
+    private int getPosicionYRelative(View view) {
+        int[] location = getViewLocations(view);
+        return location[1];
     }
 
     private boolean llegaAlFinal() {
@@ -374,7 +379,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void lanzaEnemigos() {
-        columnasCaptadas=new int[2];
+        columnasCaptadas = new int[2];
         navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
@@ -385,32 +390,32 @@ public class GameActivity extends AppCompatActivity {
         return locations;
     }
 
-    private ArrayList<Integer> enemigosQueDisparan(){
+    private ArrayList<Integer> enemigosQueDisparan() {
         ArrayList<Integer> posiciones = new ArrayList<Integer>();
-        for (int i=0; i<3; i++){
-            if (findViewById(navesId[i]).getVisibility()!=View.INVISIBLE){
+        for (int i = 0; i < 3; i++) {
+            if (findViewById(navesId[i + 3]).getVisibility() != View.INVISIBLE) {
+                posiciones.add(i + 3);
+            } else if (findViewById(navesId[i]).getVisibility() != View.INVISIBLE) {
                 posiciones.add(i);
-            } else if (findViewById(navesId[i+3]).getVisibility()!=View.INVISIBLE){
-                posiciones.add(i+3);
             }
         }
         return posiciones;
     }
 
     // QUEDA ARREGLAR ESTOS DOS MÉTODOS
-    private void detectaCambiosEnAnchura(){
+    private void detectaCambiosEnAnchura() {
         int i = esColumnaVacia();
-        if (i==1 && (findViewById(navesId[1]).getVisibility()!=View.INVISIBLE && findViewById(navesId[4]).getVisibility()!=View.INVISIBLE)){
-            matriz.setLayoutParams(new RelativeLayout.LayoutParams((findViewById(navesId[0]).getWidth())*2, matriz.getHeight()));
-        } else if (i==2) {
+        if (i == 1 && (findViewById(navesId[1]).getVisibility() != View.INVISIBLE && findViewById(navesId[4]).getVisibility() != View.INVISIBLE)) {
+            matriz.setLayoutParams(new RelativeLayout.LayoutParams((findViewById(navesId[0]).getWidth()) * 2, matriz.getHeight()));
+        } else if (i == 2) {
             matriz.setLayoutParams(new RelativeLayout.LayoutParams((findViewById(navesId[0]).getWidth()), matriz.getHeight()));
         }
     }
 
-    private int esColumnaVacia(){
-        int j=0;
-        for (int i=0; i<3; i++){
-            if (findViewById(navesId[i]).getVisibility()==View.INVISIBLE && findViewById(navesId[i+3]).getVisibility()==View.INVISIBLE)
+    private int esColumnaVacia() {
+        int j = 0;
+        for (int i = 0; i < 3; i++) {
+            if (findViewById(navesId[i]).getVisibility() == View.INVISIBLE && findViewById(navesId[i + 3]).getVisibility() == View.INVISIBLE)
                 j++;
         }
         return j;
