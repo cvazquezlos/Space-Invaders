@@ -242,7 +242,7 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i] = image;
                         municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
                         municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        tablero_enemigo.addView(municionEnemiga[i]);
+                        activity_main.addView(municionEnemiga[i]);
                         municionEnemiga[i].setVisibility(View.VISIBLE);
                         municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2));
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
