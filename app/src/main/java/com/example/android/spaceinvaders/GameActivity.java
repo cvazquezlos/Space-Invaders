@@ -14,6 +14,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -68,6 +70,7 @@ public class GameActivity extends AppCompatActivity {
                 manejaEnemigo.postDelayed(accionMovimiento, 10);
                 manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
                 posiciones = new ArrayList<Integer>();
+                municionEnemiga = new ImageView[0];
             }
         }
     }
@@ -217,17 +220,24 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             ArrayList<Integer> posiciones1 = enemigosQueDisparan();
             if (!posiciones.equals(posiciones1)) {
-                municionEnemiga = new ImageView[posiciones1.size()];
+                    for (int i = 0; i < municionEnemiga.length; i++)
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                List<ImageView> list = new ArrayList<>();
+                Collections.addAll(list, municionEnemiga);
+                list.clear();
+                municionEnemiga = list.toArray(new ImageView[posiciones1.size()]);
                 for (int i = 0; i < posiciones1.size(); i++) {
                     ImageView image = new ImageView(GameActivity.this);
                     municionEnemiga[i] = image;
                     municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
                     municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                     tablero_enemigo.addView(municionEnemiga[i]);
+                    municionEnemiga[i].setVisibility(View.VISIBLE);
                     municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2));
                     municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
                 }
-                posiciones = new ArrayList<>(posiciones1);
+                posiciones.clear();
+                posiciones = new ArrayList<Integer>(posiciones1);
             } else {
                 for (int i = 0; i < posiciones.size(); i++) {
                     municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2));
