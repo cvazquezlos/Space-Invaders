@@ -215,8 +215,14 @@ public class GameActivity extends AppCompatActivity {
             if (municionEnemiga.length > 0){
                 manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
                 disparoEnemigoFuncion = false;
-                for (int i=0; i<municionEnemiga.length; i++)
-                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 150);
+                for (int i=0; i<municionEnemiga.length; i++) {
+                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
+                    if (colisionaEnemigoConAsteroide(asteroide1, municionEnemiga[i])){
+                        activity_main.removeView(municionEnemiga[i]);
+                    } else if (colisionaEnemigoConAsteroide(asteroide2, municionEnemiga[i])){
+                        activity_main.removeView(municionEnemiga[i]);
+                    }
+                }
                 if (llegaMunicionAlFinal()) {
                     disparoEnemigoFuncion = true;
                     manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
@@ -234,7 +240,7 @@ public class GameActivity extends AppCompatActivity {
                 ArrayList<Integer> posiciones1 = enemigosQueDisparan();
                 if (!posiciones.equals(posiciones1)) {
                     for (int i = 0; i < municionEnemiga.length; i++)
-                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                        activity_main.removeView(municionEnemiga[i]);
                     List<ImageView> list = new ArrayList<>();
                     Collections.addAll(list, municionEnemiga);
                     list.clear();
@@ -246,14 +252,14 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         activity_main.addView(municionEnemiga[i]);
                         municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + ((findViewById(navesId[posiciones1.get(i)]).getWidth() / 2)-8));
+                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2)-8);
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
                     }
                     posiciones.clear();
                     posiciones = new ArrayList<Integer>(posiciones1);
                 } else {
                     for (int i = 0; i < posiciones.size(); i++) {
-                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2));
+                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2)-8);
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones.get(i)])));
                     }
                 }
@@ -264,9 +270,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean llegaMunicionAlFinal(){
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
-
         int height = metrics.heightPixels;
-        int width = metrics.widthPixels;
         return (municionEnemiga[0].getY() >= (height - 50));
     }
 
@@ -327,6 +331,12 @@ public class GameActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean colisionaEnemigoConAsteroide(ImageView view, ImageView enemigo) {
+        int[] location = getViewLocations(view);
+        int[] location1 = getViewLocations(enemigo);
+        return (((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()))));
     }
 
     private boolean estaEnRegionXRelativa(View view) {
