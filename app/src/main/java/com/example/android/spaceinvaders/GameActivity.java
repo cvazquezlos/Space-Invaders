@@ -223,7 +223,7 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
                     } else if (llegaMunicionAlFinal(municionEnemiga[i])){
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (colisionaEnemigoConAsteroide(nave, municionEnemiga[i])){
+                    } else if (colisionaEnemigoConAliado(nave, municionEnemiga[i])){
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
                         puntosSaludJugador--;
                         actualizaSalud();
@@ -359,6 +359,12 @@ public class GameActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private boolean colisionaEnemigoConAliado(ImageView view, ImageView enemigo) {
+        int[] location = getViewLocations(view);
+        int[] location1 = getViewLocations(enemigo);
+        return ((((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()))))&&(enemigo.getVisibility()==View.VISIBLE));
     }
 
     private boolean colisionaEnemigoConAsteroide(ImageView view, ImageView enemigo) {
