@@ -230,6 +230,9 @@ public class GameActivity extends AppCompatActivity {
                     manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
                 }
             }
+            if (todasNavesDestruidas()){
+                reseteaMatriz();
+            }
             if (accionEnemigo)
                 manejaEnemigo.postDelayed(this, 10);
         }
@@ -269,6 +272,14 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     };
+
+    private boolean todasNavesDestruidas(){
+        int contador = 0;
+        for (int i=0; i<navesId.length; i++)
+            if (findViewById(navesId[i]).getVisibility() == View.INVISIBLE)
+                contador++;
+        return contador==navesId.length;
+    }
 
     private boolean municionDesaparecida(int iterador){
         int contador = 0;
@@ -391,6 +402,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void reseteaMatriz() {
+        if (todasNavesDestruidas())
+            for (int i=0; i<navesId.length; i++)
+                findViewById(navesId[i]).setVisibility(View.VISIBLE);
         matriz.setY(0);
         matriz.setX((tablero_enemigo.getWidth() / 2) - (matriz.getWidth() / 2));
     }
