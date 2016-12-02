@@ -218,12 +218,14 @@ public class GameActivity extends AppCompatActivity {
                 for (int i=0; i<municionEnemiga.length; i++) {
                     municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
                     if (colisionaEnemigoConAsteroide(asteroide1, municionEnemiga[i])){
-                        activity_main.removeView(municionEnemiga[i]);
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
                     } else if (colisionaEnemigoConAsteroide(asteroide2, municionEnemiga[i])){
-                        activity_main.removeView(municionEnemiga[i]);
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                    } else if (llegaMunicionAlFinal(municionEnemiga[i])){
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
                     }
                 }
-                if (llegaMunicionAlFinal()) {
+                if (municionDesaparecida(municionEnemiga.length)) {
                     disparoEnemigoFuncion = true;
                     manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
                 }
@@ -259,6 +261,7 @@ public class GameActivity extends AppCompatActivity {
                     posiciones = new ArrayList<Integer>(posiciones1);
                 } else {
                     for (int i = 0; i < posiciones.size(); i++) {
+                        municionEnemiga[i].setVisibility(View.VISIBLE);
                         municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2)-8);
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones.get(i)])));
                     }
@@ -267,11 +270,20 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    private boolean llegaMunicionAlFinal(){
+    private boolean municionDesaparecida(int iterador){
+        int contador = 0;
+        for (int i=0; i<iterador; i++)
+            if (municionEnemiga[i].getVisibility() == View.INVISIBLE){
+                contador++;
+            }
+        return (contador>=municionEnemiga.length);
+    }
+
+    private boolean llegaMunicionAlFinal(ImageView image){
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int height = metrics.heightPixels;
-        return (municionEnemiga[0].getY() >= (height - 50));
+        return (image.getY() >= (height - 50));
     }
 
     private int getPosicionXRelative(View view) {
