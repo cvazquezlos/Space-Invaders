@@ -223,6 +223,11 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
                     } else if (llegaMunicionAlFinal(municionEnemiga[i])){
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
+                    } else if (colisionaEnemigoConAsteroide(nave, municionEnemiga[i])){
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                        puntosSaludJugador--;
+                        actualizaSalud();
+                        actualizaPuntosVida();
                     }
                 }
                 if (municionDesaparecida(municionEnemiga.length)) {
