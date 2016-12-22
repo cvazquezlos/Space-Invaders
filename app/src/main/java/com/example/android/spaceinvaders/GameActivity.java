@@ -20,59 +20,51 @@ import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
 
-    ImageView municion, nave, fondoJuego, enemigo, asteroide1, asteroide2;
-    ImageView[] municionEnemiga;
-    Button botonDisparo;
-    int rotacion = 0;
-    int iteracion = 0;
-    RelativeLayout activity_main, tablero_enemigo, tablero_aliado;
-    Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler(), manejaDisparoEnemigo = new Handler();
-    final int movimiento = 30;
-    final int movimientoEnemigo = 5;
-    boolean inicioAFin = false;
-    int ladeadoIzq, ladeadoDer, frontal, disparo;
-    int ladeadoIzqEnemigo, ladeadoDerEnemigo, frontalEnemigo, disparoEnemigo, idEnemigo;
-    TextView puntosVida;
-    MediaPlayer sonidoDisparoNave;
-    int puntuacion = 0;
-    MediaPlayer musicaFondo;
-    Boolean sonido, accionEnemigo, disparoEnemigoFuncion;
-    int puntosSaludJugador = 6;
-    int saludObstaculo1 = 3, saludObstaculo2 = 3;
-    int[] navesId, columnasCaptadas;
-    LinearLayout matriz;
     ArrayList<Integer> posiciones;
+    boolean accionEnemigo, disparoEnemigoFuncion, inicioAFin = false, sonido;
+    Button botonDisparo;
+    Handler manejaDisparo = new Handler(), manejaDisparoEnemigo = new Handler(), manejaEnemigo = new Handler();
+    ImageView asteroide1, asteroide2, enemigo, fondoJuego, municion, nave;
+    ImageView[] municionEnemiga;
+    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion = 0, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento = 30, movimientoEnemigo = 5, puntosSaludJugador = 6, puntuacion = 0, rotacion = 0, saludObstaculo1 = 2, saludObstaculo2 = 3;
+    int[] columnasCaptadas, navesId;
+    LinearLayout matriz;
+    MediaPlayer musicaFondo, sonidoDisparoNave;
+    RelativeLayout activity_main, tablero_aliado, tablero_enemigo;
+    TextView puntosVida;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.game_activity);
-        municion = (ImageView) findViewById(R.id.municion);
-        nave = (ImageView) findViewById(R.id.nave);
-        enemigo = (ImageView) findViewById(R.id.enemigo1);
-        fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
-        asteroide1 = (ImageView) findViewById(R.id.asteroide_1);
-        asteroide2 = (ImageView) findViewById(R.id.asteroide_2);
-        botonDisparo = (Button) findViewById(R.id.disparo);
-        activity_main = (RelativeLayout) findViewById(R.id.activity_main);
-        tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
-        tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
-        puntosVida = (TextView) findViewById(R.id.ptos_vida);
-        Intent i = getIntent();
-        if (i != null) {
-            String data = i.getStringExtra("arg");
-            introduceCambios(data);
-            musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
-            accionEnemigo = true;
-            if (sonido)
-                musicaFondo.start();
-            if (iteracion == 0) {
-                lanzaEnemigos();
-                disparoEnemigoFuncion = true;
-                manejaEnemigo.postDelayed(accionMovimientoEnemigo, 10);
-                manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
-                posiciones = new ArrayList<Integer>();
-                municionEnemiga = new ImageView[0];
+        if (savedInstanceState == null) {
+            activity_main = (RelativeLayout) findViewById(R.id.activity_main);
+            asteroide1 = (ImageView) findViewById(R.id.asteroide_1);
+            asteroide2 = (ImageView) findViewById(R.id.asteroide_2);
+            botonDisparo = (Button) findViewById(R.id.disparo);
+            enemigo = (ImageView) findViewById(R.id.enemigo1);
+            fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
+            municion = (ImageView) findViewById(R.id.municion);
+            nave = (ImageView) findViewById(R.id.nave);
+            puntosVida = (TextView) findViewById(R.id.ptos_vida);
+            tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
+            tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
+            Intent i = getIntent();
+            if (i != null) {
+                String data = i.getStringExtra("arg");
+                introduceCambios(data);
+                musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
+                accionEnemigo = true;
+                if (sonido)
+                    musicaFondo.start();
+                if (iteracion == 0) {
+                    lanzaEnemigos();
+                    disparoEnemigoFuncion = true;
+                    manejaEnemigo.postDelayed(accionMovimientoEnemigo, 10);
+                    manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
+                    municionEnemiga = new ImageView[0];
+                    posiciones = new ArrayList<>();
+                }
             }
         }
     }
@@ -212,18 +204,18 @@ public class GameActivity extends AppCompatActivity {
                 actualizaSalud();
                 actualizaPuntosVida();
             }
-            if (municionEnemiga.length > 0){
+            if (municionEnemiga.length > 0) {
                 manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
                 disparoEnemigoFuncion = false;
-                for (int i=0; i<municionEnemiga.length; i++) {
+                for (int i = 0; i < municionEnemiga.length; i++) {
                     municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
-                    if (colisionaEnemigoConAsteroide(asteroide1, municionEnemiga[i])){
+                    if (colisionaEnemigoConAsteroide(asteroide1, municionEnemiga[i])) {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (colisionaEnemigoConAsteroide(asteroide2, municionEnemiga[i])){
+                    } else if (colisionaEnemigoConAsteroide(asteroide2, municionEnemiga[i])) {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (llegaMunicionAlFinal(municionEnemiga[i])){
+                    } else if (llegaMunicionAlFinal(municionEnemiga[i])) {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (colisionaEnemigoConAliado(nave, municionEnemiga[i])){
+                    } else if (colisionaEnemigoConAliado(nave, municionEnemiga[i])) {
                         municionEnemiga[i].setVisibility(View.INVISIBLE);
                         puntosSaludJugador--;
                         actualizaSalud();
@@ -235,7 +227,7 @@ public class GameActivity extends AppCompatActivity {
                     manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
                 }
             }
-            if (todasNavesDestruidas()){
+            if (todasNavesDestruidas()) {
                 reseteaMatriz();
             }
             if (accionEnemigo)
@@ -262,7 +254,7 @@ public class GameActivity extends AppCompatActivity {
                         municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         activity_main.addView(municionEnemiga[i]);
                         municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2)-8);
+                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones1.get(i)])) + (findViewById(navesId[posiciones1.get(i)]).getWidth() / 2) - 8);
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones1.get(i)])));
                     }
                     posiciones.clear();
@@ -270,7 +262,7 @@ public class GameActivity extends AppCompatActivity {
                 } else {
                     for (int i = 0; i < posiciones.size(); i++) {
                         municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2)-8);
+                        municionEnemiga[i].setX(getPosicionXRelative(findViewById(navesId[posiciones.get(i)])) + (findViewById(navesId[posiciones.get(i)]).getWidth() / 2) - 8);
                         municionEnemiga[i].setY(getPosicionYRelative(findViewById(navesId[posiciones.get(i)])));
                     }
                 }
@@ -278,24 +270,24 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    private boolean todasNavesDestruidas(){
+    private boolean todasNavesDestruidas() {
         int contador = 0;
-        for (int i=0; i<navesId.length; i++)
+        for (int i = 0; i < navesId.length; i++)
             if (findViewById(navesId[i]).getVisibility() == View.INVISIBLE)
                 contador++;
-        return contador==navesId.length;
+        return contador == navesId.length;
     }
 
-    private boolean municionDesaparecida(int iterador){
+    private boolean municionDesaparecida(int iterador) {
         int contador = 0;
-        for (int i=0; i<iterador; i++)
-            if (municionEnemiga[i].getVisibility() == View.INVISIBLE){
+        for (int i = 0; i < iterador; i++)
+            if (municionEnemiga[i].getVisibility() == View.INVISIBLE) {
                 contador++;
             }
-        return (contador>=municionEnemiga.length);
+        return (contador >= municionEnemiga.length);
     }
 
-    private boolean llegaMunicionAlFinal(ImageView image){
+    private boolean llegaMunicionAlFinal(ImageView image) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int height = metrics.heightPixels;
@@ -364,7 +356,7 @@ public class GameActivity extends AppCompatActivity {
     private boolean colisionaEnemigoConAliado(ImageView view, ImageView enemigo) {
         int[] location = getViewLocations(view);
         int[] location1 = getViewLocations(enemigo);
-        return ((((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()))))&&(enemigo.getVisibility()==View.VISIBLE));
+        return ((((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight())))) && (enemigo.getVisibility() == View.VISIBLE));
     }
 
     private boolean colisionaEnemigoConAsteroide(ImageView view, ImageView enemigo) {
@@ -414,7 +406,7 @@ public class GameActivity extends AppCompatActivity {
 
     private void reseteaMatriz() {
         if (todasNavesDestruidas())
-            for (int i=0; i<navesId.length; i++)
+            for (int i = 0; i < navesId.length; i++)
                 findViewById(navesId[i]).setVisibility(View.VISIBLE);
         matriz.setY(0);
         matriz.setX((tablero_enemigo.getWidth() / 2) - (matriz.getWidth() / 2));
