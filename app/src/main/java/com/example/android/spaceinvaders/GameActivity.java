@@ -74,14 +74,65 @@ public class GameActivity extends AppCompatActivity {
         int idFondo = getResources().getIdentifier(info[0], "drawable", getPackageName());
         fondoJuego.setImageResource(idFondo);
         int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
-        cambiosMovilidad(idNave);
+        cambiosMovilidad(idNave, "aliado");
         nave.setImageResource(frontal);
         int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
-        cambiosMovilidadEnemigo(idEnemigo);
+        cambiosMovilidad(idEnemigo, "enemigo");
         System.out.println(idEnemigo);
         enemigo.setImageResource(frontalEnemigo);
         this.idEnemigo = idEnemigo;
         sonido = Boolean.valueOf(info[3]);
+    }
+
+    private void cambiosMovilidad(int id, String valor) {
+        switch (valor) {
+            case "aliado":
+                switch (id) {
+                    case 2130837589:
+                        frontal = R.drawable.diseno11;
+                        ladeadoDer = R.drawable.diseno13;
+                        ladeadoIzq = R.drawable.diseno12;
+                        disparo = R.drawable.municion;
+                        sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavezanahoria);
+                        break;
+                    case 2130837592:
+                        frontal = R.drawable.diseno21;
+                        ladeadoDer = R.drawable.diseno23;
+                        ladeadoIzq = R.drawable.diseno22;
+                        disparo = R.drawable.municion1;
+                        sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparodragon);
+                        break;
+                    case 2130837595:
+                        frontal = R.drawable.diseno31;
+                        ladeadoDer = R.drawable.diseno33;
+                        ladeadoIzq = R.drawable.diseno32;
+                        disparo = R.drawable.municion2;
+                        sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavenormal);
+                        break;
+                }
+                break;
+            case "enemigo":
+                switch (id) {
+                    case 2130837601:
+                        frontalEnemigo = R.drawable.enemigodiseno21;
+                        break;
+                    case 2130837598:
+                        frontalEnemigo = R.drawable.enemigodiseno11;
+                        ladeadoIzqEnemigo = R.drawable.enemigodiseno12;
+                        ladeadoDerEnemigo = R.drawable.enemigodiseno13;
+                        break;
+                }
+                break;
+        }
+    }
+
+    private void lanzaEnemigos() {
+        columnasCaptadas = new int[2];
+        navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
+        matrizEnemigos = new ImageView[navesId.length];
+        for (int i = 0; i < matrizEnemigos.length; i++)
+            matrizEnemigos[i] = (ImageView) findViewById(navesId[i]);
+        matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
 
     public void actualizaPosicion(View v) {
@@ -97,45 +148,6 @@ public class GameActivity extends AppCompatActivity {
                     nave.setImageResource(ladeadoDer);
                     nave.setX(nave.getX() + movimiento);
                 }
-                break;
-        }
-    }
-
-    private void cambiosMovilidadEnemigo(int idEnemigo) {
-        switch (idEnemigo) {
-            case 2130837601:
-                frontalEnemigo = R.drawable.enemigodiseno21;
-                break;
-            case 2130837598:
-                frontalEnemigo = R.drawable.enemigodiseno11;
-                ladeadoIzqEnemigo = R.drawable.enemigodiseno12;
-                ladeadoDerEnemigo = R.drawable.enemigodiseno13;
-                break;
-        }
-    }
-
-    private void cambiosMovilidad(int idNave) {
-        switch (idNave) {
-            case 2130837589:
-                frontal = R.drawable.diseno11;
-                ladeadoDer = R.drawable.diseno13;
-                ladeadoIzq = R.drawable.diseno12;
-                disparo = R.drawable.municion;
-                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavezanahoria);
-                break;
-            case 2130837592:
-                frontal = R.drawable.diseno21;
-                ladeadoDer = R.drawable.diseno23;
-                ladeadoIzq = R.drawable.diseno22;
-                disparo = R.drawable.municion1;
-                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparodragon);
-                break;
-            case 2130837595:
-                frontal = R.drawable.diseno31;
-                ladeadoDer = R.drawable.diseno33;
-                ladeadoIzq = R.drawable.diseno32;
-                disparo = R.drawable.municion2;
-                sonidoDisparoNave = MediaPlayer.create(this, R.raw.disparonavenormal);
                 break;
         }
     }
@@ -157,14 +169,14 @@ public class GameActivity extends AppCompatActivity {
         public void run() {
             municion.setY(municion.getY() - 15);
             if (llegaAlFinal()) {
-                resetBala();
+                reiniciarBala();
             }
             manejaDisparo.postDelayed(this, 10);
             if (colisionaConEnte()) {
                 //detectaCambiosEnAnchura();
                 puntuacion += 20;
-                actualizaPuntosVida();
-                resetBala();
+                actualizaSalud();
+                reiniciarBala();
             } else if (colisionaConAsteroide(asteroide1)) {
                 actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
             } else if (colisionaConAsteroide(asteroide2)) {
@@ -173,68 +185,31 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
-    Runnable accionMovimientoEnemigo = new Runnable() {
-        @Override
-        public void run() {
-            iteracion++;
-            if (inicioAFin) {
-                if (idEnemigo == 2130837601) {
-                    rotacion += 20;
-                    enemigo.setRotation(rotacion);
-                } else
-                    enemigo.setImageResource(ladeadoIzqEnemigo);
-                matriz.setX(matriz.getX() + movimientoEnemigo);
-            } else {
-                if (idEnemigo == 2130837601) {
-                    rotacion -= 20;
-                    enemigo.setRotation(rotacion);
-                } else
-                    enemigo.setImageResource(ladeadoDerEnemigo);
-                matriz.setX(matriz.getX() - movimientoEnemigo);
-            }
-            if (seSale("izq", "IA") || seSale("der", "IA")) {
-                rotacion = 0;
-                matriz.setY(matriz.getY() + 70);
-                inicioAFin = !inicioAFin;
-            }
-            if (invadeMitad()) {
-                reseteaMatriz();
-                puntosSaludJugador--;
-                actualizaSalud();
-                actualizaPuntosVida();
-            }
-            if (municionEnemiga.length > 0) {
-                manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
-                disparoEnemigoFuncion = false;
-                for (int i = 0; i < municionEnemiga.length; i++) {
-                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
-                    if (colisionaEnemigoConAsteroide(asteroide1, municionEnemiga[i])) {
-                        municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (colisionaEnemigoConAsteroide(asteroide2, municionEnemiga[i])) {
-                        municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (llegaMunicionAlFinal(municionEnemiga[i])) {
-                        municionEnemiga[i].setVisibility(View.INVISIBLE);
-                    } else if (colisionaEnemigoConAliado(nave, municionEnemiga[i])) {
-                        municionEnemiga[i].setVisibility(View.INVISIBLE);
-                        puntosSaludJugador--;
-                        actualizaSalud();
-                        actualizaPuntosVida();
-                    }
-                }
-                if (municionDesaparecida(municionEnemiga.length)) {
-                    disparoEnemigoFuncion = true;
-                    manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
-                }
-            }
-            if (todasNavesDestruidas()) {
-                reseteaMatriz();
-            }
-            if (accionEnemigo)
-                manejaEnemigo.postDelayed(this, 10);
-        }
-    };
+    private void reiniciarBala() {
+        municion.setVisibility(View.INVISIBLE);
+        manejaDisparo.removeCallbacks(accionDisparo);
+        botonDisparo.setEnabled(true);
+    }
 
-    Runnable accionDisparoEnemigo = new Runnable() {
+    private void actualizaSalud() {
+        try {
+            puntosVida.setText(Integer.toString(puntuacion));
+        } catch (Exception e) {
+        }
+        int idAEsconder = 2131492962 - puntosSaludJugador;
+        findViewById(idAEsconder).setVisibility(View.INVISIBLE);
+        if (puntosSaludJugador == 0) {
+            accionEnemigo = false;
+            manejaEnemigo.removeCallbacks(accionMovimientoEnemigo);
+            botonDisparo.setEnabled(false);
+            findViewById(R.id.control_derecha).setEnabled(false);
+            findViewById(R.id.control_izquierda).setEnabled(false);
+            ((TextView) (findViewById(R.id.puntuacion_final))).setText("Puntuación: " + puntuacion);
+            findViewById(R.id.pantalla_game_over).setVisibility(View.VISIBLE);
+        }
+    }
+
+    Runnable accionDisparoEnemigo = new Runnable() { // Muy ineficiente
         @Override
         public void run() {
             if (disparoEnemigoFuncion) {
@@ -269,12 +244,77 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    Runnable accionMovimientoEnemigo = new Runnable() {
+        @Override
+        public void run() {
+            iteracion++;
+            if (inicioAFin) {
+                if (idEnemigo == 2130837601) {
+                    rotacion += 20;
+                    enemigo.setRotation(rotacion);
+                } else
+                    enemigo.setImageResource(ladeadoIzqEnemigo);
+                matriz.setX(matriz.getX() + movimientoEnemigo);
+            } else {
+                if (idEnemigo == 2130837601) {
+                    rotacion -= 20;
+                    enemigo.setRotation(rotacion);
+                } else
+                    enemigo.setImageResource(ladeadoDerEnemigo);
+                matriz.setX(matriz.getX() - movimientoEnemigo);
+            }
+            if (seSale("izq", "IA") || seSale("der", "IA")) {
+                rotacion = 0;
+                matriz.setY(matriz.getY() + 70);
+                inicioAFin = !inicioAFin;
+            }
+            if (invadeMitad()) {
+                reseteaMatriz();
+                puntosSaludJugador--;
+                actualizaSalud();
+            }
+            if (municionEnemiga.length > 0) {
+                manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
+                disparoEnemigoFuncion = false;
+                for (int i = 0; i < municionEnemiga.length; i++) {
+                    municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
+                    if (colisionaEnemigoCon(asteroide1, municionEnemiga[i])) {
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                    } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i])) {
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                    } else if (llegaMunicionAlFinal(municionEnemiga[i])) {
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                    } else if ((colisionaEnemigoCon(nave, municionEnemiga[i]))&&(municionEnemiga[i].getVisibility() == View.VISIBLE)) {
+                        municionEnemiga[i].setVisibility(View.INVISIBLE);
+                        puntosSaludJugador--;
+                        actualizaSalud();
+                    }
+                }
+                if (municionDesaparecida(municionEnemiga.length)) {
+                    disparoEnemigoFuncion = true;
+                    manejaDisparoEnemigo.postDelayed(accionDisparoEnemigo, 10);
+                }
+            }
+            if (todasNavesDestruidas()) {
+                reseteaMatriz();
+            }
+            if (accionEnemigo)
+                manejaEnemigo.postDelayed(this, 10);
+        }
+    };
+
+    private boolean colisionaEnemigoCon(ImageView v1, ImageView v2) {
+        int[] l1 = getPosicionRelativa(v1);
+        int[] l2 = getPosicionRelativa(v2);
+        return ((((l2[0] > l1[0]) && (l2[0] < (l1[0] + v1.getWidth()))) && ((l2[1] > l1[1]) && (l2[1] < (l1[1] + v1.getHeight())))));
+    }
+
     private boolean todasNavesDestruidas() {
         int contador = 0;
-        for (int i = 0; i < navesId.length; i++)
-            if (findViewById(navesId[i]).getVisibility() == View.INVISIBLE)
+        for (int i = 0; i < matrizEnemigos.length; i++)
+            if (matrizEnemigos[i].getVisibility() == View.INVISIBLE)
                 contador++;
-        return contador == navesId.length;
+        return contador == matrizEnemigos.length;
     }
 
     private boolean municionDesaparecida(int iterador) {
@@ -294,12 +334,12 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private int getPosicionXRelative(View view) {
-        int[] location = getViewLocations(view);
+        int[] location = getPosicionRelativa(view);
         return location[0];
     }
 
     private int getPosicionYRelative(View view) {
-        int[] location = getViewLocations(view);
+        int[] location = getPosicionRelativa(view);
         return location[1];
     }
 
@@ -352,27 +392,15 @@ public class GameActivity extends AppCompatActivity {
         return false;
     }
 
-    private boolean colisionaEnemigoConAliado(ImageView view, ImageView enemigo) {
-        int[] location = getViewLocations(view);
-        int[] location1 = getViewLocations(enemigo);
-        return ((((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight())))) && (enemigo.getVisibility() == View.VISIBLE));
-    }
-
-    private boolean colisionaEnemigoConAsteroide(ImageView view, ImageView enemigo) {
-        int[] location = getViewLocations(view);
-        int[] location1 = getViewLocations(enemigo);
-        return (((location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()))) && ((location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()))));
-    }
-
     private boolean estaEnRegionXRelativa(View view) {
-        int[] location = getViewLocations(view);
-        int[] location1 = getViewLocations(municion);
+        int[] location = getPosicionRelativa(view);
+        int[] location1 = getPosicionRelativa(municion);
         return (location1[0] > location[0]) && (location1[0] < (location[0] + view.getWidth()));
     }
 
     private boolean estaEnRegionYRelativa(View view) {
-        int[] location = getViewLocations(view);
-        int[] location1 = getViewLocations(municion);
+        int[] location = getPosicionRelativa(view);
+        int[] location1 = getPosicionRelativa(municion);
         return (location1[1] > location[1]) && (location1[1] < (location[1] + view.getHeight()));
     }
 
@@ -385,11 +413,11 @@ public class GameActivity extends AppCompatActivity {
             switch (salud) {
                 case 2:
                     view.setImageResource(R.drawable.zobjectasteroiefase2);
-                    resetBala();
+                    reiniciarBala();
                     break;
                 case 1:
                     view.setImageResource(R.drawable.zobjectasteroiefase3);
-                    resetBala();
+                    reiniciarBala();
                     break;
                 case 0:
                     view.setVisibility(View.GONE);
@@ -397,78 +425,30 @@ public class GameActivity extends AppCompatActivity {
             }
     }
 
-    private void resetBala() {
-        municion.setVisibility(View.INVISIBLE);
-        manejaDisparo.removeCallbacks(accionDisparo);
-        botonDisparo.setEnabled(true);
-    }
-
     private void reseteaMatriz() {
         if (todasNavesDestruidas())
-            for (int i = 0; i < navesId.length; i++)
+            for (int i = 0; i < matrizEnemigos.length; i++)
                 matrizEnemigos[i].setVisibility(View.VISIBLE);
         matriz.setY(0);
         matriz.setX((tablero_enemigo.getWidth() / 2) - (matriz.getWidth() / 2));
-    }
-
-    private void actualizaPuntosVida() {
-        try {
-            puntosVida.setText(Integer.toString(puntuacion));
-        } catch (Exception e) {
-        }
-    }
-
-    private void actualizaSalud() {
-        int idAEsconder = 2131492962 - puntosSaludJugador;
-        findViewById(idAEsconder).setVisibility(View.INVISIBLE);
-        if (puntosSaludJugador == 0) {
-            accionEnemigo = false;
-            manejaEnemigo.removeCallbacks(accionMovimientoEnemigo);
-            botonDisparo.setEnabled(false);
-            findViewById(R.id.control_derecha).setEnabled(false);
-            findViewById(R.id.control_izquierda).setEnabled(false);
-            ((TextView) (findViewById(R.id.puntuacion_final))).setText("Puntuación: " + puntuacion);
-            findViewById(R.id.pantalla_game_over).setVisibility(View.VISIBLE);
-        }
     }
 
     public void volverMenuPrincipal(View v) {
         this.finish();
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (musicaFondo != null) {
-            musicaFondo.pause();
-            if (isFinishing()) {
-                musicaFondo.stop();
-                musicaFondo.release();
-            }
-        }
-    }
-
-    private void lanzaEnemigos() {
-        columnasCaptadas = new int[2];
-        navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
-        matrizEnemigos = new ImageView[navesId.length];
-        for (int i = 0; i < matrizEnemigos.length; i++)
-            matrizEnemigos[i] = (ImageView) findViewById(navesId[i]);
-        matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
-    }
-
-    private int[] getViewLocations(View view) {
-        int[] locations = new int[2];
-        view.getLocationOnScreen(locations);
-        return locations;
+    private int[] getPosicionRelativa(View view) {
+        int[] localizacion = new int[2];
+        view.getLocationOnScreen(localizacion);
+        return localizacion;
     }
 
     private ArrayList<Integer> enemigosQueDisparan() {
-        ArrayList<Integer> posiciones = new ArrayList<Integer>();
+        ArrayList<Integer> posiciones = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            if (findViewById(navesId[i + 3]).getVisibility() != View.INVISIBLE) {
+            if (matrizEnemigos[i + 3].getVisibility() != View.INVISIBLE) {
                 posiciones.add(i + 3);
-            } else if (findViewById(navesId[i]).getVisibility() != View.INVISIBLE) {
+            } else if (matrizEnemigos[i].getVisibility() != View.INVISIBLE) {
                 posiciones.add(i);
             }
         }
@@ -492,5 +472,17 @@ public class GameActivity extends AppCompatActivity {
                 j++;
         }
         return j;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (musicaFondo != null) {
+            musicaFondo.pause();
+            if (isFinishing()) {
+                musicaFondo.stop();
+                musicaFondo.release();
+            }
+        }
     }
 }
