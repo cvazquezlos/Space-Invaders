@@ -152,6 +152,26 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
+    private boolean seSale(String direccion, String jugador) {
+        switch (direccion) {
+            case "izq":
+                switch (jugador) {
+                    case "CU":
+                        return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
+                    case "IA":
+                        return (matriz.getX() + movimiento + matriz.getWidth()) > tablero_enemigo.getWidth();
+                }
+            case "der":
+                switch (jugador) {
+                    case "CU":
+                        return (nave.getX() - movimiento) < 0;
+                    case "IA":
+                        return (matriz.getX() - movimiento) < 0;
+                }
+        }
+        return true;
+    }
+
     public void dispara(View v) {
         if (sonido)
             sonidoDisparoNave.start();
@@ -187,6 +207,10 @@ public class GameActivity extends AppCompatActivity {
         }
     };
 
+    private boolean llegaAlFinal() {
+        return (municion.getY() <= 20);
+    }
+
     private void reiniciarBala() {
         municion.setVisibility(View.INVISIBLE);
         manejaDisparo.removeCallbacks(accionDisparo);
@@ -194,24 +218,40 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private boolean colisionaConEnte() {
-        ImageView[] navesEnemigasEnPosX = new ImageView[2];
+        ImageView[] navesEn = new ImageView[2];
         for (int i = 0; i < 3; i++) {
             if (estaEnRegionXRelativa(matrizEnemigos[i])) {
-                navesEnemigasEnPosX[0] = matrizEnemigos[i + 3];
-                navesEnemigasEnPosX[1] = matrizEnemigos[i];
+                navesEn[0] = matrizEnemigos[i + 3];
+                navesEn[1] = matrizEnemigos[i];
                 break;
             }
         }
-        if (navesEnemigasEnPosX[0] == null) {
+        if (navesEn[0] == null) {
             return false;
-        } else if ((navesEnemigasEnPosX[0].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[0]))) {
-            navesEnemigasEnPosX[0].setVisibility(View.INVISIBLE);
+        } else if ((navesEn[0].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEn[0]))) {
+            navesEn[0].setVisibility(View.INVISIBLE);
             return true;
-        } else if ((navesEnemigasEnPosX[1].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEnemigasEnPosX[1]))) {
-            navesEnemigasEnPosX[1].setVisibility(View.INVISIBLE);
+        } else if ((navesEn[1].getVisibility() != View.INVISIBLE) && (estaEnRegionYRelativa(navesEn[1]))) {
+            navesEn[1].setVisibility(View.INVISIBLE);
             return true;
         }
         return false;
+    }
+
+    private boolean colisionaConAsteroide(ImageView view) {
+        return estaEnRegionXRelativa(view) && estaEnRegionYRelativa(view);
+    }
+
+    private boolean estaEnRegionXRelativa(View view) {
+        int[] l1 = getPosicionRelativa(view);
+        int[] l2 = getPosicionRelativa(municion);
+        return (l2[0] > l1[0]) && (l2[0] < (l1[0] + view.getWidth()));
+    }
+
+    private boolean estaEnRegionYRelativa(View view) {
+        int[] l1 = getPosicionRelativa(view);
+        int[] l2 = getPosicionRelativa(municion);
+        return (l2[1] > l1[1]) && (l2[1] < (l1[1] + view.getHeight()));
     }
 
     private void actualizaSalud() {
@@ -232,30 +272,30 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    Runnable accionDisparoEnemigo = new Runnable() { // Muy ineficiente
+    Runnable accionDisparoEnemigo = new Runnable() {
         @Override
         public void run() {
             if (ejecucionAccionEnemigo) {
-                ArrayList<Integer> posiciones1 = enemigosQueDisparan();
-                if (!posiciones.equals(posiciones1)) {
+                ArrayList<Integer> tiradores = enemigosQueDisparan();
+                if (!posiciones.equals(tiradores)) {
                     for (int i = 0; i < municionEnemiga.length; i++)
                         activity_main.removeView(municionEnemiga[i]);
                     List<ImageView> list = new ArrayList<>();
                     Collections.addAll(list, municionEnemiga);
                     list.clear();
-                    municionEnemiga = list.toArray(new ImageView[posiciones1.size()]);
-                    for (int i = 0; i < posiciones1.size(); i++) {
+                    municionEnemiga = list.toArray(new ImageView[tiradores.size()]);
+                    for (int i = 0; i < tiradores.size(); i++) {
                         ImageView image = new ImageView(GameActivity.this);
                         municionEnemiga[i] = image;
                         municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
                         municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                         activity_main.addView(municionEnemiga[i]);
                         municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[posiciones1.get(i)]) + (matrizEnemigos[posiciones1.get(i)].getWidth() / 2) - 8);
-                        municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[posiciones1.get(i)]));
+                        municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[tiradores.get(i)]) + (matrizEnemigos[tiradores.get(i)].getWidth() / 2) - 8);
+                        municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[tiradores.get(i)]));
                     }
                     posiciones.clear();
-                    posiciones = new ArrayList<Integer>(posiciones1);
+                    posiciones = new ArrayList<Integer>(tiradores);
                 } else {
                     for (int i = 0; i < posiciones.size(); i++) {
                         municionEnemiga[i].setVisibility(View.VISIBLE);
@@ -266,6 +306,28 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     };
+
+    private ArrayList<Integer> enemigosQueDisparan() {
+        ArrayList<Integer> posiciones = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            if (matrizEnemigos[i + 3].getVisibility() != View.INVISIBLE) {
+                posiciones.add(i + 3);
+            } else if (matrizEnemigos[i].getVisibility() != View.INVISIBLE) {
+                posiciones.add(i);
+            }
+        }
+        return posiciones;
+    }
+
+    private int getPosicionXRelative(View view) {
+        int[] location = getPosicionRelativa(view);
+        return location[0];
+    }
+
+    private int getPosicionYRelative(View view) {
+        int[] location = getPosicionRelativa(view);
+        return location[1];
+    }
 
     Runnable accionMovimientoEnemigo = new Runnable() {
         @Override
@@ -338,6 +400,12 @@ public class GameActivity extends AppCompatActivity {
         return ((((l2[0] > l1[0]) && (l2[0] < (l1[0] + v1.getWidth()))) && ((l2[1] > l1[1]) && (l2[1] < (l1[1] + v1.getHeight())))));
     }
 
+    private int[] getPosicionRelativa(View view) {
+        int[] localizacion = new int[2];
+        view.getLocationOnScreen(localizacion);
+        return localizacion;
+    }
+
     private boolean llegaMunicionAlFinal(ImageView img) {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -365,58 +433,8 @@ public class GameActivity extends AppCompatActivity {
         return contador == matrizEnemigos.length;
     }
 
-    private int getPosicionXRelative(View view) {
-        int[] location = getPosicionRelativa(view);
-        return location[0];
-    }
-
-    private int getPosicionYRelative(View view) {
-        int[] location = getPosicionRelativa(view);
-        return location[1];
-    }
-
-    private boolean llegaAlFinal() {
-        return (municion.getY() <= 20);
-    }
-
-    private boolean seSale(String direccion, String jugador) {
-        switch (direccion) {
-            case "izq":
-                switch (jugador) {
-                    case "CU":
-                        return (nave.getX() + movimiento + nave.getWidth()) > tablero_aliado.getWidth();
-                    case "IA":
-                        return (matriz.getX() + movimiento + matriz.getWidth()) > tablero_enemigo.getWidth();
-                }
-            case "der":
-                switch (jugador) {
-                    case "CU":
-                        return (nave.getX() - movimiento) < 0;
-                    case "IA":
-                        return (matriz.getX() - movimiento) < 0;
-                }
-        }
-        return true;
-    }
-
     private boolean invadeMitad() {
         return ((matriz.getY() + matriz.getHeight()) >= tablero_enemigo.getHeight());
-    }
-
-    private boolean estaEnRegionXRelativa(View view) {
-        int[] l1 = getPosicionRelativa(view);
-        int[] l2 = getPosicionRelativa(municion);
-        return (l2[0] > l1[0]) && (l2[0] < (l1[0] + view.getWidth()));
-    }
-
-    private boolean estaEnRegionYRelativa(View view) {
-        int[] l1 = getPosicionRelativa(view);
-        int[] l2 = getPosicionRelativa(municion);
-        return (l2[1] > l1[1]) && (l2[1] < (l1[1] + view.getHeight()));
-    }
-
-    private boolean colisionaConAsteroide(ImageView view) {
-        return estaEnRegionXRelativa(view) && estaEnRegionYRelativa(view);
     }
 
     private void actualizaRecurso(ImageView view, int salud) {
@@ -444,24 +462,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void volverMenuPrincipal(View v) {
         this.finish();
-    }
-
-    private int[] getPosicionRelativa(View view) {
-        int[] localizacion = new int[2];
-        view.getLocationOnScreen(localizacion);
-        return localizacion;
-    }
-
-    private ArrayList<Integer> enemigosQueDisparan() {
-        ArrayList<Integer> posiciones = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            if (matrizEnemigos[i + 3].getVisibility() != View.INVISIBLE) {
-                posiciones.add(i + 3);
-            } else if (matrizEnemigos[i].getVisibility() != View.INVISIBLE) {
-                posiciones.add(i);
-            }
-        }
-        return posiciones;
     }
 
     // QUEDA ARREGLAR ESTOS DOS MÉTODOS
