@@ -226,29 +226,43 @@
                     android:layout_height="0dp"
                     android:layout_weight="1">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/asteroides_seccion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp">
 
-                        <ImageView
-                            android:id="@+id/asteroide_1"
-                            android:layout_width="wrap_content"
+                        <RelativeLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_marginLeft="50dp"
-                            android:src="@drawable/zobjectasteroie" />
+                            android:layout_weight="1">
 
-                        <ImageView
-                            android:id="@+id/asteroide_2"
-                            android:layout_width="wrap_content"
+                            <ImageView
+                                android:id="@+id/asteroide_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/zobjectasteroie" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="50dp"
-                            android:src="@drawable/zobjectasteroie" />
+                            android:layout_weight="1">
 
-                    </RelativeLayout>
+                            <ImageView
+                                android:id="@+id/asteroide_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/zobjectasteroie" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                 </RelativeLayout>
 
