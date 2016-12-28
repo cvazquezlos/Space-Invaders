@@ -197,10 +197,10 @@ public class GameActivity extends AppCompatActivity {
                 puntuacion += 20;
                 actualizaSalud();
                 reiniciarBala();
-            } else if (colisionaConAsteroide(asteroide1)) {
+            } else if (colisionaConAsteroide(asteroide1) && saludObstaculo1!=0) {
                 actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
                 reiniciarBala();
-            } else if (colisionaConAsteroide(asteroide2)) {
+            } else if (colisionaConAsteroide(asteroide2) && saludObstaculo2!=0) {
                 actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
                 reiniciarBala();
             }
@@ -365,10 +365,10 @@ public class GameActivity extends AppCompatActivity {
                 for (int i = 0; i < municionEnemiga.length; i++) {
                     municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
                     if (municionEnemiga[i].getVisibility() == View.VISIBLE) {
-                        if (colisionaEnemigoCon(asteroide1, municionEnemiga[i])) {
+                        if (colisionaEnemigoCon(asteroide1, municionEnemiga[i]) && saludObstaculo1!=0) {
                             actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
-                        } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i])) {
+                        } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i]) && saludObstaculo2!=0) {
                             actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
                         } else if (llegaMunicionAlFinal(municionEnemiga[i])) {
