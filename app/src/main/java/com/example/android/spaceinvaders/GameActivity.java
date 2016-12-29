@@ -21,12 +21,12 @@ import java.util.List;
 public class GameActivity extends AppCompatActivity {
 
     ArrayList<Integer> posiciones;
-    boolean accionEnemigo, ejecucionAccionEnemigo, inicioAFin = false, sonido;
+    boolean accionEnemigo, ejecucionAccionEnemigo, inicioAFin, sonido, izquierda, derecha;
     Button botonDisparo;
     Handler manejaDisparo = new Handler(), manejaDisparoEnemigo = new Handler(), manejaEnemigo = new Handler();
     ImageView asteroide1, asteroide2, enemigo, fondoJuego, municion, nave;
     ImageView[] municionEnemiga, matrizEnemigos;
-    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion = 0, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento = 30, movimientoEnemigo = 5, puntosSaludJugador = 6, puntuacion = 0, rotacion = 0, saludObstaculo1 = 3, saludObstaculo2 = 3;
+    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigo, puntosSaludJugador, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
     int[] columnasCaptadas, navesId;
     LinearLayout matriz;
     MediaPlayer musicaFondo, sonidoDisparoNave;
@@ -44,15 +44,26 @@ public class GameActivity extends AppCompatActivity {
             botonDisparo = (Button) findViewById(R.id.disparo);
             enemigo = (ImageView) findViewById(R.id.enemigo1);
             fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
+            movimiento = 30;
+            movimientoEnemigo = 5;
             municion = (ImageView) findViewById(R.id.municion);
             nave = (ImageView) findViewById(R.id.nave);
+            puntuacion = 0;
             puntosVida = (TextView) findViewById(R.id.ptos_vida);
+            puntosSaludJugador = 6;
+            rotacion = 0;
+            saludObstaculo1 = 3;
+            saludObstaculo2 = 3;
             tablero_enemigo = (RelativeLayout) findViewById(R.id.tablero_enemigo);
             tablero_aliado = (RelativeLayout) findViewById(R.id.tablero_aliado);
             Intent i = getIntent();
             if (i != null) {
                 String data = i.getStringExtra("arg");
                 introduceCambios(data);
+                iteracion=0;
+                inicioAFin = false;
+                izquierda = false;
+                derecha = false;
                 musicaFondo = MediaPlayer.create(this, R.raw.musicafondo);
                 accionEnemigo = true;
                 if (sonido)
@@ -197,10 +208,10 @@ public class GameActivity extends AppCompatActivity {
                 puntuacion += 20;
                 actualizaSalud();
                 reiniciarBala();
-            } else if (colisionaConAsteroide(asteroide1) && saludObstaculo1!=0) {
+            } else if (colisionaConAsteroide(asteroide1) && saludObstaculo1 != 0) {
                 actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
                 reiniciarBala();
-            } else if (colisionaConAsteroide(asteroide2) && saludObstaculo2!=0) {
+            } else if (colisionaConAsteroide(asteroide2) && saludObstaculo2 != 0) {
                 actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
                 reiniciarBala();
             }
@@ -365,10 +376,10 @@ public class GameActivity extends AppCompatActivity {
                 for (int i = 0; i < municionEnemiga.length; i++) {
                     municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
                     if (municionEnemiga[i].getVisibility() == View.VISIBLE) {
-                        if (colisionaEnemigoCon(asteroide1, municionEnemiga[i]) && saludObstaculo1!=0) {
+                        if (colisionaEnemigoCon(asteroide1, municionEnemiga[i]) && saludObstaculo1 != 0) {
                             actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
-                        } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i]) && saludObstaculo2!=0) {
+                        } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i]) && saludObstaculo2 != 0) {
                             actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
                         } else if (llegaMunicionAlFinal(municionEnemiga[i])) {

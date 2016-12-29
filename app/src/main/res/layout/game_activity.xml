@@ -48,6 +48,8 @@
                     android:id="@+id/heart_6"
                     android:layout_width="20dp"
                     android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     android:layout_marginRight="1dp"
                     android:src="@drawable/vcorazonizq" />
 
@@ -55,24 +57,34 @@
                     android:id="@+id/heart_5"
                     android:layout_width="20dp"
                     android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="2dp"
                     android:src="@drawable/vcorazonder" />
 
                 <ImageView
                     android:id="@+id/heart_4"
                     android:layout_width="20dp"
                     android:layout_height="30dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     android:layout_marginRight="1dp"
                     android:src="@drawable/vcorazonizq" />
 
                 <ImageView
                     android:id="@+id/heart_3"
                     android:layout_width="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="2dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vcorazonder" />
 
                 <ImageView
                     android:id="@+id/heart_2"
                     android:layout_width="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     android:layout_height="30dp"
                     android:layout_marginRight="1dp"
                     android:src="@drawable/vcorazonizq" />
@@ -80,6 +92,8 @@
                 <ImageView
                     android:id="@+id/heart_1"
                     android:layout_width="20dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
                     android:layout_height="30dp"
                     android:src="@drawable/vcorazonder" />
 
@@ -170,12 +184,14 @@
                                 android:id="@+id/enemigo1"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
+                                android:adjustViewBounds="true"
                                 android:src="@drawable/enemigodiseno11" />
 
                             <ImageView
                                 android:id="@+id/enemigo2"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
+                                android:adjustViewBounds="true"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/enemigodiseno11" />
 
@@ -183,6 +199,7 @@
                                 android:id="@+id/enemigo3"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
+                                android:adjustViewBounds="true"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/enemigodiseno11" />
 
@@ -197,12 +214,14 @@
                             <ImageView
                                 android:id="@+id/enemigo4"
                                 android:layout_width="65dp"
+                                android:adjustViewBounds="true"
                                 android:layout_height="65dp"
                                 android:src="@drawable/enemigodiseno11" />
 
                             <ImageView
                                 android:id="@+id/enemigo5"
                                 android:layout_width="65dp"
+                                android:adjustViewBounds="true"
                                 android:layout_height="65dp"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/enemigodiseno11" />
@@ -211,6 +230,7 @@
                                 android:id="@+id/enemigo6"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
+                                android:adjustViewBounds="true"
                                 android:layout_centerHorizontal="true"
                                 android:src="@drawable/enemigodiseno11" />
 
@@ -302,6 +322,7 @@
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:adjustViewBounds="true"
             android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:onClick="volverMenuPrincipal"
