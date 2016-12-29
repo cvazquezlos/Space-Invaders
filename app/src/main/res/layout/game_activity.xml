@@ -133,7 +133,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
                 android:background="@android:color/transparent"
-                android:onClick="actualizaPosicion"
                 android:visibility="visible" />
 
             <Button
@@ -143,7 +142,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
-                android:onClick="actualizaPosicion"
                 android:visibility="visible" />
 
             <ImageView

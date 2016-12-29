@@ -1,11 +1,12 @@
 package com.example.android.spaceinvaders;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends Activity {
 
     ArrayList<Integer> posiciones;
     boolean accionEnemigo, ejecucionAccionEnemigo, inicioAFin, sonido, izquierda, derecha;
@@ -35,7 +36,6 @@ public class GameActivity extends AppCompatActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
         setContentView(R.layout.game_activity);
         if (savedInstanceState == null) {
             activity_main = (RelativeLayout) findViewById(R.id.activity_main);
@@ -44,7 +44,7 @@ public class GameActivity extends AppCompatActivity {
             botonDisparo = (Button) findViewById(R.id.disparo);
             enemigo = (ImageView) findViewById(R.id.enemigo1);
             fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
-            movimiento = 30;
+            movimiento = 13;
             movimientoEnemigo = 5;
             municion = (ImageView) findViewById(R.id.municion);
             nave = (ImageView) findViewById(R.id.nave);
@@ -77,6 +77,38 @@ public class GameActivity extends AppCompatActivity {
                     posiciones = new ArrayList<>();
                 }
             }
+
+            final Button izquierdaControl = (Button) findViewById(R.id.control_derecha);
+            izquierdaControl.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+                        izquierda = true;
+                        derecha = false;
+                    }
+                    if(event.getAction() == MotionEvent.ACTION_UP){
+                        izquierda = false;
+                    }
+                    return true;
+                }
+            });
+
+            final Button derechaControl = (Button) findViewById(R.id.control_izquierda);
+            derechaControl.setOnTouchListener(new View.OnTouchListener() {
+
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+                        izquierda = false;
+                        derecha = true;
+                    }
+                    if(event.getAction() == MotionEvent.ACTION_UP){
+                        derecha = false;
+                    }
+                    return true;
+                }
+            });
         }
     }
 
@@ -144,23 +176,6 @@ public class GameActivity extends AppCompatActivity {
         for (int i = 0; i < matrizEnemigos.length; i++)
             matrizEnemigos[i] = (ImageView) findViewById(navesId[i]);
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
-    }
-
-    public void actualizaPosicion(View v) {
-        switch (v.getId()) {
-            case (R.id.control_derecha):
-                if (!seSale("der", "CU")) {
-                    nave.setImageResource(ladeadoIzq);
-                    nave.setX(nave.getX() - movimiento);
-                }
-                break;
-            case R.id.control_izquierda:
-                if (!seSale("izq", "CU")) {
-                    nave.setImageResource(ladeadoDer);
-                    nave.setX(nave.getX() + movimiento);
-                }
-                break;
-        }
     }
 
     private boolean seSale(String direccion, String jugador) {
@@ -401,6 +416,21 @@ public class GameActivity extends AppCompatActivity {
             }
             if (accionEnemigo) {
                 manejaEnemigo.postDelayed(this, 10);
+            }
+            if (izquierda && !derecha){
+                if (!seSale("der", "CU")) {
+                    nave.setImageResource(ladeadoIzq);
+                    nave.setX(nave.getX() - movimiento);
+                } else {
+                    izquierda = false;
+                }
+            } else if (derecha && !izquierda) {
+                if (!seSale("izq", "CU")) {
+                    nave.setImageResource(ladeadoDer);
+                    nave.setX(nave.getX() + movimiento);
+                } else {
+                    izquierda = false;
+                }
             }
         }
     };
