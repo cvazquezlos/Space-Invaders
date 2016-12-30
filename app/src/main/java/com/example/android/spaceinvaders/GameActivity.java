@@ -27,7 +27,7 @@ public class GameActivity extends Activity {
     Handler manejaDisparo = new Handler(), manejaDisparoEnemigo = new Handler(), manejaEnemigo = new Handler();
     ImageView asteroide1, asteroide2, enemigo, fondoJuego, municion, nave;
     ImageView[] municionEnemiga, matrizEnemigos;
-    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigo, puntosSaludJugador, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
+    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigoX, movimientoEnemigoY, puntosSaludJugador, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
     int[] columnasCaptadas, navesId;
     LinearLayout matriz;
     MediaPlayer musicaFondo, sonidoDisparoNave;
@@ -45,7 +45,8 @@ public class GameActivity extends Activity {
             enemigo = (ImageView) findViewById(R.id.enemigo1);
             fondoJuego = (ImageView) findViewById(R.id.fondo_juego);
             movimiento = 13;
-            movimientoEnemigo = 5;
+            movimientoEnemigoX = 5;
+            movimientoEnemigoY = 60;
             municion = (ImageView) findViewById(R.id.municion);
             nave = (ImageView) findViewById(R.id.nave);
             puntuacion = 0;
@@ -60,7 +61,7 @@ public class GameActivity extends Activity {
             if (i != null) {
                 String data = i.getStringExtra("arg");
                 introduceCambios(data);
-                iteracion=0;
+                iteracion = 0;
                 inicioAFin = false;
                 izquierda = false;
                 derecha = false;
@@ -83,11 +84,11 @@ public class GameActivity extends Activity {
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         izquierda = true;
                         derecha = false;
                     }
-                    if(event.getAction() == MotionEvent.ACTION_UP){
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
                         izquierda = false;
                     }
                     return true;
@@ -99,11 +100,11 @@ public class GameActivity extends Activity {
 
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
-                    if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         izquierda = false;
                         derecha = true;
                     }
-                    if(event.getAction() == MotionEvent.ACTION_UP){
+                    if (event.getAction() == MotionEvent.ACTION_UP) {
                         derecha = false;
                     }
                     return true;
@@ -365,7 +366,7 @@ public class GameActivity extends Activity {
                     enemigo.setRotation(rotacion);
                 } else
                     enemigo.setImageResource(ladeadoIzqEnemigo);
-                matriz.setX(matriz.getX() + movimientoEnemigo);
+                matriz.setX(matriz.getX() + movimientoEnemigoX);
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 20;
@@ -373,17 +374,21 @@ public class GameActivity extends Activity {
                 } else {
                     enemigo.setImageResource(ladeadoDerEnemigo);
                 }
-                matriz.setX(matriz.getX() - movimientoEnemigo);
+                matriz.setX(matriz.getX() - movimientoEnemigoX);
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
                 rotacion = 0;
-                matriz.setY(matriz.getY() + 70);
+                matriz.setY(matriz.getY() + movimientoEnemigoY);
                 inicioAFin = !inicioAFin;
             }
             if (invadeMitad()) {
+                movimientoEnemigoY *= -1;
+                /*
                 reseteaMatriz();
                 puntosSaludJugador--;
-                actualizaSalud();
+                actualizaSalud();*/
+            } else if (invadeOrigen()) {
+                movimientoEnemigoY *= -1;
             }
             if (municionEnemiga.length > 0) {
                 manejaDisparoEnemigo.removeCallbacks(accionDisparoEnemigo);
@@ -417,7 +422,7 @@ public class GameActivity extends Activity {
             if (accionEnemigo) {
                 manejaEnemigo.postDelayed(this, 10);
             }
-            if (izquierda && !derecha){
+            if (izquierda && !derecha) {
                 if (!seSale("der", "CU")) {
                     nave.setImageResource(ladeadoIzq);
                     nave.setX(nave.getX() - movimiento);
@@ -475,7 +480,11 @@ public class GameActivity extends Activity {
     }
 
     private boolean invadeMitad() {
-        return ((matriz.getY() + matriz.getHeight()) >= tablero_enemigo.getHeight());
+        return ((matriz.getY() + matriz.getHeight()) >= (tablero_enemigo.getHeight() - (enemigo.getHeight() / 3)));
+    }
+
+    private boolean invadeOrigen() {
+        return (matriz.getY() <= 20);
     }
 
     private void actualizaRecurso(ImageView view, int salud) {
