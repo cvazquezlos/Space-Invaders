@@ -215,7 +215,7 @@ public class GameActivity extends Activity {
         @Override
         public void run() {
             municion.setY(municion.getY() - 15);
-            if (llegaAlFinal()) {
+            if (invadeOrigen(municion)) {
                 reiniciarBala();
             }
             manejaDisparo.postDelayed(this, 10);
@@ -234,8 +234,8 @@ public class GameActivity extends Activity {
         }
     };
 
-    private boolean llegaAlFinal() {
-        return (municion.getY() <= 20);
+    private boolean invadeOrigen(View view) {
+        return (view.getY() <= 20);
     }
 
     private void reiniciarBala() {
@@ -387,7 +387,7 @@ public class GameActivity extends Activity {
                 reseteaMatriz();
                 puntosSaludJugador--;
                 actualizaSalud();*/
-            } else if (invadeOrigen()) {
+            } else if (invadeOrigen(matriz)) {
                 movimientoEnemigoY *= -1;
             }
             if (municionEnemiga.length > 0) {
@@ -481,10 +481,6 @@ public class GameActivity extends Activity {
 
     private boolean invadeMitad() {
         return ((matriz.getY() + matriz.getHeight()) >= (tablero_enemigo.getHeight() - (enemigo.getHeight() / 3)));
-    }
-
-    private boolean invadeOrigen() {
-        return (matriz.getY() <= 20);
     }
 
     private void actualizaRecurso(ImageView view, int salud) {
