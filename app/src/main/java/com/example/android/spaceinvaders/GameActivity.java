@@ -383,10 +383,6 @@ public class GameActivity extends Activity {
             }
             if (invadeMitad()) {
                 movimientoEnemigoY *= -1;
-                /*
-                reseteaMatriz();
-                puntosSaludJugador--;
-                actualizaSalud();*/
             } else if (invadeOrigen(matriz)) {
                 movimientoEnemigoY *= -1;
             }
@@ -396,13 +392,7 @@ public class GameActivity extends Activity {
                 for (int i = 0; i < municionEnemiga.length; i++) {
                     municionEnemiga[i].setY(municionEnemiga[i].getY() + 15);
                     if (municionEnemiga[i].getVisibility() == View.VISIBLE) {
-                        if (colisionaEnemigoCon(asteroide1, municionEnemiga[i]) && saludObstaculo1 != 0) {
-                            actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
-                            municionEnemiga[i].setVisibility(View.INVISIBLE);
-                        } else if (colisionaEnemigoCon(asteroide2, municionEnemiga[i]) && saludObstaculo2 != 0) {
-                            actualizaRecurso(asteroide2, saludObstaculo2 -= 1);
-                            municionEnemiga[i].setVisibility(View.INVISIBLE);
-                        } else if (llegaMunicionAlFinal(municionEnemiga[i])) {
+                        if (llegaMunicionAlFinal(municionEnemiga[i])) {
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
                         } else if (colisionaEnemigoCon(nave, municionEnemiga[i])) {
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
@@ -480,7 +470,7 @@ public class GameActivity extends Activity {
     }
 
     private boolean invadeMitad() {
-        return ((matriz.getY() + matriz.getHeight()) >= (tablero_enemigo.getHeight() - (enemigo.getHeight() / 3)));
+        return ((matriz.getY() + matriz.getHeight()) >= (tablero_enemigo.getHeight() - (enemigo.getHeight() / 4)));
     }
 
     private void actualizaRecurso(ImageView view, int salud) {
