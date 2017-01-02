@@ -1,6 +1,6 @@
 <img src="http://i65.tinypic.com/vrpiyg.png">
 
-[TRAVIS. Queda instalar y modificar el código para que sea aceptado]
+[![Build Status](https://travis-ci.org/cvazquezlos/Space-Invaders-Android.svg?branch=master)](https://travis-ci.org/cvazquezlos/Space-Invaders-Android)
 
 #Castellano 
 
