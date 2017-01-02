@@ -408,9 +408,6 @@ public class GameActivity extends Activity {
             if (todasNavesDestruidas()) {
                 reseteaMatriz();
             }
-            if (accionEnemigo) {
-                manejaEnemigo.postDelayed(this, 10);
-            }
             if (izquierda && !derecha) {
                 if (!seSale("der", "CU")) {
                     nave.setImageResource(ladeadoIzq);
@@ -425,6 +422,9 @@ public class GameActivity extends Activity {
                 } else {
                     izquierda = false;
                 }
+            }
+            if (accionEnemigo) {
+                manejaEnemigo.postDelayed(this, 10);
             }
         }
     };
