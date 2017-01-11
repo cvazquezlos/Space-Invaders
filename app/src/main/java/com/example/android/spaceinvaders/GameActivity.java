@@ -284,7 +284,7 @@ public class GameActivity extends Activity {
             puntosVida.setText(Integer.toString(puntuacion));
         } catch (Exception e) {
         }
-        int idAEsconder = 2131492962 - puntosSaludJugador;
+        int idAEsconder = 2131492961 - puntosSaludJugador;
         findViewById(idAEsconder).setVisibility(View.INVISIBLE);
         if (puntosSaludJugador == 0) {
             accionEnemigo = false;
@@ -361,15 +361,16 @@ public class GameActivity extends Activity {
                     rotacion += 20;
                     enemigo.setRotation(rotacion);
                 } else
-                    enemigo.setImageResource(ladeadoIzqEnemigo);
+                    for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setImageResource(ladeadoIzqEnemigo);
                 matriz.setX(matriz.getX() + movimientoEnemigoX);
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 20;
                     enemigo.setRotation(rotacion);
-                } else {
-                    enemigo.setImageResource(ladeadoDerEnemigo);
-                }
+                } else
+                    for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setImageResource(ladeadoDerEnemigo);
                 matriz.setX(matriz.getX() - movimientoEnemigoX);
             }
             if (seSale("izq", "IA") || seSale("der", "IA")) {
