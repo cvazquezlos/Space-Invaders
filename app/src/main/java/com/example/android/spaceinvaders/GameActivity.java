@@ -172,8 +172,10 @@ public class GameActivity extends Activity {
         columnasCaptadas = new int[2];
         navesId = new int[]{R.id.enemigo1, R.id.enemigo2, R.id.enemigo3, R.id.enemigo4, R.id.enemigo5, R.id.enemigo6};
         matrizEnemigos = new ImageView[navesId.length];
-        for (int i = 0; i < matrizEnemigos.length; i++)
+        for (int i = 0; i < matrizEnemigos.length; i++) {
             matrizEnemigos[i] = (ImageView) findViewById(navesId[i]);
+            matrizEnemigos[i].setImageResource(frontalEnemigo);
+        }
         matriz = (LinearLayout) findViewById(R.id.matriz_enemigos);
     }
 
@@ -358,16 +360,18 @@ public class GameActivity extends Activity {
             accionDisparoEnemigo();
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
-                    rotacion += 20;
-                    enemigo.setRotation(rotacion);
+                    rotacion += 2;
+                    for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setRotation(rotacion);
                 } else
                     for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoIzqEnemigo);
                 matriz.setX(matriz.getX() + movimientoEnemigoX);
             } else {
                 if (idEnemigo == 2130837601) {
-                    rotacion -= 20;
-                    enemigo.setRotation(rotacion);
+                    rotacion -= 2;
+                    for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setRotation(rotacion);
                 } else
                     for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoDerEnemigo);
@@ -489,8 +493,9 @@ public class GameActivity extends Activity {
 
     private void reseteaMatriz() {
         if (todasNavesDestruidas())
-            for (int i = 0; i < matrizEnemigos.length; i++)
+            for (int i = 0; i < matrizEnemigos.length; i++) {
                 matrizEnemigos[i].setVisibility(View.VISIBLE);
+            }
         matriz.setY(0);
         matriz.setX((tablero_enemigo.getWidth() / 2) - (matriz.getWidth() / 2));
     }
