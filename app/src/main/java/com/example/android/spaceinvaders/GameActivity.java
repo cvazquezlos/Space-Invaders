@@ -357,7 +357,8 @@ public class GameActivity extends Activity {
         @Override
         public void run() {
             iteracion++;
-            accionDisparoEnemigo();
+            if (iteracion!=1)
+                accionDisparoEnemigo();
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
                     rotacion += 2;
