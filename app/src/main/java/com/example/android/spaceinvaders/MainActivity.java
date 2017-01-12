@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageButton opcionBoton, volumenBoton;
+    ImageButton opcionBoton, volumenBoton, playBoton;
     private PopupWindow popup;
     private RelativeLayout layoutPrincipal;
     String[] resultados;
@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         resultados[1] = "diseno11";
         resultados[2] = "enemigodiseno11";
         resultados[3] = Boolean.toString(sonido);
+        playBoton = (ImageButton) findViewById(R.id.play_boton);
         opcionBoton = (ImageButton) findViewById(R.id.opcion_boton);
         volumenBoton = (ImageButton) findViewById(R.id.volumen_boton);
         layoutPrincipal = (RelativeLayout) findViewById(R.id.principal_screen);
@@ -56,10 +57,12 @@ public class MainActivity extends AppCompatActivity {
                         popup.dismiss();
                         opcionBoton.setVisibility(View.VISIBLE);
                         volumenBoton.setVisibility(View.VISIBLE);
+                        playBoton.setVisibility(View.VISIBLE);
                     }
                 });
                 opcionBoton.setVisibility(View.INVISIBLE);
                 volumenBoton.setVisibility(View.INVISIBLE);
+                playBoton.setVisibility(View.INVISIBLE);
             }
         });
     }
