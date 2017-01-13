@@ -221,7 +221,7 @@ public class GameActivity extends Activity {
             if (colisionaConEnte()) {
                 //detectaCambiosEnAnchura();
                 puntuacion += 20;
-                actualizaSalud(puntuacion);
+                actualizaPuntuacion();
                 reiniciarBala();
             } else if (colisionaConAsteroide(asteroide1) && saludObstaculo1 != 0) {
                 actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
@@ -280,13 +280,15 @@ public class GameActivity extends Activity {
         return (l2[1] > l1[1]) && (l2[1] < (l1[1] + view.getHeight()));
     }
 
-    private void actualizaSalud(int puntuacion) {
+    private void actualizaPuntuacion() {
         try {
-            puntosVida.setText(Integer.toString(puntuacion));
-            System.out.println("Transformación exitosa.");
+            puntosVida.setText(""+puntuacion);
         } catch (Exception e) {
             System.out.println("Error en la transformación de Integer a String.");
         }
+    }
+
+    private void actualizaSalud() {
         int idAEsconder = 2131492961 - puntosSaludJugador;
         findViewById(idAEsconder).setVisibility(View.INVISIBLE);
         if (puntosSaludJugador == 0) {
@@ -403,7 +405,7 @@ public class GameActivity extends Activity {
                         } else if (colisionaEnemigoCon(nave, municionEnemiga[i])) {
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
                             puntosSaludJugador--;
-                            actualizaSalud(puntuacion);
+                            actualizaSalud();
                         }
                     }
                 }
