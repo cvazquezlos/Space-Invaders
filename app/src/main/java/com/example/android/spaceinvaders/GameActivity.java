@@ -282,7 +282,7 @@ public class GameActivity extends Activity {
 
     private void actualizaPuntuacion() {
         try {
-            puntosVida.setText(""+puntuacion);
+            puntosVida.setText("" + puntuacion);
         } catch (Exception e) {
             System.out.println("Error en la transformación de Integer a String.");
         }
@@ -302,37 +302,37 @@ public class GameActivity extends Activity {
         }
     }
 
-    private void accionDisparoEnemigo(){
-            if (ejecucionAccionEnemigo) {
-                ArrayList<Integer> tiradores = enemigosQueDisparan();
-                if (!posiciones.equals(tiradores)) {
-                    for (int i = 0; i < municionEnemiga.length; i++)
-                        activity_main.removeView(municionEnemiga[i]);
-                    List<ImageView> list = new ArrayList<>();
-                    Collections.addAll(list, municionEnemiga);
-                    list.clear();
-                    municionEnemiga = list.toArray(new ImageView[tiradores.size()]);
-                    for (int i = 0; i < tiradores.size(); i++) {
-                        ImageView image = new ImageView(GameActivity.this);
-                        municionEnemiga[i] = image;
-                        municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
-                        municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        activity_main.addView(municionEnemiga[i]);
-                        municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[tiradores.get(i)]) + (matrizEnemigos[tiradores.get(i)].getWidth() / 2) - 8);
-                        municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[tiradores.get(i)]));
-                    }
-                    posiciones.clear();
-                    posiciones = new ArrayList<Integer>(tiradores);
-                } else {
-                    for (int i = 0; i < posiciones.size(); i++) {
-                        municionEnemiga[i].setVisibility(View.VISIBLE);
-                        municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[posiciones.get(i)]) + (matrizEnemigos[posiciones.get(i)].getWidth() / 2) - 8);
-                        municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[posiciones.get(i)]));
-                    }
+    private void accionDisparoEnemigo() {
+        if (ejecucionAccionEnemigo) {
+            ArrayList<Integer> tiradores = enemigosQueDisparan();
+            if (!posiciones.equals(tiradores)) {
+                for (int i = 0; i < municionEnemiga.length; i++)
+                    activity_main.removeView(municionEnemiga[i]);
+                List<ImageView> list = new ArrayList<>();
+                Collections.addAll(list, municionEnemiga);
+                list.clear();
+                municionEnemiga = list.toArray(new ImageView[tiradores.size()]);
+                for (int i = 0; i < tiradores.size(); i++) {
+                    ImageView image = new ImageView(GameActivity.this);
+                    municionEnemiga[i] = image;
+                    municionEnemiga[i].setImageResource(R.drawable.municionenemiga);
+                    municionEnemiga[i].setLayoutParams(new android.view.ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                    activity_main.addView(municionEnemiga[i]);
+                    municionEnemiga[i].setVisibility(View.VISIBLE);
+                    municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[tiradores.get(i)]) + (matrizEnemigos[tiradores.get(i)].getWidth() / 2) - 8);
+                    municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[tiradores.get(i)]));
+                }
+                posiciones.clear();
+                posiciones = new ArrayList<Integer>(tiradores);
+            } else {
+                for (int i = 0; i < posiciones.size(); i++) {
+                    municionEnemiga[i].setVisibility(View.VISIBLE);
+                    municionEnemiga[i].setX(getPosicionXRelative(matrizEnemigos[posiciones.get(i)]) + (matrizEnemigos[posiciones.get(i)].getWidth() / 2) - 8);
+                    municionEnemiga[i].setY(getPosicionYRelative(matrizEnemigos[posiciones.get(i)]));
                 }
             }
         }
+    }
 
     private ArrayList<Integer> enemigosQueDisparan() {
         ArrayList<Integer> posiciones = new ArrayList<>();
@@ -360,7 +360,7 @@ public class GameActivity extends Activity {
         @Override
         public void run() {
             iteracion++;
-            if (iteracion!=1)
+            if (iteracion != 1)
                 accionDisparoEnemigo();
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
@@ -368,7 +368,7 @@ public class GameActivity extends Activity {
                     /*for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setRotation(rotacion);*/
                 } else
-                    for (int i=0; i<matrizEnemigos.length; i++)
+                    for (int i = 0; i < matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoIzqEnemigo);
                 matriz.setX(matriz.getX() + movimientoEnemigoX);
             } else {
@@ -377,7 +377,7 @@ public class GameActivity extends Activity {
                     /*for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setRotation(rotacion);*/
                 } else
-                    for (int i=0; i<matrizEnemigos.length; i++)
+                    for (int i = 0; i < matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoDerEnemigo);
                 matriz.setX(matriz.getX() - movimientoEnemigoX);
             }
