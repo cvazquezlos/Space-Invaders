@@ -49,8 +49,8 @@ public class GameActivity extends Activity {
             movimientoEnemigoY = 60;
             municion = (ImageView) findViewById(R.id.municion);
             nave = (ImageView) findViewById(R.id.nave);
-            puntosVida = (TextView) findViewById(R.id.ptos_vida);
             puntosSaludJugador = 6;
+            puntosVida = (TextView) findViewById(R.id.ptos_vida);
             rotacion = 0;
             saludObstaculo1 = 3;
             saludObstaculo2 = 3;
@@ -120,7 +120,6 @@ public class GameActivity extends Activity {
         nave.setImageResource(frontal);
         int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
         cambiosMovilidad(idEnemigo, "enemigo");
-        System.out.println(idEnemigo);
         enemigo.setImageResource(frontalEnemigo);
         this.idEnemigo = idEnemigo;
         sonido = Boolean.valueOf(info[3]);
@@ -222,7 +221,7 @@ public class GameActivity extends Activity {
             if (colisionaConEnte()) {
                 //detectaCambiosEnAnchura();
                 puntuacion += 20;
-                actualizaSalud();
+                actualizaSalud(puntuacion);
                 reiniciarBala();
             } else if (colisionaConAsteroide(asteroide1) && saludObstaculo1 != 0) {
                 actualizaRecurso(asteroide1, saludObstaculo1 -= 1);
@@ -281,10 +280,12 @@ public class GameActivity extends Activity {
         return (l2[1] > l1[1]) && (l2[1] < (l1[1] + view.getHeight()));
     }
 
-    private void actualizaSalud() {
+    private void actualizaSalud(int puntuacion) {
         try {
             puntosVida.setText(Integer.toString(puntuacion));
+            System.out.println("Transformación exitosa.");
         } catch (Exception e) {
+            System.out.println("Error en la transformación de Integer a String.");
         }
         int idAEsconder = 2131492961 - puntosSaludJugador;
         findViewById(idAEsconder).setVisibility(View.INVISIBLE);
@@ -402,7 +403,7 @@ public class GameActivity extends Activity {
                         } else if (colisionaEnemigoCon(nave, municionEnemiga[i])) {
                             municionEnemiga[i].setVisibility(View.INVISIBLE);
                             puntosSaludJugador--;
-                            actualizaSalud();
+                            actualizaSalud(puntuacion);
                         }
                     }
                 }
