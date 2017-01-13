@@ -362,8 +362,8 @@ public class GameActivity extends Activity {
             if (inicioAFin) {
                 if (idEnemigo == 2130837601) {
                     rotacion += 2;
-                    for (int i=0; i<matrizEnemigos.length; i++)
-                        matrizEnemigos[i].setRotation(rotacion);
+                    /*for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setRotation(rotacion);*/
                 } else
                     for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoIzqEnemigo);
@@ -371,8 +371,8 @@ public class GameActivity extends Activity {
             } else {
                 if (idEnemigo == 2130837601) {
                     rotacion -= 2;
-                    for (int i=0; i<matrizEnemigos.length; i++)
-                        matrizEnemigos[i].setRotation(rotacion);
+                    /*for (int i=0; i<matrizEnemigos.length; i++)
+                        matrizEnemigos[i].setRotation(rotacion);*/
                 } else
                     for (int i=0; i<matrizEnemigos.length; i++)
                         matrizEnemigos[i].setImageResource(ladeadoDerEnemigo);
