@@ -27,7 +27,7 @@ public class GameActivity extends Activity {
     Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
     ImageView asteroide1, asteroide2, enemigo, fondoJuego, municion, nave;
     ImageView[] municionEnemiga, matrizEnemigos;
-    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigoX, movimientoEnemigoY, puntosSaludJugador, puntuacion = 0, rotacion, saludObstaculo1, saludObstaculo2;
+    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigoX, movimientoEnemigoY, puntosSaludJugador, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
     int[] columnasCaptadas, navesId;
     LinearLayout matriz;
     MediaPlayer musicaFondo, sonidoDisparoNave;
@@ -51,6 +51,7 @@ public class GameActivity extends Activity {
             nave = (ImageView) findViewById(R.id.nave);
             puntosSaludJugador = 6;
             puntosVida = (TextView) findViewById(R.id.ptos_vida);
+            puntuacion = 0;
             rotacion = 0;
             saludObstaculo1 = 3;
             saludObstaculo2 = 3;
