@@ -1,6 +1,6 @@
 <img src="http://i65.tinypic.com/vrpiyg.png">
 
-[![Build Status](https://travis-ci.org/cvazquezlos/Space-Invaders-Android.svg?branch=master)](https://travis-ci.org/cvazquezlos/Space-Invaders-Android)
+[![Build Status](https://travis-ci.org/cvazquezlos/Space-Invaders.svg?branch=master)](https://travis-ci.org/cvazquezlos/Space-Invaders)
 
 #Castellano 
 
