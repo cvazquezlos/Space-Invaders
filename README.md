@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/cvazquezlos/Space-Invaders.svg?branch=master)](https://travis-ci.org/cvazquezlos/Space-Invaders)
 
-#Castellano 
+#Castellano  
 
 Aplicación desarrollada en Android que consiste en un sencillo juego, emulando el clásico Space Invaders y con temáticas más actuales. Actualmente la funcionalidad es reducida, pero se irá modificando y ampliando la susodicha conforme pase el tiempo y las releases.
 
