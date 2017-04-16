@@ -13,3 +13,7 @@ Actualmente la aplicación se encuentra en fase de desarrollo y la prealfa será
 ## Tecnologías utilizadas para el desarrollo de esta aplicación
 
 Android, XML, Java, diseño vectorial (a través del Adobe Illustrator), todo ello organizado en GitHub a través de commits y releases.
+
+## Estado actual de la aplicación 
+
+Actualmente, la aplicación está siendo objeto de labores de testing. En concreto, las tecnologías que se están utilizando son: Features de Gherkin, Cucumber, Espresso, Jenkins, JUnit y Calabas, entre otras.
