@@ -1,7 +1,5 @@
 package com.example.android.spaceinvaders;
 
-import android.test.AndroidTestCase;
-
 import org.junit.runner.RunWith;
 
 import cucumber.api.CucumberOptions;
