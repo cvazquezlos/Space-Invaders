@@ -9,7 +9,7 @@ import cucumber.api.junit.Cucumber;
 @CucumberOptions(
         monochrome = true,
         glue = "classpath:com.example.android.spaceinvaders",
-        features = "C:\\Users\\c.vazquezlos\\Desktop\\Space-Invaders\\app\\src\\test\\resources\\features\\botones.feature"
+        features = "C:\\Users\\c.vazquezlos\\Desktop\\Space-Invaders\\app\\src\\test\\resources\\features\\Botones.feature"
 )
 public class CucumberTestCase {
 }

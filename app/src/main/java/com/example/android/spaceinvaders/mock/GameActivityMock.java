@@ -32,7 +32,7 @@ public class GameActivityMock {
 
     public String moveSpaceToLeft() {
         this.space[1] = 45;
-        return "Ship has been moved to " + space.toString() + " coordinates.";
+        return "Ship has been moved to " + this.toStringg() + " coordinates.";
     }
 
     public boolean pressLeftButton() {
@@ -42,7 +42,7 @@ public class GameActivityMock {
 
     public String moveSpaceToRight() {
         this.space[1] = 55;
-        return "Space has been moved to " + space.toString() + " coordinates.";
+        return "Space has been moved to " + this.toStringg() + " coordinates.";
     }
 
     public boolean pressMiddleButton() {

@@ -23,74 +23,74 @@ public class BotonesSteps {
         this.gameActivity = new GameActivityMock();
     }
 
-    @Given("^la pantalla principal de la aplicación$")
-    public void la_pantalla_principal_de_la_aplicación() {
+    @Given("^principal screen in app$")
+    public void principal_screen_in_app() {
         Boolean valor = this.mainActivity.isUserInMainActivity;
         System.out.println(valor+"\n");
     }
 
-    @When("^pincho sobre el botón de opciones$")
-    public void pincho_sobre_el_botón_de_opciones() throws Throwable {
+    @When("^i tap on the option menu$")
+    public void i_tap_on_the_option_menu() {
         String valor = this.mainActivity.clickOption();
         System.out.println(valor);
     }
 
-    @Then("^se abre el menú de opciones$")
-    public void se_abre_el_menú_de_opciones() throws Throwable {
+    @Then("^option menu opens$")
+    public void option_menu_opens() {
         String valor = this.mainActivity.toString();
         System.out.println(valor+"\n\n");
     }
 
-    @When("^pincho sobre el botón de jugar$")
-    public void pincho_sobre_el_botón_de_jugar() throws Throwable {
+    @When("^i tap the game button$")
+    public void i_tap_the_game_button() {
         String valor = this.mainActivity.clickPlay();
         System.out.println(valor);
     }
 
-    @Then("^se cambia de pantalla a la pantalla de juego$")
-    public void se_cambia_de_pantalla_a_la_pantalla_de_juego() throws Throwable {
+    @Then("^appears the game screen$")
+    public void appears_the_game_screen() {
         Boolean valor = this.gameActivity.isUserInGameActivity;
         System.out.println(valor+"\n\n");
     }
 
-    @Given("^me encuentro en la pantalla de juego$")
-    public void me_encuentro_en_la_pantalla_de_juego() throws Throwable {
+    @Given("^gameplay screen$")
+    public void gameplay_screen() {
         String valor = this.gameActivity.toString();
         System.out.println(valor);
     }
 
-    @When("^pulso en el botón de la derecha de la pantalla$")
-    public void pulso_en_el_botón_de_la_derecha_de_la_pantalla() throws Throwable {
+    @When("^i tap the right button in the screen$")
+    public void i_tap_the_right_button_in_the_screen() {
         Boolean valor = this.gameActivity.pressRightButton();
         System.out.println(valor);
     }
 
-    @Then("^la nave se desplaza hacia la izquierda en 5 unidades$")
-    public void la_nave_se_desplaza_hacia_la_izquierda_en_unidades() throws Throwable {
+    @Then("^the spaceship moves to the left 5 units$")
+    public void the_spaceship_moves_to_the_left_5_units() {
         String valor = this.gameActivity.moveSpaceToLeft();
         System.out.println(valor+"\n\n");
     }
 
-    @When("^pulso en el botón de la izquierda de la pantalla$")
-    public void pulso_en_el_botón_de_la_izquierda_de_la_pantalla() throws Throwable {
+    @When("^i tap the left button in the screen$")
+    public void i_tap_the_left_button_in_the_screen() {
         Boolean valor = this.gameActivity.pressLeftButton();
         System.out.println(valor);
     }
 
-    @Then("^la nave se desplaza hacia la derecha en 5 unidades$")
-    public void la_nave_se_desplaza_hacia_la_derecha_en_unidades() throws Throwable {
+    @Then("^the spaceship moves to the right 5 units$")
+    public void the_spaceship_moves_to_the_right_5_units() {
         String valor = this.gameActivity.moveSpaceToRight();
         System.out.println(valor+"\n\n");
     }
 
-    @When("^pulso en el botón del centro de la pantalla$")
-    public void pulso_en_el_botón_del_centro_de_la_pantalla() throws Throwable {
+    @When("^i tap the button in the middle of the screen$")
+    public void i_tap_the_button_in_the_middle_of_the_screen() {
         Boolean valor = this.gameActivity.pressMiddleButton();
         System.out.println(valor);
     }
 
-    @Then("^la nave dispara un proyectil que se desplaza verticalmente$")
-    public void la_nave_dispara_un_proyectil_que_se_desplaza_verticalmente() throws Throwable {
+    @Then("^the spaceship shoots a missile that moves vertically in the screen$")
+    public void the_spaceship_shoots_a_missile_that_moves_vertically_in_the_screen() {
         String valor = this.gameActivity.releaseAmmo();
         System.out.println(valor+"\n\n");
     }
