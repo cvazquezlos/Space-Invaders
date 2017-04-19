@@ -1,27 +1,27 @@
-Feature: Actividad sobre botones
-    Debo encontrarme en la aplicación
+Feature: button activity
+    I must be in the app
     
-    Scenario: Mostrar menú de opciones
-        Given la pantalla principal de la aplicación
-        When pincho sobre el botón de opciones
-        Then se abre el menú de opciones
+    Scenario: Show option menu
+        Given Principal screen in app
+        When I tap on the option menu
+        Then option menu opens
 
-    Scenario: Iniciar el juego
-        Given la pantalla principal de la aplicación
-        When pincho sobre el botón de jugar
-        Then se cambia de pantalla a la pantalla de juego
+    Scenario: Iniciate the game
+        Given Principal screen in app
+        When I tap the game button
+        Then appear the game screen 
 
-    Scenario: Desplazar la nave hacia la izquierda
-        Given me encuentro en la pantalla de juego
-        When pulso en el botón de la derecha de la pantalla
-        Then la nave se desplaza hacia la izquierda en 5 unidades
+    Scenario: Move the ship to the left
+        Given Gameplay screen
+        When I tap the right button in the screen
+        Then the spaceship moves to the left 5 units
 
-    Scenario: Desplazar la nave hacia la derecha
-        Given me encuentro en la pantalla de juego
-        When pulso en el botón de la izquierda de la pantalla
-        Then la nave se desplaza hacia la derecha en 5 unidades
+    Scenario: Move the ship to the right
+        Given Gameplay screen
+        When I tap the left button in the screen
+        Then the spaceship moves to the right 5 units
 
-    Scenario: Disparar proyectil
-        Given me encuentro en la pantalla de juego
-        When pulso en el botón del centro de la pantalla
-        Then la nave dispara un proyectil que se desplaza verticalmente
+    Scenario: Spaceship's shoot
+        Given Gameplay screen
+        When I tap the button in the middle of the screen
+        Then the spaceship shoots a missile that moves vertically in the screen
