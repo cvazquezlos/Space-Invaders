@@ -8,10 +8,8 @@ import cucumber.api.junit.Cucumber;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         monochrome = true,
-        glue = {"com.example.android.spaceinvaders.steps"},
-        dryRun = false,
-        features = {"src/test/resources/features"},
-        strict = false
+        glue = "classpath:com.example.android.spaceinvaders",
+        features = "C:\\Users\\c.vazquezlos\\Desktop\\Space-Invaders\\app\\src\\test\\resources\\features\\botones.feature"
 )
 public class CucumberTestCase {
 }

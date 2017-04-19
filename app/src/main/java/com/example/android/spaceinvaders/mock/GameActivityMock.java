@@ -22,7 +22,7 @@ public class GameActivityMock {
 
     @Override
     public String toString() {
-        return "Heigh: " + this.heigh + "\nWeight: " + this.weight + "\nSpace position: " + space.toString() + "\n";
+        return "Heigh: " + this.heigh + "\nWeight: " + this.weight + "\nShip position: " + this.toStringg();
     }
 
     public boolean pressRightButton() {
@@ -32,7 +32,7 @@ public class GameActivityMock {
 
     public String moveSpaceToLeft() {
         this.space[1] = 45;
-        return "Space has been moved to " + space.toString() + " coordinates.\n";
+        return "Ship has been moved to " + space.toString() + " coordinates.";
     }
 
     public boolean pressLeftButton() {
@@ -42,7 +42,7 @@ public class GameActivityMock {
 
     public String moveSpaceToRight() {
         this.space[1] = 55;
-        return "Space has been moved to " + space.toString() + " coordinates.\n";
+        return "Space has been moved to " + space.toString() + " coordinates.";
     }
 
     public boolean pressMiddleButton() {
@@ -52,7 +52,11 @@ public class GameActivityMock {
 
     public String releaseAmmo() {
         this.ammo[0] = 100;
-        return "Space is shooting ammo!.\n";
+        return "Space is shooting ammo!.";
+    }
+
+    private String toStringg() {
+        return this.space[0] + "," + this.space[1];
     }
 
 }

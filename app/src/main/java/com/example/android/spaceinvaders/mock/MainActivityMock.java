@@ -10,7 +10,7 @@ public class MainActivityMock {
     public boolean isUserInMainActivity;
     public boolean isOptionButtonPressed;
     public boolean isPlayButtonPressed;
-    public String[] optionMenu;
+    public String[] optionMenu = {"Fondo de juego", "Skin aliada", "Skin enemiga"};
 
     public MainActivityMock() {
         this.isUserInApp = true;
@@ -21,11 +21,16 @@ public class MainActivityMock {
 
     public String clickOption() {
         this.isOptionButtonPressed = true;
-        return "Option button successfully clicked\n";
+        return "Option button successfully clicked";
     }
     public String clickPlay() {
         this.isPlayButtonPressed = true;
-        return "Play button successfully clicked\n";
+        return "Play button successfully clicked";
+    }
+
+    @Override
+    public String toString() {
+        return this.optionMenu[0] + " | " + this.optionMenu[1] + " | " + this.optionMenu[2];
     }
 
 }
