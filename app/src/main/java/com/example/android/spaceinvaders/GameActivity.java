@@ -27,7 +27,7 @@ public class GameActivity extends Activity {
     Handler manejaDisparo = new Handler(), manejaEnemigo = new Handler();
     ImageView asteroide1, asteroide2, enemigo, fondoJuego, municion, nave;
     ImageView[] municionEnemiga, matrizEnemigos;
-    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigoX, movimientoEnemigoY, puntosSaludJugador, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
+    int disparo, frontal, frontalEnemigo, idEnemigo, iteracion, ladeadoDer, ladeadoIzq, ladeadoDerEnemigo, ladeadoIzqEnemigo, movimiento, movimientoEnemigoX, movimientoEnemigoY, puntosSaludJugador = 6, puntuacion, rotacion, saludObstaculo1, saludObstaculo2;
     int[] columnasCaptadas, navesId;
     LinearLayout matriz;
     MediaPlayer musicaFondo, sonidoDisparoNave;
@@ -113,17 +113,30 @@ public class GameActivity extends Activity {
     }
 
     private void introduceCambios(String data) {
-        String[] info = data.split(" ");
-        int idFondo = getResources().getIdentifier(info[0], "drawable", getPackageName());
-        fondoJuego.setImageResource(idFondo);
-        int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
-        cambiosMovilidad(idNave, "aliado");
-        nave.setImageResource(frontal);
-        int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
-        cambiosMovilidad(idEnemigo, "enemigo");
-        enemigo.setImageResource(frontalEnemigo);
-        this.idEnemigo = idEnemigo;
-        sonido = Boolean.valueOf(info[3]);
+        if (data==null) {
+            int idFondo = getResources().getIdentifier("fondo3", "drawable", getPackageName());
+            fondoJuego.setImageResource(idFondo);
+            int idNave = getResources().getIdentifier("diseno11", "drawable", getPackageName());
+            cambiosMovilidad(idNave, "aliado");
+            nave.setImageResource(frontal);
+            int idEnemigo = getResources().getIdentifier("enemigodiseno11", "drawable", getPackageName());
+            cambiosMovilidad(idEnemigo, "enemigo");
+            enemigo.setImageResource(frontalEnemigo);
+            this.idEnemigo = idEnemigo;
+            sonido = Boolean.valueOf(true);
+        } else {
+            String[] info = data.split(" ");
+            int idFondo = getResources().getIdentifier(info[0], "drawable", getPackageName());
+            fondoJuego.setImageResource(idFondo);
+            int idNave = getResources().getIdentifier(info[1], "drawable", getPackageName());
+            cambiosMovilidad(idNave, "aliado");
+            nave.setImageResource(frontal);
+            int idEnemigo = getResources().getIdentifier(info[2], "drawable", getPackageName());
+            cambiosMovilidad(idEnemigo, "enemigo");
+            enemigo.setImageResource(frontalEnemigo);
+            this.idEnemigo = idEnemigo;
+            sonido = Boolean.valueOf(info[3]);
+        }
     }
 
     private void cambiosMovilidad(int id, String valor) {
@@ -291,7 +304,6 @@ public class GameActivity extends Activity {
 
     private void actualizaSalud() {
         int idAEsconder = 2131492961 - puntosSaludJugador;
-        findViewById(idAEsconder).setVisibility(View.INVISIBLE);
         if (puntosSaludJugador == 0) {
             accionEnemigo = false;
             manejaEnemigo.removeCallbacks(accionMovimientoEnemigo);
