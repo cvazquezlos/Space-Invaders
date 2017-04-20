@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'http://repo1.maven.org/maven2' }
+    jcenter { url "http://jcenter.bintray.com/" }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
@@ -10,6 +15,7 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -27,15 +33,19 @@ android {
     lintOptions {
         abortOnError false
     }
-
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.11'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'info.cukes:cucumber-java:1.2.0'
     compile 'info.cukes:cucumber-junit:1.2.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    compile 'junit:junit:4.12'
+}
+repositories {
+    maven { url 'http://repo1.maven.org/maven2' }
 }
