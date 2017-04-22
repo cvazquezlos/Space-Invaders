@@ -25,3 +25,4 @@ Feature: button activity
         Given gameplay screen
         When i tap the button in the middle of the screen
         Then the spaceship shoots a missile that moves vertically in the screen
+

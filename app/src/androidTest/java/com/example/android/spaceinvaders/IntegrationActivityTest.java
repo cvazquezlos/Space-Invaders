@@ -12,14 +12,11 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 
-/**
- * Created by c.vazquezlos on 19/04/2017.
- */
-
 @RunWith(AndroidJUnit4.class)
 public class IntegrationActivityTest {
 
-    public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<>(MainActivity.class, false);
+    public ActivityTestRule<MainActivity> mActivityRule = new
+            ActivityTestRule<>(MainActivity.class, false);
 
     @Before
     public void before_test() {
@@ -39,5 +36,6 @@ public class IntegrationActivityTest {
         onView(withId(R.id.control_izquierda)).perform(click());
         onView(withId(R.id.disparo)).perform(click());
     }
-
 }
+
+
