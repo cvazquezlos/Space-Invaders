@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="rs.spaceinvaders"
-	android:versionCode="1"
+	android:versionCode="2"
 	android:versionName="1.0">
     <uses-sdk android:minSdkVersion="4"/>
 	<application android:label="Space Invaders" android:icon="@drawable/ic_launcher">

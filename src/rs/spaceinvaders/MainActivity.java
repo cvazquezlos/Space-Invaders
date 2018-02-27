@@ -19,9 +19,9 @@ import java.util.Random;
 public class MainActivity extends Activity {
 	ViewSpaceInvaders vsi;
 	float maxx,maxy;
-	Bitmap splash,logo,logotexto,fundo,nave[]=new Bitmap[3],ovni[]=new Bitmap[3],tiro[]=new Bitmap[3];
+	Bitmap splash,logo,logotexto,fundo,coracaodir,coracaoesq,nave[]=new Bitmap[3],ovni[]=new Bitmap[3],tiro[]=new Bitmap[3];
 	boolean modojogo;
-	int pontos,posicao=5,tiponave,tirox[]=new int[20],tiroy[]=new int[20],ovnix[]=new int[3],ovniy[]=new int[3],ovnitipo[]=new int[3];
+	int vida=4,pontos,posicao=5,tiponave,tirox[]=new int[20],tiroy[]=new int[20],ovnix[]=new int[3],ovniy[]=new int[3],ovnitipo[]=new int[3];
 	final Handler meuhandler=new Handler();
 	Timer meutimer=new Timer();
 	@Override protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +44,17 @@ public class MainActivity extends Activity {
 		tiro[0]=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.municion),(int)maxy/20,(int)maxx/20,true);
 		tiro[1]=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.municion1),(int)maxy/20,(int)maxx/20,true);
 		tiro[2]=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.municion2),(int)maxy/20,(int)maxx/20,true);
+		coracaodir=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.vcorazonder),(int)maxy/20,(int)maxx/20,true);
+		coracaoesq=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.vcorazonizq),(int)maxy/20,(int)maxx/20,true);
 		setContentView(vsi);
 		meutimer.schedule(new TimerTask(){
 			public void run(){
 				if(modojogo){
 					int x;
-					for(x=0;x<3;x++)if(ovnix[x]>20)geraovnis(x);
+					for(x=0;x<3;x++)if(ovnix[x]>20){
+						if(ovnitipo[x]!=0)vida--;
+						geraovnis(x);
+					}
 					for(x=0;x<3;x++){
 						ovnix[x]++;
 						if(ovnix[x]==19&&ovniy[x]==posicao)modojogo=false;
@@ -61,10 +66,12 @@ public class MainActivity extends Activity {
 							if(ovnitipo[x]!=0){
 								pontos++;
 								geraovnis(x);
+								if(vida<4)vida++;
 							}
 							tirox[y]=-1;
 						}
 					}
+					if(vida==0)modojogo=false;
 					meuhandler.post(meurunnable);
 				}
 			}
@@ -83,6 +90,7 @@ public class MainActivity extends Activity {
 		@Override public boolean onTouchEvent(MotionEvent event){
 			if(!modojogo){
 				pontos=0;
+				vida=4;
 				int x;
 				for(x=0;x<3;x++)geraovnis(x);
 				for(x=0;x<20;x++)tirox[x]=-1;
@@ -108,21 +116,26 @@ public class MainActivity extends Activity {
 		@Override protected void onDraw(Canvas c){
 			super.onDraw(c);
 			Paint p=new Paint();
+			p.setColor(Color.GREEN);
+			p.setTextSize(20);
 			if(modojogo){
 				c.drawBitmap(fundo,0,0,p);
 				c.drawBitmap(nave[tiponave],(int)((maxy/11)*posicao),(int)(maxx*.88),p);
-				p.setColor(Color.GREEN);
-				p.setTextSize(20);
 				c.drawText(String.valueOf(pontos*100),10,30,p);
 				c.drawLine(0,(int)(maxx*.7),maxy,(int)(maxx*.7),p);
 				int x;
 				for(x=0;x<3;x++)c.drawBitmap(ovni[ovnitipo[x]],(int)((maxy/11)*ovniy[x]),(int)(ovnix[x]*(maxx/20)),p);
 				for(x=0;x<20;x++)if(tirox[x]>=0)c.drawBitmap(tiro[tiponave],(int)((maxy/11)*tiroy[x])+(maxy/33),(int)(tirox[x]*(maxx/20)),p);
+				c.drawBitmap(coracaodir,(int)(maxy*.95)-20,20,p);
+				if(vida>1)c.drawBitmap(coracaoesq,(int)(maxy*.90)-20,20,p);
+				if(vida>2)c.drawBitmap(coracaodir,(int)(maxy*.85)-40,20,p);
+				if(vida>3)c.drawBitmap(coracaoesq,(int)(maxy*.80)-40,20,p);
 			}
 			else{
 				c.drawBitmap(splash,0,0,p);
 				c.drawBitmap(logo,-(logo.getWidth())/3,-(logo.getHeight())/3,p);
 				c.drawBitmap(logotexto,(maxy-logotexto.getWidth())/2,(maxx-logotexto.getHeight())/3,p);
+				if(pontos>3)c.drawText(String.valueOf(pontos*100),maxy-60,32,p);
 			}
 		}
 	}
