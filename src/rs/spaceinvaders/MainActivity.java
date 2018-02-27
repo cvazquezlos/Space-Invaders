@@ -15,15 +15,26 @@ import android.os.Handler;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 
 public class MainActivity extends Activity {
 	ViewSpaceInvaders vsi;
 	float maxx,maxy;
 	Bitmap splash,logo,logotexto,fundo,coracaodir,coracaoesq,nave[]=new Bitmap[3],ovni[]=new Bitmap[3],tiro[]=new Bitmap[3];
 	boolean modojogo;
-	int vida=4,pontos,posicao=5,tiponave,tirox[]=new int[20],tiroy[]=new int[20],ovnix[]=new int[3],ovniy[]=new int[3],ovnitipo[]=new int[3];
+	int recorde,vida=4,pontos,posicao=5,tiponave,tirox[]=new int[20],tiroy[]=new int[20],ovnix[]=new int[3],ovniy[]=new int[3],ovnitipo[]=new int[3];
 	final Handler meuhandler=new Handler();
 	Timer meutimer=new Timer();
+	SharedPreferences valorp;
+	@Override public void onBackPressed(){
+		if(!modojogo)super.onBackPressed();
+		else{
+			modojogo=false;
+			vsi.invalidate();
+		}
+	}
 	@Override protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		vsi=new ViewSpaceInvaders(this);
@@ -31,6 +42,8 @@ public class MainActivity extends Activity {
 		getWindowManager().getDefaultDisplay().getSize(size);
 		maxx=Math.max(size.x,size.y);//800
 		maxy=Math.min(size.x,size.y);//480
+		valorp=PreferenceManager.getDefaultSharedPreferences(this);
+		if(valorp.contains("recorde"))recorde=valorp.getInt("recorde",0);
 		logo=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.iconotitulo),(int)(maxx/4),(int)(maxx/4),true);
 		logotexto=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.iconotitulo1),(int)(maxx/4),(int)(maxx/4),true);
 		splash=Bitmap.createScaledBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.fondo2),(int)maxy,(int)maxx,true);
@@ -72,6 +85,12 @@ public class MainActivity extends Activity {
 						}
 					}
 					if(vida==0)modojogo=false;
+					if(pontos>recorde){
+						Editor editor=valorp.edit();
+						editor.putInt("recorde",pontos);
+						editor.commit();
+						recorde=pontos;
+					}
 					meuhandler.post(meurunnable);
 				}
 			}
@@ -117,7 +136,7 @@ public class MainActivity extends Activity {
 			super.onDraw(c);
 			Paint p=new Paint();
 			p.setColor(Color.GREEN);
-			p.setTextSize(20);
+			p.setTextSize((float)(maxy*0.04));
 			if(modojogo){
 				c.drawBitmap(fundo,0,0,p);
 				c.drawBitmap(nave[tiponave],(int)((maxy/11)*posicao),(int)(maxx*.88),p);
@@ -135,7 +154,7 @@ public class MainActivity extends Activity {
 				c.drawBitmap(splash,0,0,p);
 				c.drawBitmap(logo,-(logo.getWidth())/3,-(logo.getHeight())/3,p);
 				c.drawBitmap(logotexto,(maxy-logotexto.getWidth())/2,(maxx-logotexto.getHeight())/3,p);
-				if(pontos>3)c.drawText(String.valueOf(pontos*100),maxy-60,32,p);
+				if(recorde>3)c.drawText(String.valueOf(recorde*100),maxy-60,32,p);
 			}
 		}
 	}
